@@ -2,10 +2,14 @@
   "compilerOptions": {
       "module": "commonjs",
       "esModuleInterop": true,
-      "target": "es6",
+      "resolveJsonModule": true,
+      "target": "ES5",
       "noImplicitAny": true,
       "moduleResolution": "node",
+      "skipLibCheck": true,
+      "strict": true,
       "sourceMap": true,
+      "rootDir": "./src",
       "outDir": "dist",
       "baseUrl": ".",
       "paths": {

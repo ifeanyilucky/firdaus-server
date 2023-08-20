@@ -1,14 +1,20 @@
-import { Container } from "typedi";
+import { Container, Inject } from "typedi";
 import { StudentRepository } from "../repositories/StudentRepository";
 
 export default class StudentService {
-  studentRepository: StudentRepository;
-  constructor(studentRepository: StudentRepository) {
-    this.studentRepository = studentRepository;
+  // @Inject()
+  studentRepo: StudentRepository;
+
+  constructor(studentRepo: StudentRepository) {
+    this.studentRepo = studentRepo;
   }
 
   getStudents() {
-    const studentRepo = Container.get(StudentRepository);
-    return studentRepo.getStudents();
+    // const studentRepo = Container.get(StudentRepository);
+    return this.studentRepo.getStudents();
+  }
+
+  getStudentReport() {
+    return this.studentRepo.getStudentReportCard();
   }
 }
