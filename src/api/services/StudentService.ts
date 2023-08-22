@@ -5,12 +5,12 @@ export default class StudentService {
   // @Inject()
   studentRepo: StudentRepository;
 
-  constructor(studentRepo: StudentRepository) {
+  constructor(@Inject() studentRepo: StudentRepository) {
     this.studentRepo = studentRepo;
   }
 
+  // studentRepo = Container.get(StudentRepository);
   getStudents() {
-    // const studentRepo = Container.get(StudentRepository);
     return this.studentRepo.getStudents();
   }
 

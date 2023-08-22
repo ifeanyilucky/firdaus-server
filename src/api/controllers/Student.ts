@@ -3,7 +3,7 @@ import { Inject, Service } from "typedi";
 import { JsonController, Get } from "routing-controllers";
 import StudentService from "../services/StudentService";
 
-// @Service()
+@Service()
 @JsonController()
 export default class StudentController {
   router: Router;
@@ -23,11 +23,11 @@ export default class StudentController {
     return this.studentService.getStudentReport();
   }
 
-  routes() {
-    this.router.get("/", (_req, res) => res.send(this.getStudentsRoute()));
-    this.router.get("/report-card", (req, res) => {
-      res.send(this.getStudentReport());
-    });
-    return this.router;
-  }
+  // routes() {
+  //   this.router.get("/", (_req, res) => res.send(this.getStudentsRoute()));
+  //   this.router.get("/report-card", (req, res) => {
+  //     res.send(this.getStudentReport());
+  //   });
+  //   return this.router;
+  // }
 }
