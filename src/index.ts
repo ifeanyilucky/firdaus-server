@@ -1,13 +1,17 @@
 import "reflect-metadata";
 import express, { Request, Response } from "express";
-import { useExpressServer } from "routing-controllers";
+import {
+  useExpressServer,
+  createExpressServer,
+  useContainer,
+} from "routing-controllers";
 import dotenv from "dotenv";
 import logger from "morgan";
 
 import { StudentRepository } from "./api/repositories/StudentRepository";
 import StudentService from "./api/services/StudentService";
 import StudentController from "./api/controllers/Student";
-import Container from "typedi";
+import { Container } from "typedi";
 
 dotenv.config();
 
@@ -23,7 +27,7 @@ app.use(logger("dev"));
 // const studentRepo = new StudentRepository();
 // const studentService = new StudentService(studentRepo);
 // const studentController = new StudentController(studentService);
-
+// useContainer(Container);
 useExpressServer(app, {
   routePrefix: "/api",
   controllers: [StudentController],

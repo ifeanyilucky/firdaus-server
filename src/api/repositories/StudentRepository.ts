@@ -4,7 +4,7 @@ import ejs from "ejs";
 import path from "path";
 import { Student } from "../../types/User";
 
-// @Service()
+@Service()
 export class StudentRepository {
   public async createUser(data: object) {
     // let entity = new User()
