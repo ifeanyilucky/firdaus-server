@@ -5,11 +5,13 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "rimraf ./dist && npx tsc copy-assets",
-    "copy-assets": "ts-node tools/copyAssets",
+    "build": "npm-run-all clean tsc copy-assets",
+    "copy-assets": "ts-node ./src/tools/copyAssets",
     "clean": "rimraf ./dist",
-    "start": "npm run build && NODE_ENV=production node ./dist/index.js",
-    "dev": "concurrently \"npx tsc --watch\" \"nodemon -q dist/index.js\""
+    "tsc": "npx tsc",
+    "start": "NODE_ENV=production node ./dist/index.js",
+    "dev:start": "npm-run-all build start",
+    "dev": "nodemon --watch src -e ts,ejs --exec npm run dev:start"
   },
   "keywords": [],
   "author": "Ifeanyi Lucky",
