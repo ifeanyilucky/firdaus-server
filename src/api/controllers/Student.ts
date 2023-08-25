@@ -76,20 +76,8 @@ export default class StudentController {
     //   }
     // });
     const pathToResult = path.join(__dirname, "../../tmp/report-sheet.pdf");
-    fs.access(pathToResult, fs.constants.F_OK, (err) => {
-      if (err) {
-        console.log(err);
-        return res.send({
-          message: "Error occured, when downloading the report sheet",
-        });
-      } else {
-        res.download(pathToResult, (error) => {
-          if (error) {
-            console.log(error);
-          }
-          console.log("Your file has been downloaded");
-        });
-      }
-    });
+    console.log(pathToResult);
+
+    res.download(pathToResult);
   }
 }
