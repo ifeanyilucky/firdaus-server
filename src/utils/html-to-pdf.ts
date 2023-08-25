@@ -4,40 +4,33 @@ import ejs from "ejs";
 import path from "path";
 import { Student } from "../types/User";
 
-export async function htmlToPdf(config: Student) {
-  // browser instance
-  const browser = await puppeteer.launch({ headless: "new" });
-
-  // new page
+export const htmlToPdf = async (user: Student) => {
+  const browser = await puppeteer.launch();
   const page = await browser.newPage();
 
-  // Get HTML by converting EJS to html
-  let htmlFile = "";
-  ejs.renderFile(
-    path.join(__dirname, "../views/report-card.ejs"),
-    { config: "settings" },
-    (error, html) => {
-      if (error) {
-        console.log(error);
-      } else {
-        htmlFile = html;
-      }
-    }
-  );
-
-  await page.setContent(htmlFile, { waitUntil: "domcontentloaded" });
-
-  // to reflect css used for screens
-  await page.emulateMediaType("screen");
-
-  // DOWNLOAD THE PDF
-  const pdf = await page.pdf({
-    path: `${config.first_name}-${config.last_name}.pdf`,
-    margin: { top: "100px", right: "50px", bottom: "100px", left: "50px" },
-    printBackground: true,
-    format: "A4",
+  await page.goto("http://localhost:4000/api/students/report-card", {
+    waitUntil: "networkidle0",
   });
 
-  //   close the browser
+  const pdf = await page.pdf({
+    path: path.join(__dirname, "../tmp/report-sheet.pdf"),
+    printBackground: true,
+    scale: 0.6,
+    format: "a4",
+  });
+
   await browser.close();
-}
+
+  fs.writeFile(
+    path.join(__dirname, "../views/report-card.ejs"),
+    pdf,
+    {},
+    (err) => {
+      if (err) {
+        return console.error("error");
+      }
+
+      console.log("success!");
+    }
+  );
+};

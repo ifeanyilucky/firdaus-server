@@ -1,6 +1,9 @@
-import { Router } from "express";
+import { Router, Response, Request } from "express";
 import { Inject, Service } from "typedi";
-import { JsonController, Controller, Get } from "routing-controllers";
+import ejs from "ejs";
+import path from "path";
+import { JsonController, Controller, Get, Req, Res } from "routing-controllers";
+import fs from "fs";
 import StudentService from "../services/StudentService";
 import { Student } from "../../types/User";
 import { htmlToPdf } from "../../utils/html-to-pdf";
@@ -22,7 +25,7 @@ export default class StudentController {
   }
 
   @Get("/students/report-card")
-  getStudentReport() {
+  async getStudentReport(@Req() req: Request, @Res() res: Response) {
     // return this.studentService.getStudentReport();''
     const students: Student[] = [
       {
@@ -48,15 +51,45 @@ export default class StudentController {
       },
     ];
 
-    const result = htmlToPdf(students[0]);
-    return result;
-  }
+    // htmlToPdf(students[0]);
 
-  // routes() {
-  //   this.router.get("/", (_req, res) => res.send(this.getStudentsRoute()));
-  //   this.router.get("/report-card", (req, res) => {
-  //     res.send(this.getStudentReport());
-  //   });
-  //   return this.router;
-  // }
+    // const filePath: string = path.join(
+    //   __dirname,
+    //   "../../views/report-card.ejs"
+    // );
+
+    // let htmlContent: string = "";
+    // ejs.renderFile(filePath, { user: students[2] }, (err, html) => {
+    //   if (!err) {
+    //     return (htmlContent = html);
+    //   } else {
+    //     return console.log(err);
+    //   }
+    // });
+
+    // const pathToResult = path.join(__dirname, "../tmp/report-sheet.pdf");
+    // fs.access(pathToResult, fs.constants.F_OK, (err) => {
+    //   if (err) {
+    //     console.log(err);
+    //   } else {
+    //     return;
+    //   }
+    // });
+    const pathToResult = path.join(__dirname, "../../tmp/report-sheet.pdf");
+    fs.access(pathToResult, fs.constants.F_OK, (err) => {
+      if (err) {
+        console.log(err);
+        return res.send({
+          message: "Error occured, when downloading the report sheet",
+        });
+      } else {
+        res.download(pathToResult, (error) => {
+          if (error) {
+            console.log(error);
+          }
+          console.log("Your file has been downloaded");
+        });
+      }
+    });
+  }
 }

@@ -4,4 +4,6 @@ export interface Student {
   age: number;
   class: string;
   admission_no: number;
+  gender?: "male" | "female";
 }
+export interface Teacher extends Student {}

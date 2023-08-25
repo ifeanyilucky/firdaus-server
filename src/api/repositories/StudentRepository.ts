@@ -1,5 +1,5 @@
 import { Service, Inject } from "typedi";
-import { htmlToPdf } from "../../utils/html-to-pdf";
+// import { htmlToPdf } from "../../utils/html-to-pdf";
 import ejs from "ejs";
 import path from "path";
 import { Student } from "../../types/User";
@@ -41,7 +41,7 @@ export class StudentRepository {
   }
 
   public async getStudentReportCard() {
-    const result = htmlToPdf(this.students[0]);
-    return result;
+    // const result = htmlToPdf(this.students[0]);
+    return "result";
   }
 }

@@ -1,9 +1,9 @@
 import "reflect-metadata";
 import express, { Request, Response } from "express";
+import path from "path";
 import {
   useExpressServer,
-  createExpressServer,
-  useContainer,
+  useContainer as useRouteContainer,
 } from "routing-controllers";
 import dotenv from "dotenv";
 import logger from "morgan";
@@ -17,17 +17,16 @@ dotenv.config();
 
 const app = express();
 // EJS
-app.set("views", "./src/views");
+app.set("views", "./views");
 app.set("view engine", "ejs");
-
+app.use(
+  express.static(path.join(__dirname, "/public"), { maxAge: 31557600000 })
+);
 app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ extended: true, limit: "50mb" }));
 app.use(logger("dev"));
 
-// const studentRepo = new StudentRepository();
-// const studentService = new StudentService(studentRepo);
-// const studentController = new StudentController(studentService);
-// useContainer(Container);
+// useRouteContainer(Container);
 useExpressServer(app, {
   routePrefix: "/api",
   controllers: [StudentController],
