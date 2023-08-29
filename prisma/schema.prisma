@@ -1,0 +1,6 @@
+
+
+datasource db {
+    provider =  env("DATABASE_PROVIDER")
+    url       = env("DATABASE_URL")
+}
