@@ -1,6 +1,39 @@
-
-
 datasource db {
-    provider =  env("DATABASE_PROVIDER")
-    url       = env("DATABASE_URL")
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model ReportSheets {
+  id       String    @id @default(auto()) @map("_id") @db.ObjectId
+  slug     String    @unique
+  title    String
+  body     String
+  author   User      @relation(fields: [authorId], references: [id])
+  authorId String    @db.ObjectId
+  comments Comment[]
+}
+
+model User {
+  id           String         @id @default(auto()) @map("_id") @db.ObjectId
+  email        String         @unique
+  firstName    String?
+  lastName     String?
+  middleName   String?
+  class        String?
+  department   String?
+  password     String
+  address      Address?
+  reportSheets ReportSheets[]
+}
+
+// Address is an embedded document
+type Address {
+  street String
+  city   String
+  state  String
+  zip    String
 }
