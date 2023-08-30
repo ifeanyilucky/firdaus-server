@@ -51,7 +51,21 @@ export class AuthService {
     if (existingEmail) {
       throw new UnauthorizedException();
     }
+    const newUser = await this.userService.createUser({
+      data: registerUserDTO,
+    });
 
-    return this.userService.createUser({ data: registerUserDTO });
+    const payload = {
+      ...newUser,
+    };
+
+    const accessToken = this.jwtService.sign(payload, {
+      expiresIn: GLOBAL_CONFIG.security.expiresIn,
+    });
+
+    return {
+      user: payload,
+      accessToken,
+    };
   }
 }
