@@ -8,32 +8,216 @@ generator client {
 }
 
 model ReportSheets {
-  id       String    @id @default(auto()) @map("_id") @db.ObjectId
-  slug     String    @unique
-  title    String
-  body     String
-  author   User      @relation(fields: [authorId], references: [id])
-  authorId String    @db.ObjectId
-  comments Comment[]
+  id        String     @id @default(auto()) @map("_id") @db.ObjectId
+  slug      String     @unique
+  student   User       @relation(fields: [studentId], references: [id])
+  studentId String     @db.ObjectId
+  subjects  Subjects[]
 }
 
 model User {
   id           String         @id @default(auto()) @map("_id") @db.ObjectId
   email        String         @unique
-  firstName    String?
-  lastName     String?
+  firstName    String
+  lastName     String
   middleName   String?
-  class        String?
+  class        String
   department   String?
   password     String
-  address      Address?
   reportSheets ReportSheets[]
 }
 
-// Address is an embedded document
-type Address {
-  street String
-  city   String
-  state  String
-  zip    String
+// Subjects
+type Subjects {
+  accounting            Accounting
+  agriculture           Agriculture
+  animalHusbandry       AnimalHusbandry
+  arabic                Arabic
+  biology               Biology
+  cateringCraftPractice CateringCraftPractice
+  chemistry             Chemistry
+  civicEducation        CivicEducation
+  commerce              Commerce
+  dataProcessing        DataProcessing
+  economics             Economics
+  englishLanguage       EnglishLanguage
+  furtherMathematics    FurtherMathematics
+  geography             Geography
+  government            Government
+  irs                   IRS
+  literatureInEnglish   LiteratureInEnglish
+  marketing             Marketing
+  mathematics           Mathematics
+  physics               Physics
+}
+
+//-----------------------------------------------------
+// LIST OF ALL THE SUBJECTS FOR SENIOR SECONDARY SCHOOLS
+//----------------------------------------------------
+type Accounting {
+  continuousAssessmentScore Int
+  examScore                 Int
+  totalWeightedAverage      Int
+  positionGrade             Int
+  comment                   String
+}
+
+type Agriculture {
+  continuousAssessmentScore Int
+  examScore                 Int
+  totalWeightedAverage      Int
+  positionGrade             Int
+  comment                   String
+}
+
+type AnimalHusbandry {
+  continuousAssessmentScore Int
+  examScore                 Int
+  totalWeightedAverage      Int
+  positionGrade             Int
+  comment                   String
+}
+
+type Arabic {
+  continuousAssessmentScore Int
+  examScore                 Int
+  totalWeightedAverage      Int
+  positionGrade             Int
+  comment                   String
+}
+
+type Biology {
+  continuousAssessmentScore Int
+  examScore                 Int
+  totalWeightedAverage      Int
+  positionGrade             Int
+  comment                   String
+}
+
+type CateringCraftPractice {
+  continuousAssessmentScore Int
+  examScore                 Int
+  totalWeightedAverage      Int
+  positionGrade             Int
+  comment                   String
+}
+
+type Chemistry {
+  continuousAssessmentScore Int
+  examScore                 Int
+  totalWeightedAverage      Int
+  positionGrade             Int
+  comment                   String
+}
+
+type CivicEducation {
+  continuousAssessmentScore Int
+  examScore                 Int
+  totalWeightedAverage      Int
+  positionGrade             Int
+  comment                   String
+}
+
+type Commerce {
+  continuousAssessmentScore Int
+  examScore                 Int
+  totalWeightedAverage      Int
+  positionGrade             Int
+  comment                   String
+}
+
+type DataProcessing {
+  continuousAssessmentScore Int
+  examScore                 Int
+  totalWeightedAverage      Int
+  positionGrade             Int
+  comment                   String
+}
+
+type Economics {
+  continuousAssessmentScore Int
+  examScore                 Int
+  totalWeightedAverage      Int
+  positionGrade             Int
+  comment                   String
+}
+
+type EnglishLanguage {
+  continuousAssessmentScore Int
+  examScore                 Int
+  totalWeightedAverage      Int
+  positionGrade             Int
+  comment                   String
+}
+
+type FurtherMathematics {
+  continuousAssessmentScore Int
+  examScore                 Int
+  totalWeightedAverage      Int
+  positionGrade             Int
+  comment                   String
+}
+
+type Geography {
+  continuousAssessmentScore Int
+  examScore                 Int
+  totalWeightedAverage      Int
+  positionGrade             Int
+  comment                   String
+}
+
+type Government {
+  continuousAssessmentScore Int
+  examScore                 Int
+  totalWeightedAverage      Int
+  positionGrade             Int
+  comment                   String
+}
+
+type IRS {
+  continuousAssessmentScore Int
+  examScore                 Int
+  totalWeightedAverage      Int
+  positionGrade             Int
+  comment                   String
+}
+
+type LiteratureInEnglish {
+  continuousAssessmentScore Int
+  examScore                 Int
+  totalWeightedAverage      Int
+  positionGrade             Int
+  comment                   String
+}
+
+type Marketing {
+  continuousAssessmentScore Int
+  examScore                 Int
+  totalWeightedAverage      Int
+  positionGrade             Int
+  comment                   String
+}
+
+type Mathematics {
+  continuousAssessmentScore Int
+  examScore                 Int
+  totalWeightedAverage      Int
+  positionGrade             Int
+  comment                   String
+}
+
+type Physics {
+  continuousAssessmentScore Int
+  examScore                 Int
+  totalWeightedAverage      Int
+  positionGrade             Int
+  comment                   String
+}
+
+type YorubaLanguage {
+  continuousAssessmentScore Int
+  examScore                 Int
+  totalWeightedAverage      Int
+  positionGrade             Int
+  comment                   String
 }
