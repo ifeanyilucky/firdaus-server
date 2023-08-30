@@ -1,7 +1,8 @@
 import {
   OnModuleDestroy,
   OnModuleInit,
-  INextApplication,
+  Injectable,
+  INestApplication,
 } from '@nestjs/common';
 import { PrismaClient } from '@prisma/client';
 import { UserListener } from 'src/modules/user/user.listener';
@@ -16,15 +17,15 @@ export class PrismaService
 
   async onModuleInit() {
     await this.$connect();
-    this.$use(UserListener.onCreated);
+    // this.$use(UserListener.onCreated);
   }
 
-  async enableShutdownHooks(app: INextApplication) {
-    this.$on('beforeExit', async (event) => {
-      console.log(event.name);
-      await app.close();
-    });
-  }
+  // async enableShutdownHooks(app: INestApplication) {
+  //   this.$on('beforeExit', async (event) => {
+  //     console.log(event);
+  //     await app.close();
+  //   });
+  // }
 
   async onModuleDestroy() {
     await this.$disconnect();

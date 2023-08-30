@@ -1,4 +1,4 @@
-import { PrismaClientOptions } from '@prisma/client/runtime';
+import { PrismaClientOptions } from '@prisma/client/runtime/library';
 
 export type LogLevel = 'info' | 'query' | 'warn' | 'error';
 export type LogDefinition = {
@@ -15,7 +15,8 @@ export const PRISMA_LOG_CONFIG: Array<LogDefinition> = [
 
 export const PRISMA_CLIENT_OPTIONS: PrismaClientOptions = {
   log: PRISMA_LOG_CONFIG,
-  rejectOnNotFound: true,
+  // rejectOnNotFound: true,
+
   __internal: {
     // hooks: {
     //   beforeRequest: (_params: any) => {

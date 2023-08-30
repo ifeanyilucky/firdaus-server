@@ -30,3 +30,4 @@ export const PORT = process.env.PORT || 4000;
 
 export const DATABASE_URL = process.env.DATABASE_URL;
 export const DATABASE_PROVIDER = process.env.DATABASE_PROVIDER;
+export const JWTSecret = process.env.JWT_SECRET;
