@@ -22,7 +22,6 @@ export class AuthController {
   @Post('register')
   async register(@Body() userDto: RegisterAuthDTO, @Response() res: IResponse) {
     const registrationData = await this.authService.register(userDto);
-
     res.cookie('accessToken', registrationData.accessToken, {
       expires: new Date(new Date().getTime() + JWT_EXPIRY_SECONDS * 1000),
       secure: true,
