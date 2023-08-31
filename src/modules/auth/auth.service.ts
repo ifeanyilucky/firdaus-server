@@ -35,7 +35,7 @@ export class AuthService {
       ...userData,
     };
 
-    const accessToken = this.jwtService.sign(payload, {
+    const accessToken = await this.jwtService.sign(payload, {
       expiresIn: GLOBAL_CONFIG.security.expiresIn,
     });
     return {
@@ -59,7 +59,7 @@ export class AuthService {
       ...newUser,
     };
 
-    const accessToken = this.jwtService.sign(payload, {
+    const accessToken = await this.jwtService.sign(payload, {
       expiresIn: GLOBAL_CONFIG.security.expiresIn,
     });
 
