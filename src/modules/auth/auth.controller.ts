@@ -27,6 +27,7 @@ export class AuthController {
       expires: new Date(new Date().getTime() + JWT_EXPIRY_SECONDS * 1000),
       secure: true,
     });
+
     res.status(200).json(registrationData);
   }
 }
