@@ -1,4 +1,9 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import {
+  Injectable,
+  UnauthorizedException,
+  HttpException,
+  HttpStatus,
+} from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { UserService } from '../user/user.service';
 import { PrismaService } from 'src/prisma/prisma.service';
@@ -14,6 +19,7 @@ export class AuthService {
     private prismaService: PrismaService,
   ) {}
 
+  // Login service
   public async login(loginUserDTO: LoginUserDTO) {
     const userData = await this.userService.getUser({
       email: loginUserDTO.email,
@@ -23,12 +29,15 @@ export class AuthService {
       throw new UnauthorizedException();
     }
 
-    const passwordIsMatch = AuthHelpers.verify(
+    const passwordIsMatch = await AuthHelpers.verify(
       loginUserDTO.password,
       userData.password,
     );
     if (!passwordIsMatch) {
-      throw new UnauthorizedException();
+      throw new HttpException(
+        'Password is incorrect, try again.',
+        HttpStatus.UNPROCESSABLE_ENTITY,
+      );
     }
 
     const payload = {
@@ -44,6 +53,7 @@ export class AuthService {
     };
   }
 
+  // Register service
   public async register(registerUserDTO: RegisterAuthDTO) {
     const existingEmail = await this.userService.getUser({
       email: registerUserDTO.email,
@@ -55,7 +65,7 @@ export class AuthService {
     const newUser = await this.userService.createUser({
       data: {
         ...registerUserDTO,
-        password: AuthHelpers.hash(registerUserDTO.password),
+        password: await AuthHelpers.hash(registerUserDTO.password),
       },
     });
 

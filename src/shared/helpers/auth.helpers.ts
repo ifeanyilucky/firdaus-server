@@ -1,24 +1,13 @@
 import { randomBytes, scrypt } from 'crypto';
+import * as bcrypt from 'bcryptjs';
 
-const hash = (password: string) => {
-  return new Promise((resolve, reject) => {
-    const salt = randomBytes(8).toString('hex');
-
-    scrypt(password, salt, 64, (err, derivedKey) => {
-      if (err) reject(err);
-      resolve(salt + ':' + derivedKey.toString('hex'));
-    });
-  });
+const hash = async (password: string) => {
+  const saltOrRounds = 10;
+  return await bcrypt.hash(password, saltOrRounds);
 };
 
-const verify = (password: string, hash) => {
-  return new Promise((resolve, reject) => {
-    const [salt, key] = hash.split(':');
-    scrypt(password, salt, 64, (err, derivedKey) => {
-      if (err) reject(err);
-      resolve(key == derivedKey.toString('hex'));
-    });
-  });
+const verify = async (password: string, hash) => {
+  return await bcrypt.compare(password, hash);
 };
 
 export const AuthHelpers = {
