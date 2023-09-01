@@ -6,9 +6,11 @@ import {
   Param,
   Post,
   Patch,
+  UseGuards,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { User } from '@prisma/client';
+import { AuthGuard } from 'src/guards/auth.guard';
 
 @Controller('/users')
 export class UserController {
@@ -16,6 +18,7 @@ export class UserController {
   constructor(private userService: UserService) {}
 
   @Get()
+  @UseGuards(AuthGuard)
   async getAll(): Promise<User[]> {
     return this.userService.users({});
   }

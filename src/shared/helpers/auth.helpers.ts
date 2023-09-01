@@ -1,8 +1,7 @@
-import { randomBytes, scrypt } from 'crypto';
 import * as bcrypt from 'bcryptjs';
 
 const hash = async (password: string) => {
-  const saltOrRounds = 10;
+  const saltOrRounds = await bcrypt.genSalt();
   return await bcrypt.hash(password, saltOrRounds);
 };
 
