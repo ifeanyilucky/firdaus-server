@@ -18,6 +18,7 @@ model User {
   password        String
   reportSheet     ReportSheet[]
   admissionNumber String?
+  role            String
 }
 
 model ReportSheet {

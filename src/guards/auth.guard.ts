@@ -4,18 +4,20 @@ import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
-  constructor(private readonly prismaService: PrismaService){}
+  constructor(private readonly prismaService: PrismaService) {}
 
-  async canActivate(context: ExecutionContext): boolean | Promise<boolean> | Observable<boolean> {
-      const request = context.switchToHttp().getRequest();
-      request.user = await this.getAuth(request)
+  async canActivate(context: ExecutionContext): Promise<boolean> {
+    const request = context.switchToHttp().getRequest();
+    request.user = await this.getAuth(request);
+    return true;
   }
 
   async getAuth(req: any): Promise<any> {
     try {
-        let token;
+      let token;
 
-        if(req.headers.authorization && req.headers.startsWith('Bearer'))
-    }
+      if (req.headers.authorization && req.headers.startsWith('Bearer')) {
+      }
+    } catch (error) {}
   }
 }

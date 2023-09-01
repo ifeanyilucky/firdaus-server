@@ -15,10 +15,10 @@ export class ReportService {
   }
 
   async allReportSheets(params: {
-    where;
-    orderBy;
-    select;
-    skip;
+    where?: Prisma.ReportSheetWhereInput;
+    orderBy?: Prisma.ReportSheetOrderByWithRelationInput;
+    select?: Prisma.ReportSheetSelect;
+    skip: number;
   }): Promise<ReportSheet[]> {
     const { where, orderBy, select, skip } = params;
     return await this.prisma.reportSheet.findMany({

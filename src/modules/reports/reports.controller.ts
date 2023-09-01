@@ -15,13 +15,16 @@ import { ReportSheet } from '@prisma/client';
 export class ReportController {
   constructor(private reportService: ReportService) {}
 
-  @Get()
-  async findReport(@Param(':id') id: string): Promise<ReportSheet> {
+  @Get(':id')
+  async findReport(@Param('id') id: string): Promise<ReportSheet> {
     return await this.reportService.findReportSheet({ where: { id } });
   }
 
-  async updateReport(@Body() data: ReportSheet): Promise<ReportSheet> {
-    const id = '';
+  @Patch(':id')
+  async updateReport(
+    @Body() data: ReportSheet,
+    @Param('id') id: string,
+  ): Promise<ReportSheet> {
     return await this.reportService.updateReportSheet({
       whereUniqueInput: { id },
       data,

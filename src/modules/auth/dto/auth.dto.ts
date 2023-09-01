@@ -1,4 +1,10 @@
-import { IsString, isNumber, IsNotEmpty, IsEmail } from 'class-validator';
+import {
+  IsString,
+  isNumber,
+  IsNotEmpty,
+  IsEmail,
+  IsEnum,
+} from 'class-validator';
 
 export class AuthResponseDTO {
   user: '';
@@ -26,6 +32,9 @@ export class RegisterAuthDTO {
 
   @IsString()
   department: string;
+
+  @IsString()
+  role: string;
 }
 
 export class LoginUserDTO {

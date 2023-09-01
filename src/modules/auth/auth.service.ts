@@ -51,8 +51,12 @@ export class AuthService {
     if (existingEmail) {
       throw new UnauthorizedException();
     }
+
     const newUser = await this.userService.createUser({
-      data: registerUserDTO,
+      data: {
+        ...registerUserDTO,
+        password: AuthHelpers.hash(registerUserDTO.password),
+      },
     });
 
     const payload = {
