@@ -38,10 +38,10 @@ export class UserService {
     return await this.prisma.user.delete({ where: params.where });
   }
 
-  async createUser(params: { data: Prisma.UserCreateInput }): Promise<User> {
+  async createUser(params): Promise<User> {
     const { data } = params;
     const newUser = await this.prisma.user.create({
-      data,
+      data: data as Prisma.UserCreateInput,
     });
     return newUser;
   }

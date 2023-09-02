@@ -7,283 +7,93 @@ generator client {
   provider = "prisma-client-js"
 }
 
+enum Role {
+  admin
+  student
+  teacher
+}
+
 model User {
-  id              String        @id @default(uuid()) @map("_id")
-  email           String        @unique
+  id              String   @id @default(auto()) @map("_id") @db.ObjectId
+  email           String   @unique
   firstName       String
   lastName        String
   middleName      String?
   class           String
   department      String?
   password        String
-  reportSheet     ReportSheet[]
-  admissionNumber String?
-  role            String
+  oldPassword     String?
+  reports         Report[]
+  admissionNumber String?  @unique
+  role            Role     @default(student)
 }
 
-model ReportSheet {
-  id        String     @id @default(uuid()) @map("_id")
-  slug      String     @unique
-  student   User       @relation(fields: [studentId], references: [id])
-  studentId String
-  subjects  Subjects[]
+model SchoolFee {
+  id     String          @id @default(auto()) @map("_id") @db.ObjectId
+  term   Int
+  year   Int
+  status SchoolFeeStatus @default(PENDING)
 }
 
-// Subjects
-model Subjects {
-  id                      String                @id @default(uuid()) @map("_id")
-  reportSheetId           String?
-  accounting              Accounting            @relation(fields: [accountingId], references: [id])
-  agriculture             Agriculture           @relation(fields: [agricultureId], references: [id])
-  animalHusbandry         AnimalHusbandry       @relation(fields: [animalHusbandryId], references: [id])
-  arabic                  Arabic                @relation(fields: [arabicId], references: [id])
-  biology                 Biology               @relation(fields: [biologyId], references: [id])
-  cateringCraftPractice   CateringCraftPractice @relation(fields: [cateringCraftPracticeId], references: [id])
-  chemistry               Chemistry             @relation(fields: [chemistryId], references: [id])
-  civicEducation          CivicEducation        @relation(fields: [civicEducationId], references: [id])
-  commerce                Commerce              @relation(fields: [commerceId], references: [id])
-  dataProcessing          DataProcessing        @relation(fields: [dataProcessingId], references: [id])
-  economics               Economics             @relation(fields: [economicsId], references: [id])
-  englishLanguage         EnglishLanguage       @relation(fields: [englishLanguageId], references: [id])
-  furtherMathematics      FurtherMathematics    @relation(fields: [furtherMathematicsId], references: [id])
-  geography               Geography             @relation(fields: [geographyId], references: [id])
-  government              Government            @relation(fields: [governmentId], references: [id])
-  irs                     IRS                   @relation(fields: [iRSId], references: [id])
-  literatureInEnglish     LiteratureInEnglish   @relation(fields: [literatureInEnglishId], references: [id])
-  marketing               Marketing             @relation(fields: [marketingId], references: [id])
-  mathematics             Mathematics           @relation(fields: [mathematicsId], references: [id])
-  physics                 Physics               @relation(fields: [physicsId], references: [id])
-  ReportSheet             ReportSheet?          @relation(fields: [reportSheetId], references: [id])
-  accountingId            String
-  agricultureId           String
-  animalHusbandryId       String
-  arabicId                String
-  biologyId               String
-  cateringCraftPracticeId String
-  chemistryId             String
-  civicEducationId        String
-  commerceId              String
-  dataProcessingId        String
-  economicsId             String
-  englishLanguageId       String
-  furtherMathematicsId    String
-  geographyId             String
-  governmentId            String
-  iRSId                   String
-  literatureInEnglishId   String
-  marketingId             String
-  mathematicsId           String
-  physicsId               String
+enum SchoolFeeStatus {
+  PENDING
+  UNPAID
+  FAILED
+  PAID
+}
+
+model Report {
+  id        String       @id @default(auto()) @map("_id") @db.ObjectId
+  teacherId User         @relation(fields: [studentId], references: [id])
+  subjects  Subject[]
+  status    ReportStatus @default(DRAFT)
+  studentId String       @db.ObjectId
+  term      Term
+}
+
+enum Term {
+  FIRST_TERM
+  SECOND_TERM
+  LAST_TERM
+}
+
+enum ReportStatus {
+  PUBLISHED
+  DRAFT
 }
 
 //-----------------------------------------------------
 // LIST OF ALL THE SUBJECTS FOR SENIOR SECONDARY SCHOOLS
 //----------------------------------------------------
-model Accounting {
-  id                        String     @id @default(uuid()) @map("_id")
+type Subject {
+  subject                   String
   continuousAssessmentScore Int
   examScore                 Int
   totalWeightedAverage      Int
   positionGrade             Int
   comment                   String
-  Subjects                  Subjects[]
 }
 
-model Agriculture {
-  id                        String     @id @default(uuid()) @map("_id")
-  continuousAssessmentScore Int
-  examScore                 Int
-  totalWeightedAverage      Int
-  positionGrade             Int
-  comment                   String
-  Subjects                  Subjects[]
-}
-
-model AnimalHusbandry {
-  id                        String     @id @default(uuid()) @map("_id")
-  continuousAssessmentScore Int
-  examScore                 Int
-  totalWeightedAverage      Int
-  positionGrade             Int
-  comment                   String
-  Subjects                  Subjects[]
-}
-
-model Arabic {
-  id                        String     @id @default(uuid()) @map("_id")
-  continuousAssessmentScore Int
-  examScore                 Int
-  totalWeightedAverage      Int
-  positionGrade             Int
-  comment                   String
-  Subjects                  Subjects[]
-}
-
-model Biology {
-  id                        String     @id @default(uuid()) @map("_id")
-  continuousAssessmentScore Int
-  examScore                 Int
-  totalWeightedAverage      Int
-  positionGrade             Int
-  comment                   String
-  Subjects                  Subjects[]
-}
-
-model CateringCraftPractice {
-  id                        String     @id @default(uuid()) @map("_id")
-  continuousAssessmentScore Int
-  examScore                 Int
-  totalWeightedAverage      Int
-  positionGrade             Int
-  comment                   String
-  Subjects                  Subjects[]
-}
-
-model Chemistry {
-  id                        String     @id @default(uuid()) @map("_id")
-  continuousAssessmentScore Int
-  examScore                 Int
-  totalWeightedAverage      Int
-  positionGrade             Int
-  comment                   String
-  Subjects                  Subjects[]
-}
-
-model CivicEducation {
-  id                        String     @id @default(uuid()) @map("_id")
-  continuousAssessmentScore Int
-  examScore                 Int
-  totalWeightedAverage      Int
-  positionGrade             Int
-  comment                   String
-  Subjects                  Subjects[]
-}
-
-model Commerce {
-  id                        String     @id @default(uuid()) @map("_id")
-  continuousAssessmentScore Int
-  examScore                 Int
-  totalWeightedAverage      Int
-  positionGrade             Int
-  comment                   String
-  Subjects                  Subjects[]
-}
-
-model DataProcessing {
-  id                        String     @id @default(uuid()) @map("_id")
-  continuousAssessmentScore Int
-  examScore                 Int
-  totalWeightedAverage      Int
-  positionGrade             Int
-  comment                   String
-  Subjects                  Subjects[]
-}
-
-model Economics {
-  id                        String     @id @default(uuid()) @map("_id")
-  continuousAssessmentScore Int
-  examScore                 Int
-  totalWeightedAverage      Int
-  positionGrade             Int
-  comment                   String
-  Subjects                  Subjects[]
-}
-
-model EnglishLanguage {
-  id                        String     @id @default(uuid()) @map("_id")
-  continuousAssessmentScore Int
-  examScore                 Int
-  totalWeightedAverage      Int
-  positionGrade             Int
-  comment                   String
-  Subjects                  Subjects[]
-}
-
-model FurtherMathematics {
-  id                        String     @id @default(uuid()) @map("_id")
-  continuousAssessmentScore Int
-  examScore                 Int
-  totalWeightedAverage      Int
-  positionGrade             Int
-  comment                   String
-  Subjects                  Subjects[]
-}
-
-model Geography {
-  id                        String     @id @default(uuid()) @map("_id")
-  continuousAssessmentScore Int
-  examScore                 Int
-  totalWeightedAverage      Int
-  positionGrade             Int
-  comment                   String
-  Subjects                  Subjects[]
-}
-
-model Government {
-  id                        String     @id @default(uuid()) @map("_id")
-  continuousAssessmentScore Int
-  examScore                 Int
-  totalWeightedAverage      Int
-  positionGrade             Int
-  comment                   String
-  Subjects                  Subjects[]
-}
-
-model IRS {
-  id                        String     @id @default(uuid()) @map("_id")
-  continuousAssessmentScore Int
-  examScore                 Int
-  totalWeightedAverage      Int
-  positionGrade             Int
-  comment                   String
-  Subjects                  Subjects[]
-}
-
-model LiteratureInEnglish {
-  id                        String     @id @default(uuid()) @map("_id")
-  continuousAssessmentScore Int
-  examScore                 Int
-  totalWeightedAverage      Int
-  positionGrade             Int
-  comment                   String
-  Subjects                  Subjects[]
-}
-
-model Marketing {
-  id                        String     @id @default(uuid()) @map("_id")
-  continuousAssessmentScore Int
-  examScore                 Int
-  totalWeightedAverage      Int
-  positionGrade             Int
-  comment                   String
-  Subjects                  Subjects[]
-}
-
-model Mathematics {
-  id                        String     @id @default(uuid()) @map("_id")
-  continuousAssessmentScore Int
-  examScore                 Int
-  totalWeightedAverage      Int
-  positionGrade             Int
-  comment                   String
-  Subjects                  Subjects[]
-}
-
-model Physics {
-  id                        String     @id @default(uuid()) @map("_id")
-  continuousAssessmentScore Int
-  examScore                 Int
-  totalWeightedAverage      Int
-  positionGrade             Int
-  comment                   String
-  Subjects                  Subjects[]
-}
-
-model YorubaLanguage {
-  id                        String @id @default(uuid()) @map("_id")
-  continuousAssessmentScore Int
-  examScore                 Int
-  totalWeightedAverage      Int
-  positionGrade             Int
-  comment                   String
+enum SubjectType {
+  Accounting
+  Agriculture
+  AnimalHusbandry
+  Arabic
+  Biology
+  CateringCraftPractice
+  Chemistry
+  CivicEducation
+  Commerce
+  DataProcessing
+  Economics
+  EnglishLanguage
+  FurtherMathematics
+  Geography
+  Government
+  IRS
+  LiteratureInEnglish
+  Marketing
+  Mathematics
+  Physics
+  YorubaLanguage
 }
