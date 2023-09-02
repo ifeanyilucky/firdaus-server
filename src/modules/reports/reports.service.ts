@@ -1,27 +1,33 @@
-import { ReportSheet, Prisma } from 'prisma/prisma-client';
+import { Report, Prisma } from 'prisma/prisma-client';
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
+import { Roles } from 'src/decorator/roles.decorator';
+import { Role } from 'src/shared/constants/global.constants';
 
 @Injectable()
 export class ReportService {
   constructor(private prisma: PrismaService) {}
 
-  async findReportSheet(params: {
-    where: Prisma.ReportSheetWhereUniqueInput;
-  }): Promise<ReportSheet> {
+  async findReport(params: {
+    where: Prisma.ReportWhereUniqueInput;
+  }): Promise<Report> {
     const { where } = params;
-    const reportSheet = await this.prisma.reportSheet.findUnique({ where });
-    return reportSheet;
+    const report = await this.prisma.report.findUnique({ where });
+    return report;
   }
 
-  async allReportSheets(params: {
-    where?: Prisma.ReportSheetWhereInput;
-    orderBy?: Prisma.ReportSheetOrderByWithRelationInput;
-    select?: Prisma.ReportSheetSelect;
-    skip: number;
-  }): Promise<ReportSheet[]> {
+  async createReport(params: { data: Prisma }): Promise<Report> {
+    const { data } = params;
+    return await this.prisma.report.create({ data });
+  }
+  async allReports(params: {
+    where?: Prisma.ReportWhereInput;
+    orderBy?: Prisma.ReportOrderByWithRelationInput;
+    select?: Prisma.ReportSelect;
+    skip?: number;
+  }): Promise<Report[]> {
     const { where, orderBy, select, skip } = params;
-    return await this.prisma.reportSheet.findMany({
+    return await this.prisma.report.findMany({
       where,
       orderBy,
       select,
@@ -29,20 +35,21 @@ export class ReportService {
     });
   }
 
-  async updateReportSheet(params: {
-    whereUniqueInput: Prisma.ReportSheetWhereUniqueInput;
-    data: ReportSheet;
-  }): Promise<ReportSheet> {
+  @Roles(Role.TEACHER)
+  async updateReport(params: {
+    whereUniqueInput: Prisma.ReportWhereUniqueInput;
+    data: Report;
+  }): Promise<Report> {
     const { whereUniqueInput, data } = params;
 
-    return await this.prisma.reportSheet.update({
+    return await this.prisma.report.update({
       where: whereUniqueInput,
       data,
     });
   }
-
-  async deleteReportSheet(params: { whereUniqueInput }) {
+  @Roles(Role.TEACHER)
+  async deleteReport(params: { whereUniqueInput }) {
     const { whereUniqueInput } = params;
-    return await this.prisma.reportSheet.delete({ where: whereUniqueInput });
+    return await this.prisma.report.delete({ where: whereUniqueInput });
   }
 }
