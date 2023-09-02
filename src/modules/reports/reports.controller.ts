@@ -9,7 +9,7 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { ReportService } from './reports.service';
-import { Report } from '@prisma/client';
+import { Prisma, Report } from '@prisma/client';
 import { AuthGuard } from 'src/guards/auth.guard';
 
 @Controller('reports')
@@ -30,14 +30,14 @@ export class ReportController {
 
   @UseGuards(AuthGuard)
   @Post('create')
-  async createReport(@Body() data: Report): Promise<Report> {
+  async createReport(@Body() data: Prisma.ReportCreateInput): Promise<Report> {
     return await this.reportService.createReport({ data });
   }
 
   @UseGuards(AuthGuard)
   @Patch(':id')
   async updateReport(
-    @Body() data: Report,
+    @Body() data: Prisma.ReportUpdateInput,
     @Param('id') id: string,
   ): Promise<Report> {
     return await this.reportService.updateReport({

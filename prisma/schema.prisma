@@ -7,6 +7,8 @@ generator client {
   provider = "prisma-client-js"
 }
 
+//---------------------------------------------------------------------------
+//------------------ User Model (Student, Teacher, Admin) -------------------
 enum Role {
   admin
   student
@@ -28,6 +30,8 @@ model User {
   role            Role     @default(student)
 }
 
+//---------------------------------------------------------------------------
+//---------------------- School Fee Model ---------------------------------
 model SchoolFee {
   id     String          @id @default(auto()) @map("_id") @db.ObjectId
   term   Int
@@ -42,9 +46,14 @@ enum SchoolFeeStatus {
   PAID
 }
 
+//---------------------------------------------------------------------------
+
+//---------------------------------------------------------------------------
+//--------------------  Report Sheet Model ---------------------------------
 model Report {
   id        String       @id @default(auto()) @map("_id") @db.ObjectId
-  teacherId User         @relation(fields: [studentId], references: [id])
+  teacher   User         @relation(fields: [teacherId], references: [id])
+  teacherId String       @db.ObjectId
   subjects  Subject[]
   status    ReportStatus @default(DRAFT)
   studentId String       @db.ObjectId
@@ -54,7 +63,7 @@ model Report {
 enum Term {
   FIRST_TERM
   SECOND_TERM
-  LAST_TERM
+  THIRD_TERM
 }
 
 enum ReportStatus {

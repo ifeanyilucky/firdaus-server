@@ -16,7 +16,9 @@ export class ReportService {
     return report;
   }
 
-  async createReport(params: { data: Prisma }): Promise<Report> {
+  async createReport(params: {
+    data: Prisma.ReportCreateInput;
+  }): Promise<Report> {
     const { data } = params;
     return await this.prisma.report.create({ data });
   }
@@ -38,7 +40,7 @@ export class ReportService {
   @Roles(Role.TEACHER)
   async updateReport(params: {
     whereUniqueInput: Prisma.ReportWhereUniqueInput;
-    data: Report;
+    data: Prisma.ReportUpdateInput;
   }): Promise<Report> {
     const { whereUniqueInput, data } = params;
 
@@ -47,8 +49,11 @@ export class ReportService {
       data,
     });
   }
+
   @Roles(Role.TEACHER)
-  async deleteReport(params: { whereUniqueInput }) {
+  async deleteReport(params: {
+    whereUniqueInput: Prisma.ReportWhereUniqueInput;
+  }) {
     const { whereUniqueInput } = params;
     return await this.prisma.report.delete({ where: whereUniqueInput });
   }
