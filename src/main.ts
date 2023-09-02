@@ -21,6 +21,7 @@ async function bootstrap() {
   app.useGlobalFilters(new InvalidFormExceptionFilter());
 
   const config = new DocumentBuilder()
+    .addBearerAuth()
     .setTitle('FIRDAUS API DOC V1')
     .setDescription('The Firdaus Gate API Documentation')
     .setVersion('1.0')

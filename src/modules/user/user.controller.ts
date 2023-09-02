@@ -8,10 +8,12 @@ import {
   Patch,
   UseGuards,
 } from '@nestjs/common';
+import { ApiTags, ApiBody, ApiResponse, ApiOperation } from '@nestjs/swagger';
 import { UserService } from './user.service';
 import { User } from '@prisma/client';
 import { AuthGuard } from 'src/guards/auth.guard';
 
+@ApiTags('users')
 @Controller('/users')
 export class UserController {
   // userService: UserServices

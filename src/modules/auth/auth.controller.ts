@@ -1,13 +1,18 @@
 import { Body, Controller, Response, Post } from '@nestjs/common';
-import { LoginUserDTO, RegisterAuthDTO } from './dto/auth.dto';
+import { AuthResponseDTO, LoginUserDTO, RegisterAuthDTO } from './dto/auth.dto';
 import { AuthService } from './auth.service';
+import { ApiTags, ApiBody, ApiResponse, ApiOperation } from '@nestjs/swagger';
 import { Response as IResponse } from 'express';
 import { JWT_EXPIRY_SECONDS } from 'src/shared/constants/global.constants';
 
+@ApiTags('auth')
 @Controller('auth')
 export class AuthController {
   constructor(private authService: AuthService) {}
   @Post('login')
+  @ApiOperation({ description: 'Login User' })
+  @ApiBody({ type: LoginUserDTO })
+  @ApiResponse({ type: AuthResponseDTO })
   async login(@Body() userDto: LoginUserDTO, @Response() res: IResponse) {
     const loginData = await this.authService.login(userDto);
 
