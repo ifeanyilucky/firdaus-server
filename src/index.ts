@@ -6,12 +6,14 @@ import logger from "morgan";
 import { connectDb } from "./db/connect";
 import { appConfig } from "./config/app";
 import "express-async-errors";
+import { ErrorHandler } from "./middlewares/errorhandler.middleware";
 dotenv.config();
 
 const app = express();
 // EJS
 app.set("views", "./views");
 app.set("view engine", "ejs");
+app.use(ErrorHandler);
 app.use(
   express.static(path.join(__dirname, "/public"), { maxAge: 31557600000 })
 );
