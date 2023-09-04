@@ -1,7 +1,7 @@
 import * as dotenv from "dotenv";
 dotenv.config(); // { path: `.env.${process.env.NODE_ENV}` }
 
-import { toBool } from "@base/utils/to-bool";
+import { toBool } from "../utils/to-bool";
 
 function getAppPath() {
   let currentDir = __dirname;
@@ -21,4 +21,5 @@ export const appConfig = {
   url: process.env.APP_URL,
   databaseUrl: process.env.DATABASE_URL,
   jwtSecret: process.env.JWT_SECRET,
+  jwtLifetime: "2d",
 };

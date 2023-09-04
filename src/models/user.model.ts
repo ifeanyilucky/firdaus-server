@@ -1,28 +1,29 @@
 import crypto from "crypto";
-import jwt, { Jwt, Secret } from "jsonwebtoken";
+import jwt, { Secret } from "jsonwebtoken";
 import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
-import { appConfig } from "@base/config/app";
+import { appConfig } from "../config/app";
 import { IReport, Report } from "./report.model";
 
 // ------------- Types----------------
 interface IUserMethods {
-  createJwt: () => Jwt;
+  createJwt: () => string;
 }
 type UserModel = mongoose.Model<IUser, {}, IUserMethods>;
 
 export interface IUser {
   firstName: string;
   lastName: string;
+  middleName?: string;
   email: string;
   avatar: string;
   password: string;
-  admissionNumber: number;
-  department: string;
+  admissionNumber?: number;
+  department?: string;
   class: string;
-  reports: IReport[];
+  reports?: IReport[];
   role: string;
-  tel: string;
+  tel?: string;
   passwordResetExpire: Date;
   passwordResetToken: string;
 }
@@ -39,11 +40,17 @@ const UserSchema = new mongoose.Schema<IUser, UserModel, IUserMethods>(
       required: [true, "Please provide last name"],
       maxLength: 50,
     },
+    middleName: {
+      type: String,
+      maxLength: 50,
+    },
     admissionNumber: {
       type: Number,
       required: function () {
+        // @ts-ignore
         return this.role === "student" ? true : false;
       },
+      unique: true,
     },
     email: {
       type: String,
@@ -76,7 +83,9 @@ const UserSchema = new mongoose.Schema<IUser, UserModel, IUserMethods>(
       minLength: 10,
       maxLength: 11,
       trim: true,
-      required: [true, "Please provide phone number"],
+      required: function (): boolean {
+        return this.role === "teacher" ? true : false;
+      },
     },
     passwordResetToken: String,
     passwordResetExpire: Date,
@@ -97,11 +106,11 @@ UserSchema.pre("save", async function (next) {
   next();
 });
 
-UserSchema.methods.createJWT = function () {
+UserSchema.methods.createJwt = function () {
   return jwt.sign(
     { userId: this._id, email: this.email, role: this.role },
     appConfig.jwtSecret as Secret,
-    { expiresIn: process.env.JWT_LIFETIME }
+    { expiresIn: appConfig.jwtLifetime }
   );
 };
 

@@ -1,3 +1,5 @@
+import * as Mongoose from "mongoose";
+
 enum ReportStatus {
   PUBLISHED,
   DRAFT,
@@ -22,3 +24,17 @@ export interface subject {
   positionGrade: Number;
   comment: String;
 }
+
+export const Report = new Mongoose.Schema({
+  teacher: String,
+  subjects: [],
+  status: {
+    type: String,
+    enum: ["PUBLISHED", "DRAFT"],
+  },
+  studentId: String,
+  term: {
+    type: String,
+    enum: ["FIRST_TERM", "SECOND_TERM", "THIRD_TERM"],
+  },
+});

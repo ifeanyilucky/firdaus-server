@@ -3,8 +3,8 @@ import { StatusCodes } from "http-status-codes";
 
 class BadRequestError extends CustomError {
   statusCode: number;
-  constructor(message: string, statusCode: number) {
-    super(message, statusCode);
+  constructor(message: string) {
+    super(message);
     this.statusCode = StatusCodes.BAD_REQUEST;
   }
 }

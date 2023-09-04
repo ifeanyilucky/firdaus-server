@@ -4,8 +4,8 @@ import { StatusCodes } from "http-status-codes";
 class NotFoundError extends CustomError {
   statusCode: number;
 
-  constructor(message: string, statusCode: number) {
-    super(message, statusCode);
+  constructor(message: string) {
+    super(message);
     this.statusCode = StatusCodes.NOT_FOUND;
   }
 }
