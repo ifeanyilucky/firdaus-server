@@ -10,11 +10,12 @@ enum Term {
   THIRD_TERM,
 }
 export interface IReport {
-  teacherId: String;
+  teacher: string;
   // subjects : Subject[],
-  status: ReportStatus;
-  studentId: String;
-  term: Term;
+  status: string;
+  studentId: string;
+  term: string;
+  subjects: subject[];
 }
 export interface subject {
   subject: String;
@@ -25,7 +26,9 @@ export interface subject {
   comment: String;
 }
 
-export const Report = new Mongoose.Schema({
+type ReportModel = Mongoose.Model<IReport, {}, {}>;
+
+export const ReportSchema = new Mongoose.Schema<IReport>({
   teacher: String,
   subjects: [],
   status: {
@@ -38,3 +41,8 @@ export const Report = new Mongoose.Schema({
     enum: ["FIRST_TERM", "SECOND_TERM", "THIRD_TERM"],
   },
 });
+
+export const Report = Mongoose.model<IReport, ReportModel>(
+  "report",
+  ReportSchema
+);
