@@ -3,6 +3,7 @@ import jwt, { Jwt, Secret } from "jsonwebtoken";
 import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
 import { appConfig } from "@base/config/app";
+import { IReport, Report } from "./report.model";
 
 // ------------- Types----------------
 interface IUserMethods {
@@ -16,6 +17,10 @@ export interface IUser {
   email: string;
   avatar: string;
   password: string;
+  admissionNumber: number;
+  department: string;
+  class: string;
+  reports: IReport[];
   role: string;
   tel: string;
   passwordResetExpire: Date;
@@ -34,6 +39,12 @@ const UserSchema = new mongoose.Schema<IUser, UserModel, IUserMethods>(
       required: [true, "Please provide last name"],
       maxLength: 50,
     },
+    admissionNumber: {
+      type: Number,
+      required: function () {
+        return this.role === "student" ? true : false;
+      },
+    },
     email: {
       type: String,
       required: [true, "Please provide email"],
@@ -46,6 +57,9 @@ const UserSchema = new mongoose.Schema<IUser, UserModel, IUserMethods>(
     avatar: {
       type: String,
     },
+    class: String,
+    department: String,
+
     password: {
       type: String,
       minLength: 6,
@@ -57,7 +71,6 @@ const UserSchema = new mongoose.Schema<IUser, UserModel, IUserMethods>(
       default: "student",
       required: [true, "Please specify role for this user"],
     },
-
     tel: {
       type: String,
       minLength: 10,
@@ -67,6 +80,9 @@ const UserSchema = new mongoose.Schema<IUser, UserModel, IUserMethods>(
     },
     passwordResetToken: String,
     passwordResetExpire: Date,
+    reports: {
+      type: [],
+    },
   },
 
   { timestamps: true }
