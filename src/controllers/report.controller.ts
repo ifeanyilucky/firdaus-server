@@ -9,7 +9,7 @@ export const getReports = async (req: Request, res: Response) => {
 
 export const deleteReport = async (req: Request, res: Response) => {
   const { id } = req.params;
-  const data = await ReportService.deleteReport(id);
+  const data = await ReportService.deleteReport({ id });
   res.status(StatusCodes.OK).json({ data, success: true });
 };
 
