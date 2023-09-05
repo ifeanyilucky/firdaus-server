@@ -26,4 +26,10 @@ export const ReportService = {
 
     return updatedReport;
   },
+
+  createReport: async function (params: { data: IReport }) {
+    const { data } = params;
+    const newReport = new Report({ ...data });
+    return await newReport.save();
+  },
 };
