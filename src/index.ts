@@ -25,8 +25,6 @@ app.use(
 app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ extended: true, limit: "50mb" }));
 app.use(logger("dev"));
-// app.use(NotFound)
-app.use(ErrorHandler);
 
 // Routes
 app.use("/api/v1", APIV1Route);
@@ -38,14 +36,14 @@ app.get("/", (req: Request, res: Response) => {
   );
 });
 
+app.use(NotFound);
+app.use(ErrorHandler);
 const swaggerDocument = YAML.load(path.join(__dirname, "./docs/swagger.yaml"));
-console.log(path.join(__dirname, "./docs/swagger.yaml"));
 app.use(
   "/api-docs",
   swaggerUi.serve,
   swaggerUi.setup(swaggerDocument, { explorer: true })
 );
-
 const PORT = process.env.PORT || 4000;
 const start = async (): Promise<void> => {
   try {
