@@ -9,7 +9,9 @@ import "express-async-errors";
 import { ErrorHandler } from "./middlewares/errorhandler.middleware";
 import swaggerJsDoc from "swagger-jsdoc";
 import swaggerUi from "swagger-ui-express";
-import APIV1Route from "./routes/auth.route";
+import APIV1Route from "./routes";
+import { NotFound } from "./middlewares/notfound.middleware";
+import YAML from "yamljs";
 
 dotenv.config();
 
@@ -23,6 +25,7 @@ app.use(
 app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ extended: true, limit: "50mb" }));
 app.use(logger("dev"));
+// app.use(NotFound)
 app.use(ErrorHandler);
 
 // Routes
@@ -30,39 +33,17 @@ app.use("/api/v1", APIV1Route);
 
 // app.use("/students", studentController.routes());
 app.get("/", (req: Request, res: Response) => {
-  res.send(`<div>Welcome to Firdaus API Server<br/> </div>`);
+  res.send(
+    `<div>Welcome to Firdaus API Server<br/> <a href="/api-docs">Click here 👽👻</a> to navigate to API documentation </div>`
+  );
 });
 
-const swaggerSpec = swaggerJsDoc({
-  definition: {
-    openapi: "3.1.0",
-    info: {
-      title: "Firdaus Gate school API",
-      version: "1.1.0",
-      description: "This is the API documentation for Firdaus Gate backend",
-      license: {
-        name: "MIT",
-        url: "https://spdx.org/licenses/MIT.html",
-      },
-      contact: {
-        name: "Ifeanyi Lucky",
-        url: "https://ifeanyilucky.engineer",
-        email: "hello@ifeanyilucky.engineer",
-      },
-    },
-    servers: [
-      {
-        url: "http://localhost:3000",
-      },
-    ],
-  },
-  apis: ["**/*.ts"],
-});
-
+const swaggerDocument = YAML.load(path.join(__dirname, "./docs/swagger.yaml"));
+console.log(path.join(__dirname, "./docs/swagger.yaml"));
 app.use(
-  "/api-doc",
+  "/api-docs",
   swaggerUi.serve,
-  swaggerUi.setup(swaggerSpec, { explorer: true })
+  swaggerUi.setup(swaggerDocument, { explorer: true })
 );
 
 const PORT = process.env.PORT || 4000;

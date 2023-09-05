@@ -29,15 +29,25 @@ export const AuthService = {
   login: async (params: {
     loginData: ILoginData;
   }): Promise<{ user: IUser; token: string }> => {
-    const { loginData } = params;
+    const {
+      loginData: { admissionNumber, password },
+    } = params;
+
+    if (!admissionNumber && !password)
+      throw new BadRequestError("Please provide admission number and password");
+
     const user = await User.findOne({
-      admissionNumber: loginData.admissionNumber,
+      admissionNumber: admissionNumber,
     });
 
     if (!user)
       throw new NotFoundError(
         "Cannot find student with this admission number!"
       );
+
+    const passwordIsCorrect = await user.comparePassword(password);
+    if (!passwordIsCorrect)
+      throw new BadRequestError("Sorry, that password isn't right");
 
     const token = user.createJwt();
     return { user: user, token };

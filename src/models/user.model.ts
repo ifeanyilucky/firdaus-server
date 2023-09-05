@@ -8,6 +8,8 @@ import { IReport, Report } from "./report.model";
 // ------------- Types----------------
 interface IUserMethods {
   createJwt: () => string;
+  comparePassword: (candidatePassword: string) => Promise<boolean>;
+  getResetPasswordToken: () => string;
 }
 type UserModel = mongoose.Model<IUser, {}, IUserMethods>;
 
@@ -16,9 +18,9 @@ export interface IUser {
   lastName: string;
   middleName?: string;
   email: string;
-  avatar: string;
+  avatar?: string;
   password: string;
-  admissionNumber?: number;
+  admissionNumber?: string;
   department?: string;
   class: string;
   reports?: IReport[];
@@ -116,7 +118,7 @@ UserSchema.methods.createJwt = function () {
 
 UserSchema.methods.comparePassword = async function (
   candidatePassword: string
-) {
+): Promise<boolean> {
   const isMatch = await bcrypt.compare(candidatePassword, this.password);
   return isMatch;
 };
