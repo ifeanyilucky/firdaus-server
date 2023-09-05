@@ -1,3 +1,4 @@
+import { BadRequestError } from "../error";
 import { User, IUser } from "../models/user.model";
 
 export const UserService = {
@@ -8,6 +9,13 @@ export const UserService = {
     return await User.findOneAndDelete({ id });
   },
   createUser: async (data: IUser) => {
+    if (data.role === "student") {
+      if (!data.admissionNumber) {
+        throw new BadRequestError("Please enter admission number");
+      } else if (!data.teacherId) {
+        throw new BadRequestError("Please enter teacher ID");
+      }
+    }
     return await User.create(data);
   },
   updateUser: async (id: string, data: IUser) => {

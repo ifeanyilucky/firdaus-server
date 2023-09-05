@@ -17,6 +17,7 @@ export interface IUser {
   firstName: string;
   lastName: string;
   middleName?: string;
+  teacherId?: string;
   email: string;
   avatar?: string;
   password: string;
@@ -47,11 +48,7 @@ const UserSchema = new mongoose.Schema<IUser, UserModel, IUserMethods>(
       maxLength: 50,
     },
     admissionNumber: {
-      type: Number,
-      required: function () {
-        // @ts-ignore
-        return this.role === "student" ? true : false;
-      },
+      type: String,
       unique: true,
     },
     email: {
@@ -68,7 +65,10 @@ const UserSchema = new mongoose.Schema<IUser, UserModel, IUserMethods>(
     },
     class: String,
     department: String,
-
+    teacherId: {
+      type: String,
+      unique: [true, "Teacher ID must be unique"],
+    },
     password: {
       type: String,
       minLength: 6,

@@ -8,7 +8,7 @@ interface IJWTPayload extends Jwt.JwtPayload {
   userId: string;
 }
 interface IExtendsRequest extends Request {
-  user: IUser;
+  user?: IUser;
 }
 export const auth = async (
   req: IExtendsRequest,
