@@ -67,7 +67,6 @@ const UserSchema = new mongoose.Schema<IUser, UserModel, IUserMethods>(
     department: String,
     teacherId: {
       type: String,
-      unique: [true, "Teacher ID must be unique"],
     },
     password: {
       type: String,

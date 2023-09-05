@@ -23,7 +23,6 @@ export const ReportService = {
       { ...data },
       { new: true }
     );
-
     return updatedReport;
   },
 
