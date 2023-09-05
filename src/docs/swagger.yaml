@@ -217,12 +217,12 @@ components:
       - password
       type: object
       properties:
-        email:
+        admissionNumber:
           type: string
         password:
           type: string
       example:
-        email: ifeanyilucky360@gmail.com
+        admissionNumber: FGMS190822332
         password: mbfibab2018
     login:
       title: login

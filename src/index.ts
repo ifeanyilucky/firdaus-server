@@ -12,6 +12,7 @@ import swaggerUi from "swagger-ui-express";
 import APIV1Route from "./routes";
 import { NotFound } from "./middlewares/notfound.middleware";
 import YAML from "yamljs";
+import cors from "cors";
 
 dotenv.config();
 
@@ -26,6 +27,7 @@ app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ extended: true, limit: "50mb" }));
 app.use(logger("dev"));
 
+app.use(cors());
 // Routes
 app.use("/api/v1", APIV1Route);
 
