@@ -1,30 +1,6 @@
 import * as Mongoose from "mongoose";
-
-enum ReportStatus {
-  PUBLISHED,
-  DRAFT,
-}
-enum Term {
-  FIRST_TERM,
-  SECOND_TERM,
-  THIRD_TERM,
-}
-export interface IReport {
-  teacher: string;
-  // subjects : Subject[],
-  status: string;
-  studentId: string;
-  term: string;
-  subjects: subject[];
-}
-export interface subject {
-  subject: String;
-  continuousAssessmentScore: Number;
-  examScore: Number;
-  totalWeightedAverage: Number;
-  positionGrade: Number;
-  comment: String;
-}
+import { CLASS } from "../interface/user.interface";
+import { IReport } from "../interface/report.interface";
 
 type ReportModel = Mongoose.Model<IReport, {}, {}>;
 
@@ -35,14 +11,24 @@ export const ReportSchema = new Mongoose.Schema<IReport>({
     type: String,
     enum: ["PUBLISHED", "DRAFT"],
   },
-  studentId: String,
+  studentId: {
+    type: Mongoose.Types.ObjectId,
+    ref: "User",
+    required: [true, "Please provide user"],
+  },
   term: {
     type: String,
+    required: [true, "Please enter term of student report"],
     enum: ["FIRST_TERM", "SECOND_TERM", "THIRD_TERM"],
+  },
+  class: {
+    type: String,
+    enum: ["JSS1", "JSS2", "JSS3", "SSS1", "SSS2", "SSS3"],
+    required: [true, "Please specify student class"],
   },
 });
 
 export const Report = Mongoose.model<IReport, ReportModel>(
-  "report",
+  "Report",
   ReportSchema
 );

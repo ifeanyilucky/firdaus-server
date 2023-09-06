@@ -1,11 +1,12 @@
 import { BadRequestError, NotFoundError } from "../error";
-import { IUser, User } from "../models/user.model";
+import { User } from "../models/user.model";
+import { IUser } from "../interface/user.interface";
 
-// Login service
 interface ILoginData {
   admissionNumber: number;
   password: string;
 }
+
 // Register service
 export const AuthService = {
   register: async (params: { data: IUser }) => {
@@ -26,6 +27,7 @@ export const AuthService = {
     return { user, token };
   },
 
+  // Login service
   login: async (params: {
     loginData: ILoginData;
   }): Promise<{ user: IUser; token: string }> => {

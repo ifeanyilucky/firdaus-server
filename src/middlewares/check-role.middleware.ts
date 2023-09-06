@@ -1,7 +1,7 @@
 import { StatusCodes } from "http-status-codes";
 import { Role } from "../config/app";
 import { NextFunction, Request, Response } from "express";
-import { IUser } from "../models/user.model";
+import { IUser } from "../interface/user.interface";
 
 interface IReqUser extends Request {
   user: IUser;

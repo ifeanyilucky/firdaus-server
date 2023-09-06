@@ -23,6 +23,7 @@ export const appConfig = {
   jwtSecret: process.env.JWT_SECRET,
   jwtLifetime: "2d",
   apiPrefix: "/api/v1",
+  host: process.env.HOST,
   corsAllowedOrigins: [process.env.HOST, process.env.DEV_HOST],
 };
 

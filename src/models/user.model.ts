@@ -1,9 +1,10 @@
 import crypto from "crypto";
 import jwt, { Secret } from "jsonwebtoken";
-import mongoose from "mongoose";
+import mongoose, { Mongoose } from "mongoose";
 import bcrypt from "bcryptjs";
 import { appConfig } from "../config/app";
-import { IReport, Report } from "./report.model";
+import { IReport } from "../interface/report.interface";
+import { IUser } from "../interface/user.interface";
 
 // ------------- Types----------------
 interface IUserMethods {
@@ -13,23 +14,6 @@ interface IUserMethods {
 }
 type UserModel = mongoose.Model<IUser, {}, IUserMethods>;
 
-export interface IUser {
-  firstName: string;
-  lastName: string;
-  middleName?: string;
-  teacherId?: string;
-  email: string;
-  avatar?: string;
-  password: string;
-  admissionNumber?: string;
-  department?: string;
-  class: string;
-  reports?: IReport[];
-  role: string;
-  tel?: string;
-  passwordResetExpire: Date;
-  passwordResetToken: string;
-}
 // -----------------------------------
 const UserSchema = new mongoose.Schema<IUser, UserModel, IUserMethods>(
   {
@@ -49,7 +33,7 @@ const UserSchema = new mongoose.Schema<IUser, UserModel, IUserMethods>(
     },
     admissionNumber: {
       type: String,
-      unique: true,
+      unique: [true, "Student with this admission number already existed"],
     },
     email: {
       type: String,
@@ -67,6 +51,14 @@ const UserSchema = new mongoose.Schema<IUser, UserModel, IUserMethods>(
     department: String,
     teacherId: {
       type: String,
+      unique: function (): boolean {
+        // @ts-ignore
+        return this.role === "teacher" ? true : false;
+      },
+      required: function (): boolean {
+        // @ts-ignore
+        return this.role === "teacher" ? true : false;
+      },
     },
     password: {
       type: String,
@@ -91,7 +83,7 @@ const UserSchema = new mongoose.Schema<IUser, UserModel, IUserMethods>(
     passwordResetToken: String,
     passwordResetExpire: Date,
     reports: {
-      type: [],
+      type: [{ type: mongoose.Types.ObjectId, ref: "Report" }],
     },
   },
 

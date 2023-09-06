@@ -2,7 +2,8 @@ import { NextFunction, Request, Response } from "express";
 import { UnauthenticatedError } from "../error";
 import Jwt from "jsonwebtoken";
 import { appConfig } from "../config/app";
-import { IUser, User } from "../models/user.model";
+import { User } from "../models/user.model";
+import { IUser } from "../interface/user.interface";
 
 interface IJWTPayload extends Jwt.JwtPayload {
   userId: string;

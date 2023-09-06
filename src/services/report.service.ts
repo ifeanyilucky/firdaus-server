@@ -1,4 +1,6 @@
-import { Report, IReport } from "../models/report.model";
+import { IReport, Term } from "../interface/report.interface";
+import { Report } from "../models/report.model";
+import { htmlToPdf } from "../utils/html-to-pdf";
 
 export const ReportService = {
   findReport: async function (params: { id: string }) {
@@ -26,9 +28,24 @@ export const ReportService = {
     return updatedReport;
   },
 
-  createReport: async function (params: { data: IReport }) {
-    const { data } = params;
-    const newReport = new Report({ ...data });
+  createReport: async function (params: { data: IReport; teacherId: string }) {
+    const newReport = new Report({
+      ...params.data,
+      teacher: params.teacherId,
+    });
     return await newReport.save();
+  },
+
+  downloadReport: async function (params: {
+    term: Term;
+    studentId: string;
+    class: string;
+  }) {
+    const { studentId, term } = params;
+    const report = await Report.findOne({
+      studentId,
+      term,
+      class: params.class,
+    });
   },
 };

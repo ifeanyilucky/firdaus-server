@@ -1,12 +1,13 @@
 import { BadRequestError } from "../error";
-import { User, IUser } from "../models/user.model";
+import { User } from "../models/user.model";
+import { IUser } from "../interface/user.interface";
 
 export const UserService = {
   getUser: async (id: string) => {
-    return await User.findOne({ id }).populate("-password");
+    return await User.findOne({ _id: id }).populate("-password");
   },
   deleteUser: async (id: string) => {
-    return await User.findOneAndDelete({ id });
+    return await User.findOneAndDelete({ _id: id });
   },
   createUser: async (data: IUser) => {
     if (data.role === "student") {
@@ -19,7 +20,7 @@ export const UserService = {
     return await User.create(data);
   },
   updateUser: async (id: string, data: IUser) => {
-    return await User.findOneAndUpdate({ id }, { ...data }, { new: true });
+    return await User.findOneAndUpdate({ _id: id }, { ...data }, { new: true });
   },
   getUsers: async () => {
     return await User.find({});
