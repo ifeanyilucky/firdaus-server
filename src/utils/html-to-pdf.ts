@@ -1,20 +1,15 @@
 import puppeteer from "puppeteer";
-import fs from "fs";
-import ejs from "ejs";
-import path from "path";
-import { Student } from "../types/User";
-import { appConfig } from "../config/app";
 
-export const htmlToPdf = async (user: Student) => {
-  const browser = await puppeteer.launch();
+export const htmlToPdf = async (html: string, outputPath: string) => {
+  const browser = await puppeteer.launch({ headless: "new" });
   const page = await browser.newPage();
 
-  await page.goto(`${appConfig.host}/api/students/report-card`, {
+  await page.setContent(html, {
     waitUntil: "networkidle0",
   });
 
   const pdf = await page.pdf({
-    path: path.join(__dirname, "../tmp/report-sheet.pdf"),
+    path: outputPath,
     printBackground: true,
     scale: 0.6,
     format: "a4",

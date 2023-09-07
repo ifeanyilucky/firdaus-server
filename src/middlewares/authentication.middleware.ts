@@ -27,7 +27,7 @@ export const auth = async (
   ) as IJWTPayload;
 
   try {
-    const userAccount = await User.findOne({ id: payload.userId as string });
+    const userAccount = await User.findOne({ _id: payload.userId as string });
 
     // @ts-ignore
     req.user = userAccount;

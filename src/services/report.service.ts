@@ -1,6 +1,10 @@
 import { IReport, Term } from "../interface/report.interface";
 import { Report } from "../models/report.model";
 import { htmlToPdf } from "../utils/html-to-pdf";
+import wkhtmltopdf from "wkhtmltopdf";
+import ejs from "ejs";
+import path from "path";
+import fs from "fs";
 
 export const ReportService = {
   findReport: async function (params: { id: string }) {
@@ -42,10 +46,29 @@ export const ReportService = {
     class: string;
   }) {
     const { studentId, term } = params;
-    const report = await Report.findOne({
-      studentId,
-      term,
-      class: params.class,
-    });
+    let htmlReport: string = "";
+    ejs.renderFile(
+      path.join(__dirname, "../views/report-card.ejs"),
+      {
+        first_name: "Ifeanyi",
+        last_name: "Lucky",
+        admission_no: "2924433",
+        current_class: "JSS3",
+      },
+      // @ts-ignore
+      (err: Error, html: string): any => {
+        if (err) {
+          console.log(err);
+        }
+        htmlReport = html;
+      }
+    );
+
+    // const report = await Report.findOne({
+    //   studentId,
+    //   term,
+    //   class: params.class,
+    // });
+    return htmlReport;
   },
 };

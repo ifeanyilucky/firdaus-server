@@ -2,7 +2,10 @@ import { StatusCodes } from "http-status-codes";
 import { Request, Response } from "express";
 import { ReportService } from "../services/report.service";
 import { IUserResponse } from "../interface/user.interface";
-import { IReport } from "../interface/report.interface";
+import { IReport, Term } from "../interface/report.interface";
+import { htmlToPdf } from "../utils/html-to-pdf";
+import path from "path";
+import fs from "fs";
 
 interface IUserRequest extends Request {
   user: IUserResponse;
@@ -43,19 +46,36 @@ export const createReport = async (req: IUserRequest, res: Response) => {
 };
 
 export const downloadReport = async (req: IUserRequest, res: Response) => {
-  const {
-    body: { term },
-    user: { _id },
-  } = req;
-
+  console.log(req.query);
+  console.log(req.user);
+  const term = "FIRST_TERM" as unknown as Term;
   const pdf = await ReportService.downloadReport({
-    studentId: _id,
+    studentId: "DDDFF",
     term,
-    class: req.user.class,
+    class: "JSS3",
   });
 
-  // @ts-ignore
-  res.set({ "Content-Type": "application/pdf", "Content-Length": pdf.length });
+  const reportPath = path.join(__dirname, "../tmp/report-sheet.pdf");
+  await htmlToPdf(pdf, reportPath)
+    .then(() => {
+      console.log("Pdf created successfully");
+    })
+    .catch((error) => {
+      console.log("ERror creating PDF", error);
+    });
 
-  res.status(StatusCodes.OK).send(pdf);
+  // res.set({ "Content-Type": "application/pdf", "Content-Length": pdf.length });
+  // res.status(StatusCodes.ACCEPTED).json({ success: true, data: file });
+  res.download(reportPath, "report.pdf", (err) => {
+    if (err) {
+      console.log(err);
+      res.status(500).send("Error generating the PDF");
+    } else {
+      fs.unlink(reportPath, (err) => {
+        if (err) {
+          console.log(err);
+        }
+      });
+    }
+  });
 };
