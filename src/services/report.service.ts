@@ -1,10 +1,12 @@
 import { IReport, Term } from "../interface/report.interface";
 import { Report } from "../models/report.model";
 import { htmlToPdf } from "../utils/html-to-pdf";
-import wkhtmltopdf from "wkhtmltopdf";
 import ejs from "ejs";
 import path from "path";
-import fs from "fs";
+import { CLASS, IUser, IUserResponse } from "../interface/user.interface";
+import { User } from "../models/user.model";
+import { BadRequestError, NotFoundError } from "../error";
+import { ROLES } from "../config/app";
 
 export const ReportService = {
   findReport: async function (params: { id: string }) {
@@ -39,21 +41,47 @@ export const ReportService = {
     });
     return await newReport.save();
   },
-
+  // GET AND CONVERT REPORT TO PDF AND SEND THE FILE PATH TO CONTROLLER
   downloadReport: async function (params: {
-    term: Term;
     studentId: string;
-    class: string;
+    selectedTerm: string;
+    selectedClass: string;
+    reportId: string;
+    user: IUserResponse;
   }) {
-    const { studentId, term } = params;
+    const { studentId, selectedTerm, selectedClass, reportId, user } = params;
+    const student = await User.findOne({ _id: studentId });
+
+    const report = await Report.findOne({
+      reportTerm: selectedTerm,
+      reportClass: selectedClass,
+      student: user._id,
+    })
+      .populate("student")
+      .populate("teacher");
+
+    console.log(report);
+    if (!report) {
+      throw new NotFoundError("You do not have a report for this session");
+    }
+    //     if(user.role === ROLES.TEACHER || user.role === ROLES.ADMIN){
+
+    //     }
+    //     else {
+    // throw new BadRequestError("")
+
+    //     }
+
     let htmlReport: string = "";
     ejs.renderFile(
       path.join(__dirname, "../views/report-card.ejs"),
       {
-        first_name: "Ifeanyi",
-        last_name: "Lucky",
-        admission_no: "2924433",
-        current_class: "JSS3",
+        first_name: user?.firstName,
+        last_name: user?.lastName,
+        middleName: user?.middleName,
+        admission_no: user?.admissionNumber,
+        current_class: user?.currentClass,
+        selectedClass,
       },
       // @ts-ignore
       (err: Error, html: string): any => {
@@ -64,11 +92,15 @@ export const ReportService = {
       }
     );
 
-    // const report = await Report.findOne({
-    //   studentId,
-    //   term,
-    //   class: params.class,
-    // });
-    return htmlReport;
+    const reportPath = path.join(__dirname, "../tmp/report-sheet.pdf");
+    // convert html to pdf
+    await htmlToPdf(htmlReport, reportPath)
+      .then(() => {
+        console.log("Pdf created successfully");
+      })
+      .catch((error) => {
+        console.log("ERror creating PDF", error);
+      });
+    return reportPath;
   },
 };

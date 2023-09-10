@@ -8,14 +8,8 @@ import { IUser } from "../interface/user.interface";
 interface IJWTPayload extends Jwt.JwtPayload {
   userId: string;
 }
-interface IExtendsRequest extends Request {
-  user?: IUser;
-}
-export const auth = async (
-  req: IExtendsRequest,
-  res: Response,
-  next: NextFunction
-) => {
+
+export const auth = async (req: Request, res: Response, next: NextFunction) => {
   const authHeader = req.headers.authorization;
   if (!authHeader || !authHeader?.startsWith("Bearer"))
     throw new UnauthenticatedError("Authentication is invalid");
@@ -29,8 +23,7 @@ export const auth = async (
   try {
     const userAccount = await User.findOne({ _id: payload.userId as string });
 
-    // @ts-ignore
-    req.user = userAccount;
+    req.user = userAccount as unknown as any;
     next();
   } catch (error) {
     throw new UnauthenticatedError("Not authorized to access this route");

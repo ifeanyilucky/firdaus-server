@@ -12,7 +12,6 @@ const router = express.Router();
 
 router.route("/").get(auth, getReports);
 router.route("/:id").get(auth, getReport);
-// @ts-ignore
 router.route("/download/:id").get(auth, downloadReport);
 router.route("/delete/:id").delete(deleteReport);
 router.route("/update/:id").patch(auth, updateReport);

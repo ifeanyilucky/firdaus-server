@@ -9,6 +9,11 @@ import fs from "fs";
 
 interface IUserRequest extends Request {
   user: IUserResponse;
+  query: {
+    selectedTerm: string;
+    selectedClass: string;
+    studentId: string;
+  };
 }
 export const getReports = async (req: Request, res: Response) => {
   const data = await ReportService.allReports();
@@ -46,32 +51,23 @@ export const createReport = async (req: IUserRequest, res: Response) => {
 };
 
 export const downloadReport = async (req: IUserRequest, res: Response) => {
-  console.log(req.query);
-  console.log(req.user);
-  const term = "FIRST_TERM" as unknown as Term;
-  const pdf = await ReportService.downloadReport({
-    studentId: "DDDFF",
-    term,
-    class: "JSS3",
+  const { selectedTerm, selectedClass, studentId } = req.query;
+  const { user } = req;
+
+  const response = await ReportService.downloadReport({
+    selectedTerm,
+    selectedClass,
+    studentId,
+    reportId: req.params.id,
+    user,
   });
 
-  const reportPath = path.join(__dirname, "../tmp/report-sheet.pdf");
-  await htmlToPdf(pdf, reportPath)
-    .then(() => {
-      console.log("Pdf created successfully");
-    })
-    .catch((error) => {
-      console.log("ERror creating PDF", error);
-    });
-
-  // res.set({ "Content-Type": "application/pdf", "Content-Length": pdf.length });
-  // res.status(StatusCodes.ACCEPTED).json({ success: true, data: file });
-  res.download(reportPath, "report.pdf", (err) => {
+  res.download(response, "report.pdf", (err) => {
     if (err) {
       console.log(err);
       res.status(500).send("Error generating the PDF");
     } else {
-      fs.unlink(reportPath, (err) => {
+      fs.unlink(response, (err) => {
         if (err) {
           console.log(err);
         }

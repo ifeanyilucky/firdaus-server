@@ -24,13 +24,13 @@ export const AuthService = {
     const newUser = new User({ ...data });
     const user = await newUser.save();
     const token = user.createJwt();
-    return { user, token };
+    return { data: user, token };
   },
 
   // Login service
   login: async (params: {
     loginData: ILoginData;
-  }): Promise<{ user: IUser; token: string }> => {
+  }): Promise<{ data: IUser; token: string }> => {
     const {
       loginData: { admissionNumber, password },
     } = params;
@@ -52,6 +52,13 @@ export const AuthService = {
       throw new BadRequestError("Sorry, that password isn't right");
 
     const token = user.createJwt();
-    return { user: user, token };
+    return { data: user, token };
+  },
+  account: async (params: { id: string }) => {
+    const { id } = params;
+    const user = await User.findOne({ _id: id });
+    if (!user) throw new NotFoundError("User with this ID does not exist");
+
+    return user;
   },
 };

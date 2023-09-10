@@ -11,7 +11,7 @@ export const htmlToPdf = async (html: string, outputPath: string) => {
   const pdf = await page.pdf({
     path: outputPath,
     printBackground: true,
-    scale: 0.6,
+    scale: 1,
     format: "a4",
   });
 

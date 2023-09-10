@@ -38,7 +38,7 @@ app.get("/", (req: Request, res: Response) => {
   );
 });
 
-// app.use(NotFound);
+app.use(NotFound);
 app.use(ErrorHandler);
 const swaggerDocument = YAML.load(path.join(__dirname, "./docs/swagger.yaml"));
 app.use(

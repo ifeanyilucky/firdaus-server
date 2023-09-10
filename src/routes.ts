@@ -12,6 +12,7 @@ import ReportRouter from "./routes/report.route";
 router.use("/auth", AuthRouter);
 router.use("/users", UserRouter);
 router.use("/reports", ReportRouter);
+
 // router.use('',AuthRouter)
 
 export default router;

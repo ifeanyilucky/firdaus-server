@@ -12,19 +12,39 @@ export enum Term {
 }
 
 export interface IReport {
-  teacher: string;
+  teacher: string | object | Mongoose.ObjectId;
   // subjects : Subject[],
   status: string;
-  studentId: Mongoose.ObjectId;
-  term: string;
-  subjects: subject[];
-  class: string | CLASS;
+  _id?: string;
+  student: string | object | Mongoose.ObjectId;
+  reportTerm: "FIRST_TERM" | "SECOND_TERM" | "THIRD_TERM";
+  performance: subject[];
+  reportClass: "JSS1" | "JSS2" | "JSS3" | "SSS1" | "SSS2" | "SSS3";
+  type: string;
+  classTeacherComment: string;
+  attendance: {
+    timesSchoolOpened: number;
+    timePresent: number;
+    timeAbsent: number;
+  };
+  personalTrait?: {
+    punctuality?: string;
+    neatness?: string;
+    leadership?: string;
+    trait?: string;
+    demeanor?: string;
+    honesty?: string;
+    respect?: string;
+    mixing?: string;
+    obedience?: string;
+    teamWork?: string;
+  };
 }
 export interface subject {
-  subject: String;
-  continuousAssessmentScore: Number;
-  examScore: Number;
-  totalWeightedAverage: Number;
-  positionGrade: Number;
-  comment: String;
+  subject: string;
+  continuousAssessmentScore: number;
+  examScore: number;
+  totalWeightedAverage: number;
+  positionGrade: string;
+  comment: string;
 }

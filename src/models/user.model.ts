@@ -7,7 +7,7 @@ import { IReport } from "../interface/report.interface";
 import { IUser } from "../interface/user.interface";
 
 // ------------- Types----------------
-interface IUserMethods {
+export interface IUserMethods {
   createJwt: () => string;
   comparePassword: (candidatePassword: string) => Promise<boolean>;
   getResetPasswordToken: () => string;
@@ -47,18 +47,12 @@ const UserSchema = new mongoose.Schema<IUser, UserModel, IUserMethods>(
     avatar: {
       type: String,
     },
-    class: String,
+    currentClass: String,
     department: String,
-    teacherId: {
+    teacherId: String,
+    gender: {
       type: String,
-      unique: function (): boolean {
-        // @ts-ignore
-        return this.role === "teacher" ? true : false;
-      },
-      required: function (): boolean {
-        // @ts-ignore
-        return this.role === "teacher" ? true : false;
-      },
+      enum: ["male", "female"],
     },
     password: {
       type: String,

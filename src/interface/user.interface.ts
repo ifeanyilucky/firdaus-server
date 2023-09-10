@@ -7,13 +7,14 @@ export interface IUser {
   middleName?: string;
   teacherId?: string;
   email: string;
+  role?: string;
   avatar?: string;
   password: string;
   admissionNumber?: string;
   department?: string;
-  class: CLASS;
+  currentClass: "JSS1" | "JSS2" | "JSS3" | "SSS1" | "SSS2" | "SSS3";
   reports?: IReport[];
-  role: string;
+  gender: string;
   tel?: string;
   passwordResetExpire: Date;
   passwordResetToken: string;
@@ -27,17 +28,7 @@ export enum CLASS {
   SSS2,
   SSS3,
 }
-export interface IUserResponse {
-  firstName: string;
-  lastName: string;
-  middleName: string;
-  admissionNumber: string;
-  email: string;
-  class: string;
-  department: string;
-  password: string;
-  role: string;
-  reports: [];
+export interface IUserResponse extends IUser {
   _id: string;
   createdAt: Date;
   updatedAt: Date;
