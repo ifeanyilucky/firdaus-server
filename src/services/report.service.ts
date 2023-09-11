@@ -50,7 +50,6 @@ export const ReportService = {
     user: IUserResponse;
   }) {
     const { studentId, selectedTerm, selectedClass, reportId, user } = params;
-    const student = await User.findOne({ _id: studentId });
 
     const report = await Report.findOne({
       reportTerm: selectedTerm,
@@ -64,25 +63,11 @@ export const ReportService = {
     if (!report) {
       throw new NotFoundError("You do not have a report for this session");
     }
-    //     if(user.role === ROLES.TEACHER || user.role === ROLES.ADMIN){
-
-    //     }
-    //     else {
-    // throw new BadRequestError("")
-
-    //     }
 
     let htmlReport: string = "";
     ejs.renderFile(
-      path.join(__dirname, "../views/report-card.ejs"),
-      {
-        first_name: user?.firstName,
-        last_name: user?.lastName,
-        middleName: user?.middleName,
-        admission_no: user?.admissionNumber,
-        current_class: user?.currentClass,
-        selectedClass,
-      },
+      path.join(__dirname, "https://res.cloudinary.com/thebrickng/raw/upload/v1694410765/firdaus/report-card_s3qeda.ejs"),
+      { report },
       // @ts-ignore
       (err: Error, html: string): any => {
         if (err) {
