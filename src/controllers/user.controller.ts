@@ -16,7 +16,11 @@ export const createUser = async (req: Request, res: Response) => {
 };
 
 export const getUsers = async (req: Request, res: Response) => {
-  const data = await UserService.getUsers();
+  const {
+    query: { role },
+  } = req;
+
+  const data = await UserService.getUsers({ role: role as string });
   res.status(StatusCodes.OK).send({ success: true, data });
 };
 
