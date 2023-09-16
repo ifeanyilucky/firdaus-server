@@ -10,6 +10,7 @@ export const register = async (req: Request, res: Response) => {
 
 export const login = async (req: Request, res: Response) => {
   const loginData = req.body;
+  console.log(loginData);
   const login = await AuthService.login({ loginData });
   res.status(StatusCodes.ACCEPTED).json({ data: login, success: true });
 };

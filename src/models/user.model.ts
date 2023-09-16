@@ -31,10 +31,7 @@ const UserSchema = new mongoose.Schema<IUser, UserModel, IUserMethods>(
       type: String,
       maxLength: 50,
     },
-    admissionNumber: {
-      type: String,
-      unique: [true, "Student with this admission number already existed"],
-    },
+    admissionNumber: String,
     email: {
       type: String,
       required: [true, "Please provide email"],

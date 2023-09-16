@@ -12,7 +12,8 @@ export const CheckRole: (
 ) => Promise<Response<any, Record<string, any>> | undefined> =
   (role: string) => async (req: Request, res: Response, next: NextFunction) => {
     const user = req.user;
-    if (user && req.user.role && req.user.role === role) {
+    console.log(user.role);
+    if (user && user.role === role) {
       next();
     } else {
       return res
