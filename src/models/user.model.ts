@@ -44,7 +44,7 @@ const UserSchema = new mongoose.Schema<IUser, UserModel, IUserMethods>(
     avatar: {
       type: String,
     },
-    currentClass: String,
+    currentClass: { type: String },
     department: String,
     teacherId: String,
     gender: {
@@ -82,6 +82,21 @@ const UserSchema = new mongoose.Schema<IUser, UserModel, IUserMethods>(
     },
     teacherSignature: {
       type: String,
+      required: function (): boolean {
+        // @ts-ignore
+        return this.role === "teacher" ? true : false;
+      },
+    },
+    subjectTaught: {
+      type: String,
+      required: function (): boolean {
+        // @ts-ignore
+        return this.role === "teacher" ? true : false;
+      },
+    },
+    classHandled: {
+      type: String,
+      enum: ["JSS1", "JSS2", "JSS3", "SSS1", "SSS2", "SSS3"],
       required: function (): boolean {
         // @ts-ignore
         return this.role === "teacher" ? true : false;

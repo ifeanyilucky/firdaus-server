@@ -43,8 +43,8 @@ export const UserService = {
   updateUser: async (id: string, data: IUser) => {
     return await User.findOneAndUpdate({ _id: id }, { ...data }, { new: true });
   },
-  getUsers: async (params: { role: string }) => {
-    const { role } = params;
-    return await User.find({ role });
+  getUsers: async (params: { role: string; teacherId: string }) => {
+    const { role, teacherId } = params;
+    return await User.find({ role, teacherId });
   },
 };

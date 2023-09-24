@@ -68,7 +68,7 @@ export const ReportService = {
 
     let htmlReport: string = "";
     ejs.renderFile(
-      path.join(__dirname, "../views/report.ejs"),
+      path.join(__dirname, "../views/report-card.ejs"),
       { report },
       // @ts-ignore
       (err: Error, html: string): any => {
@@ -86,7 +86,7 @@ export const ReportService = {
         console.log("Pdf created successfully");
       })
       .catch((error) => {
-        console.log("ERror creating PDF", error);
+        console.log("Error generating PDF", error);
       });
     return reportPath;
   },

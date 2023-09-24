@@ -1,5 +1,5 @@
 import { StatusCodes } from "http-status-codes";
-import { Request, Response } from "express";
+import { Request, Response, response } from "express";
 import { ReportService } from "../services/report.service";
 import { IUserResponse } from "../interface/user.interface";
 import { IReport, Term } from "../interface/report.interface";
@@ -7,14 +7,6 @@ import { htmlToPdf } from "../utils/html-to-pdf";
 import path from "path";
 import fs from "fs";
 
-interface IUserRequest extends Request {
-  user: IUserResponse;
-  query: {
-    selectedTerm: string;
-    selectedClass: string;
-    studentId: string;
-  };
-}
 export const getReports = async (req: Request, res: Response) => {
   const data = await ReportService.allReports();
   res.status(StatusCodes.OK).json({ data, success: true });
@@ -40,24 +32,24 @@ export const updateReport = async (req: Request, res: Response) => {
   res.status(StatusCodes.OK).json({ data, success: true });
 };
 
-export const createReport = async (req: IUserRequest, res: Response) => {
+export const createReport = async (req: Request, res: Response) => {
   const reportData: IReport = req.body;
-
-  const data = await ReportService.createReport({
-    data: reportData,
-    teacherId: req.user._id,
-  });
-  res.status(StatusCodes.OK).json({ data, success: true });
+  console.log(reportData);
+  // const data = await ReportService.createReport({
+  //   data: reportData,
+  //   teacherId: req.user._id,
+  // });
+  res.status(StatusCodes.OK).json({ data: "data", success: true });
 };
 
-export const downloadReport = async (req: IUserRequest, res: Response) => {
+export const downloadReport = async (req: Request, res: Response) => {
   const { selectedTerm, selectedClass, studentId } = req.query;
   const { user } = req;
 
   const response = await ReportService.downloadReport({
-    selectedTerm,
-    selectedClass,
-    studentId,
+    selectedTerm: selectedTerm as string,
+    selectedClass: selectedClass as string,
+    studentId: studentId as string,
     reportId: req.params.id,
     user,
   });

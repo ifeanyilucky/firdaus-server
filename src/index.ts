@@ -37,7 +37,6 @@ app.get("/", (req: Request, res: Response) => {
   );
 });
 
-app.use(NotFound);
 app.use(ErrorHandler);
 const swaggerDocument = YAML.load(path.join(__dirname, "./docs/swagger.yaml"));
 app.use(
@@ -45,6 +44,7 @@ app.use(
   swaggerUi.serve,
   swaggerUi.setup(swaggerDocument, { explorer: true })
 );
+app.use(NotFound);
 const PORT = process.env.PORT || 4000;
 const start = async (): Promise<void> => {
   try {

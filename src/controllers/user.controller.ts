@@ -20,7 +20,10 @@ export const getUsers = async (req: Request, res: Response) => {
     query: { role, teacherId },
   } = req;
 
-  const data = await UserService.getUsers({ role: role as string });
+  const data = await UserService.getUsers({
+    role: role as string,
+    teacherId: teacherId as string,
+  });
   res.status(StatusCodes.OK).send({ success: true, data });
 };
 

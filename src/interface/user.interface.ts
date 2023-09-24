@@ -20,6 +20,8 @@ export interface IUser {
   passwordResetToken: string;
   parentPhone?: string;
   teacherSignature?: string;
+  subjectTaught?: string;
+  classHandled?: "JSS1" | "JSS2" | "JSS3" | "SSS1" | "SSS2" | "SSS3";
 }
 
 export enum CLASS {

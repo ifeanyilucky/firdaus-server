@@ -13,7 +13,7 @@ import { CheckRole } from "../middlewares/check-role.middleware";
 import { ROLES, Role } from "../config/app";
 
 router.route("/").get(auth, getUsers);
-router.route("/:id").get(auth, getUser);
+router.route("/single/:id").get(auth, getUser);
 router.route("/edit/:id").patch(auth, updateUser);
 router
   .route("/create")
