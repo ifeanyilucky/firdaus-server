@@ -71,6 +71,22 @@ const UserSchema = new mongoose.Schema<IUser, UserModel, IUserMethods>(
         return this.role === "teacher" ? true : false;
       },
     },
+    parentPhone: {
+      type: String,
+      minLength: 10,
+      maxLength: 11,
+      trim: true,
+      required: function (): boolean {
+        return this.role === "student" ? true : false;
+      },
+    },
+    teacherSignature: {
+      type: String,
+      required: function (): boolean {
+        // @ts-ignore
+        return this.role === "teacher" ? true : false;
+      },
+    },
     passwordResetToken: String,
     passwordResetExpire: Date,
     reports: {

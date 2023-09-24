@@ -35,11 +35,13 @@ export const ReportService = {
   },
 
   createReport: async function (params: { data: IReport; teacherId: string }) {
-    const newReport = new Report({
-      ...params.data,
-      teacher: params.teacherId,
-    });
-    return await newReport.save();
+    // const newReport = new Report({
+    //   ...params.data,
+    //   teacher: params.teacherId,
+    // });
+    // return await newReport.save();
+    console.log(JSON.stringify(params));
+    return "nothing";
   },
   // GET AND CONVERT REPORT TO PDF AND SEND THE FILE PATH TO CONTROLLER
   downloadReport: async function (params: {
@@ -66,7 +68,7 @@ export const ReportService = {
 
     let htmlReport: string = "";
     ejs.renderFile(
-      path.join(__dirname, "https://res.cloudinary.com/thebrickng/raw/upload/v1694410765/firdaus/report-card_s3qeda.ejs"),
+      path.join(__dirname, "../views/report.ejs"),
       { report },
       // @ts-ignore
       (err: Error, html: string): any => {

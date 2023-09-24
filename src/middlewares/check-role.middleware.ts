@@ -4,16 +4,17 @@ import { NextFunction, Request, Response } from "express";
 import { IUser } from "../interface/user.interface";
 
 export const CheckRole: (
-  role: string
+  roles: string[]
 ) => (
   req: Request,
   res: Response,
   next: NextFunction
 ) => Promise<Response<any, Record<string, any>> | undefined> =
-  (role: string) => async (req: Request, res: Response, next: NextFunction) => {
+  (roles: string[]) =>
+  async (req: Request, res: Response, next: NextFunction) => {
     const user = req.user;
     console.log(user.role);
-    if (user && user.role === role) {
+    if (roles.length && roles.includes(user.role)) {
       next();
     } else {
       return res

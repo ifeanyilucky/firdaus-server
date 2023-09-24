@@ -15,7 +15,9 @@ import { ROLES, Role } from "../config/app";
 router.route("/").get(auth, getUsers);
 router.route("/:id").get(auth, getUser);
 router.route("/edit/:id").patch(auth, updateUser);
-router.route("/create").post(auth, CheckRole(ROLES.ADMIN), createUser);
+router
+  .route("/create")
+  .post(auth, CheckRole([ROLES.ADMIN, ROLES.TEACHER]), createUser);
 router.route("/delete/:id").delete(auth, deleteUser);
 
 export default router;

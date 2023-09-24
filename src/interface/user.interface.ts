@@ -7,7 +7,7 @@ export interface IUser {
   middleName?: string;
   teacherId?: string;
   email: string;
-  role?: string;
+  role: string;
   avatar?: string;
   password: string;
   admissionNumber?: string;
@@ -18,6 +18,8 @@ export interface IUser {
   tel?: string;
   passwordResetExpire: Date;
   passwordResetToken: string;
+  parentPhone?: string;
+  teacherSignature?: string;
 }
 
 export enum CLASS {

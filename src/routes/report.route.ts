@@ -14,7 +14,7 @@ import { ROLES } from "../config/app";
 const router = express.Router();
 
 router.route("/").get(auth, getReports);
-router.route("/create").get(auth, CheckRole(ROLES.TEACHER), createReport);
+router.route("/create").post(auth, CheckRole([ROLES.TEACHER]), createReport);
 router.route("/:id").get(auth, getReport);
 router.route("/download/:id").get(auth, downloadReport);
 router.route("/delete/:id").delete(deleteReport);

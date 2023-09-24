@@ -17,7 +17,7 @@ export const createUser = async (req: Request, res: Response) => {
 
 export const getUsers = async (req: Request, res: Response) => {
   const {
-    query: { role },
+    query: { role, teacherId },
   } = req;
 
   const data = await UserService.getUsers({ role: role as string });
