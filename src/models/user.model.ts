@@ -94,6 +94,14 @@ const UserSchema = new mongoose.Schema<IUser, UserModel, IUserMethods>(
         return this.role === "teacher" ? true : false;
       },
     },
+    classTeacher: {
+      type: mongoose.Types.ObjectId,
+      ref: "User",
+      required: function (): boolean {
+        // @ts-ignore
+        return this.role === "student" ? true : false;
+      },
+    },
     classHandled: {
       type: String,
       enum: ["JSS1", "JSS2", "JSS3", "SSS1", "SSS2", "SSS3"],

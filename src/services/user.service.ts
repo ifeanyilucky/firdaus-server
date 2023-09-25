@@ -1,6 +1,6 @@
 import { BadRequestError } from "../error";
 import { User } from "../models/user.model";
-import { IUser } from "../interface/user.interface";
+import { IUser, IUserResponse } from "../interface/user.interface";
 
 export const UserService = {
   getUser: async (id: string) => {
@@ -45,6 +45,9 @@ export const UserService = {
   },
   getUsers: async (params: { role: string; teacherId: string }) => {
     const { role, teacherId } = params;
-    return await User.find({ role, teacherId });
+    if (teacherId) {
+      return await User.find({ role, classTeacher: teacherId });
+    }
+    return await User.find({ role });
   },
 };

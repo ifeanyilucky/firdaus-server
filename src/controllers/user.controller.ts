@@ -10,7 +10,7 @@ export const getUser = async (req: Request, res: Response) => {
   res.status(StatusCodes.OK).send({ success: true, data });
 };
 export const createUser = async (req: Request, res: Response) => {
-  const { body } = req;
+  const { body, user } = req;
   const data = await UserService.createUser(body);
   res.status(StatusCodes.OK).send({ success: true, data });
 };

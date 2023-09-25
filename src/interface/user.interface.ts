@@ -22,6 +22,7 @@ export interface IUser {
   teacherSignature?: string;
   subjectTaught?: string;
   classHandled?: "JSS1" | "JSS2" | "JSS3" | "SSS1" | "SSS2" | "SSS3";
+  classTeacher?: string;
 }
 
 export enum CLASS {
