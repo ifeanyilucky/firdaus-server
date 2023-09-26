@@ -36,14 +36,10 @@ export const ReportService = {
 
   createReport: async function (params: { data: IReport; teacherId: string }) {
     const { data, teacherId } = params;
-    let section = "";
-    if (JUNIOR_SECTION.includes(data.classSection)) section = "junior";
-    if (SENIOR_SECTION.includes(data.classSection)) section = "senior";
 
     const newReport = new Report({
       ...data,
       teacher: teacherId,
-      classSection: section,
     });
     return await newReport.save();
   },

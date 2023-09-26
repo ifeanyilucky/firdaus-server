@@ -23,6 +23,7 @@ export interface IUser {
   subjectTaught?: string;
   classHandled?: "JSS1" | "JSS2" | "JSS3" | "SSS1" | "SSS2" | "SSS3";
   classTeacher?: string;
+  teacherType: string;
 }
 
 export enum CLASS {

@@ -82,12 +82,19 @@ const UserSchema = new mongoose.Schema<IUser, UserModel, IUserMethods>(
     },
     teacherSignature: {
       type: String,
+      // required: function (): boolean {
+      //   // @ts-ignore
+      //   return this.role === "teacher" ? true : false;
+      // },
+    },
+    subjectTaught: {
+      type: String,
       required: function (): boolean {
         // @ts-ignore
         return this.role === "teacher" ? true : false;
       },
     },
-    subjectTaught: {
+    teacherType: {
       type: String,
       required: function (): boolean {
         // @ts-ignore
