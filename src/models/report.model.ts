@@ -24,6 +24,7 @@ export const ReportSchema = new Mongoose.Schema<IReport>({
   status: {
     type: String,
     enum: ["PUBLISHED", "DRAFT"],
+    default: "DRAFT",
   },
   student: {
     type: Mongoose.Types.ObjectId,
@@ -40,10 +41,10 @@ export const ReportSchema = new Mongoose.Schema<IReport>({
     enum: ["JSS1", "JSS2", "JSS3", "SSS1", "SSS2", "SSS3"],
     required: [true, "Please specify student class"],
   },
-  type: {
+  classSection: {
     type: String,
     enum: ["junior", "senior"],
-    required: [true, "Report type is required"],
+    required: [true, "Class section is required"],
   },
 });
 

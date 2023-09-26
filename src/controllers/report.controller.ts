@@ -34,12 +34,12 @@ export const updateReport = async (req: Request, res: Response) => {
 
 export const createReport = async (req: Request, res: Response) => {
   const reportData: IReport = req.body;
-  console.log(reportData);
-  // const data = await ReportService.createReport({
-  //   data: reportData,
-  //   teacherId: req.user._id,
-  // });
-  res.status(StatusCodes.OK).json({ data: "data", success: true });
+
+  const data = await ReportService.createReport({
+    data: reportData,
+    teacherId: req.user._id,
+  });
+  res.status(StatusCodes.OK).json({ data, success: true });
 };
 
 export const downloadReport = async (req: Request, res: Response) => {

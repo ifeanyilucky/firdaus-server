@@ -6,7 +6,7 @@ import path from "path";
 import { CLASS, IUser, IUserResponse } from "../interface/user.interface";
 import { User } from "../models/user.model";
 import { BadRequestError, NotFoundError } from "../error";
-import { ROLES } from "../config/app";
+import { JUNIOR_SECTION, ROLES, SENIOR_SECTION } from "../config/app";
 
 export const ReportService = {
   findReport: async function (params: { id: string }) {
@@ -35,13 +35,17 @@ export const ReportService = {
   },
 
   createReport: async function (params: { data: IReport; teacherId: string }) {
-    // const newReport = new Report({
-    //   ...params.data,
-    //   teacher: params.teacherId,
-    // });
-    // return await newReport.save();
-    console.log(JSON.stringify(params));
-    return "nothing";
+    const { data, teacherId } = params;
+    let section = "";
+    if (JUNIOR_SECTION.includes(data.classSection)) section = "junior";
+    if (SENIOR_SECTION.includes(data.classSection)) section = "senior";
+
+    const newReport = new Report({
+      ...data,
+      teacher: teacherId,
+      classSection: section,
+    });
+    return await newReport.save();
   },
   // GET AND CONVERT REPORT TO PDF AND SEND THE FILE PATH TO CONTROLLER
   downloadReport: async function (params: {

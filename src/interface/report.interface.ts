@@ -20,7 +20,7 @@ export interface IReport {
   reportTerm: "FIRST_TERM" | "SECOND_TERM" | "THIRD_TERM";
   performance: subject[];
   reportClass: "JSS1" | "JSS2" | "JSS3" | "SSS1" | "SSS2" | "SSS3";
-  type: string;
+  classSection: string;
   classTeacherComment: string;
   attendance: {
     timesSchoolOpened: number;

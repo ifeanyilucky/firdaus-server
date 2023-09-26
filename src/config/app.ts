@@ -39,5 +39,8 @@ export const ROLES = {
   TEACHER: "teacher",
 };
 
+export const JUNIOR_SECTION = ["JSS1", "JSS2", "JSS3"];
+export const SENIOR_SECTION = ["SSS1", "SSS2", "SSS3"];
+
 //Regex
 export const PHONE_REGEX = /^[0-9\s+-.()]+$/;
