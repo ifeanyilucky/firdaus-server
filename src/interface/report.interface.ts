@@ -11,7 +11,7 @@ export enum Term {
   THIRD_TERM,
 }
 
-export interface IReport {
+export interface IReport extends JuniorReport {
   teacher: string | object | Mongoose.ObjectId;
   // subjects : Subject[],
   status: string;
@@ -40,11 +40,30 @@ export interface IReport {
     teamWork?: string;
   };
 }
-export interface subject {
+export interface subject extends juniorSubject {
   subject: string;
   continuousAssessmentScore: number;
   examScore: number;
   totalWeightedAverage: number;
   positionGrade: string;
-  comment: string;
+  comment?: string;
+}
+
+export interface juniorSubject {
+  subject: string;
+  sumTestScores: string;
+}
+
+export interface JuniorReport {
+  attendance: object;
+  conduct: object;
+  physicalHealth: object;
+  position: string;
+  sports: object;
+  clubs: object;
+  classTeacherSignature?: string;
+  principalComment: string;
+  classTeacherComment: string;
+  schoolReopens: string;
+  numberOfStudents: string;
 }

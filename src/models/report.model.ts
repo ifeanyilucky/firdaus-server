@@ -5,14 +5,21 @@ import { IReport } from "../interface/report.interface";
 type ReportModel = Mongoose.Model<IReport, {}, {}>;
 
 export const ReportSchema = new Mongoose.Schema<IReport>({
+  performance: [],
+  attendance: {
+    type: Object,
+  },
+  sports: Object,
+  clubs: Object,
+  position: String,
+  physicalHealth: Object,
+  schoolReopens: String,
+  numberOfStudents: String,
+  conduct: Object,
   teacher: {
     type: Mongoose.Types.ObjectId,
     ref: "User",
     required: [true, "Please assign class teacher to this report"],
-  },
-  performance: [],
-  attendance: {
-    type: Object,
   },
   personalTrait: {
     type: Object,
@@ -20,6 +27,7 @@ export const ReportSchema = new Mongoose.Schema<IReport>({
   classTeacherComment: {
     type: String,
   },
+  principalComment: String,
 
   status: {
     type: String,

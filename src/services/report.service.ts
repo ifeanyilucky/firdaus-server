@@ -36,7 +36,7 @@ export const ReportService = {
 
   createReport: async function (params: { data: IReport; teacherId: string }) {
     const { data, teacherId } = params;
-
+    // if(data.r)
     const newReport = new Report({
       ...data,
       teacher: teacherId,
