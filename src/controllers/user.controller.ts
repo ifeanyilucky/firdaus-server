@@ -21,8 +21,9 @@ export const getUsers = async (req: Request, res: Response) => {
   } = req;
 
   const data = await UserService.getUsers({
-    role: role as string,
-    teacherId: teacherId as string,
+    query: {
+      ...req.query,
+    },
   });
   res.status(StatusCodes.OK).send({ success: true, data });
 };

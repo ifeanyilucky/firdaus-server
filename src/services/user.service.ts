@@ -43,11 +43,32 @@ export const UserService = {
   updateUser: async (id: string, data: IUser) => {
     return await User.findOneAndUpdate({ _id: id }, { ...data }, { new: true });
   },
-  getUsers: async (params: { role: string; teacherId: string }) => {
-    const { role, teacherId } = params;
+  getUsers: async (params: { query: IUserResponse | any }) => {
+    const { role, teacherId, _id, department, classHandled, currentClass } =
+      params.query;
+    const queryObject: IUserResponse | any = {};
+
     if (teacherId) {
-      return await User.find({ role, classTeacher: teacherId });
+      queryObject.teacherId = teacherId;
     }
-    return await User.find({ role });
+    if (role) {
+      queryObject.role = role;
+    }
+    if (_id) {
+      queryObject._id = _id;
+    }
+    if (teacherId) {
+      queryObject.teacherId = teacherId;
+    }
+    if (department) {
+      queryObject.department = department;
+    }
+    if (classHandled) {
+      queryObject.classHandled = classHandled;
+    }
+    if (currentClass) {
+      queryObject.currentClass = currentClass;
+    }
+    return await User.find(queryObject);
   },
 };

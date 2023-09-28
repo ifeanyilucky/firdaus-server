@@ -8,7 +8,7 @@ import path from "path";
 import fs from "fs";
 
 export const getReports = async (req: Request, res: Response) => {
-  const data = await ReportService.allReports();
+  const data = await ReportService.allReports(req.query as any);
   res.status(StatusCodes.OK).json({ data, success: true });
 };
 
@@ -19,7 +19,8 @@ export const deleteReport = async (req: Request, res: Response) => {
 };
 
 export const getReport = async (req: Request, res: Response) => {
-  const data = await ReportService.allReports();
+  const id = req.query.id as string;
+  const data = await ReportService.findReport({ id });
   res.status(StatusCodes.OK).json({ data, success: true });
 };
 
@@ -43,13 +44,14 @@ export const createReport = async (req: Request, res: Response) => {
 };
 
 export const downloadReport = async (req: Request, res: Response) => {
-  const { selectedTerm, selectedClass, studentId } = req.query;
+  const { selectedTerm, selectedClass, student, classSection } = req.query;
   const { user } = req;
 
   const response = await ReportService.downloadReport({
     selectedTerm: selectedTerm as string,
     selectedClass: selectedClass as string,
-    studentId: studentId as string,
+    student: student as string,
+    classSection: classSection as string,
     reportId: req.params.id,
     user,
   });

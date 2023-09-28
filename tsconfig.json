@@ -1,29 +1,38 @@
 {
   "compilerOptions": {
-      "module": "commonjs",
-      "esModuleInterop": true,
-      "resolveJsonModule": true,
-      "target": "ES5",
-      "lib": ["ES6"],
-      "noImplicitAny": true,
-      "moduleResolution": "node",
-      "skipLibCheck": true,
-      "strict": true,
-      "sourceMap": true,
-      "rootDir": "./src",
-      "outDir": "dist",
-      "baseUrl": ".",
-      "paths": {
-        "baseUrl": ["src"],
-          "*": [
-              "node_modules/*"
-          ]
-         
-      },
-      "emitDecoratorMetadata": true,
-      "experimentalDecorators": true
+    "module": "commonjs",
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "target": "ES5",
+    "lib": [
+      "ES6"
+    ],
+    "noImplicitAny": true,
+    "moduleResolution": "node",
+    "skipLibCheck": true,
+    "strict": true,
+    "sourceMap": true,
+    "rootDir": "./src",
+    "outDir": "dist",
+    "baseUrl": ".",
+    "paths": {
+      "baseUrl": [
+        "./src"
+      ],
+      "*": [
+        "node_modules/*"
+      ],
+      "@controllers/*": [
+        "controllers/*"
+      ],
+      "@services": [
+        "services/*"
+      ]
+    },
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true
   },
   "include": [
-      "src/**/*"
+    "src/**/*"
   ]
 }
