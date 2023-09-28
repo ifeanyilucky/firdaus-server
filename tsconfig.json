@@ -23,10 +23,13 @@
         "node_modules/*"
       ],
       "@controllers/*": [
-        "controllers/*"
+        "src/controllers/*"
       ],
       "@services": [
-        "services/*"
+        "src/services/*"
+      ],
+      "@routes": [
+        "src/routes/*"
       ]
     },
     "emitDecoratorMetadata": true,
