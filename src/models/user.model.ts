@@ -45,7 +45,6 @@ const UserSchema = new mongoose.Schema<IUser, UserModel, IUserMethods>(
       type: String,
     },
     currentClass: { type: String },
-    department: String,
     teacherId: String,
     gender: {
       type: String,
@@ -116,6 +115,10 @@ const UserSchema = new mongoose.Schema<IUser, UserModel, IUserMethods>(
         // @ts-ignore
         return this.role === "teacher" ? true : false;
       },
+    },
+    department: {
+      type: String,
+      enum: ["science", "commercial", "art"],
     },
     passwordResetToken: String,
     passwordResetExpire: Date,

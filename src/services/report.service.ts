@@ -122,7 +122,7 @@ export const ReportService = {
       );
     } else {
       ejs.renderFile(
-        path.join(__dirname, "../views/report-card.ejs"),
+        path.join(__dirname, "../views/senior-report.ejs"),
         { report },
         // @ts-ignore
         (err: Error, html: string): any => {

@@ -17,6 +17,8 @@ export interface IReport extends JuniorReport {
   status: string;
   _id?: string;
   student: string | object | Mongoose.ObjectId;
+  affectiveDomain: object;
+  personalSkills: object;
   reportTerm: "FIRST_TERM" | "SECOND_TERM" | "THIRD_TERM";
   performance: subject[];
   reportClass: "JSS1" | "JSS2" | "JSS3" | "SSS1" | "SSS2" | "SSS3";

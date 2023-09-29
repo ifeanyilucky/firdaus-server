@@ -11,7 +11,6 @@ export interface IUser {
   avatar?: string;
   password: string;
   admissionNumber?: string;
-  department?: string;
   currentClass: "JSS1" | "JSS2" | "JSS3" | "SSS1" | "SSS2" | "SSS3";
   reports?: IReport[];
   gender: string;
@@ -24,6 +23,7 @@ export interface IUser {
   classHandled?: "JSS1" | "JSS2" | "JSS3" | "SSS1" | "SSS2" | "SSS3";
   classTeacher?: string;
   teacherType: string;
+  department?: "science" | "department" | "art";
 }
 
 export enum CLASS {

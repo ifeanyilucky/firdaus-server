@@ -44,21 +44,18 @@ export const UserService = {
     return await User.findOneAndUpdate({ _id: id }, { ...data }, { new: true });
   },
   getUsers: async (params: { query: IUserResponse | any }) => {
-    const { role, teacherId, _id, department, classHandled, currentClass } =
+    const { role, _id, department, classHandled, currentClass, classTeacher } =
       params.query;
     const queryObject: IUserResponse | any = {};
 
-    if (teacherId) {
-      queryObject.teacherId = teacherId;
-    }
     if (role) {
       queryObject.role = role;
     }
     if (_id) {
       queryObject._id = _id;
     }
-    if (teacherId) {
-      queryObject.teacherId = teacherId;
+    if (classTeacher) {
+      queryObject.classTeacher = classTeacher;
     }
     if (department) {
       queryObject.department = department;
