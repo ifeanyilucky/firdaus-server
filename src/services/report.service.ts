@@ -106,12 +106,44 @@ export const ReportService = {
     if (!report) {
       throw new NotFoundError("You do not have a report for this session");
     }
-
+    const { personalSkills, affectiveDomain, personalTrait } = report;
     let htmlReport: string = "";
     if (report.classSection === "junior") {
       ejs.renderFile(
         path.join(__dirname, "../views/junior-report.ejs"),
-        { report },
+        {
+          report: {
+            performance: report.performance,
+            personalTrait: {
+              punctuality: personalTrait?.punctuality || "",
+              neatness: personalTrait?.neatness || "",
+              leadership: personalTrait?.leadership || "",
+              trait: personalTrait?.trait || "",
+              demeanor: personalTrait?.demeanor || "",
+              respect: personalTrait?.respect || "",
+              honesty: personalTrait?.honesty || "",
+              mixing: personalTrait?.mixing || "",
+              obedience: personalTrait?.obedience || "",
+              teamWork: personalTrait?.teamWork || "",
+            },
+            affectiveDomain: {
+              punctuality: affectiveDomain?.punctuality || "",
+              politeness: affectiveDomain?.politeness || "",
+              attentiveness: affectiveDomain?.attentiveness || "",
+              neatness: affectiveDomain?.neatness || "",
+              initiative: affectiveDomain?.initiative || "",
+              perseverance: affectiveDomain?.perseverance || "",
+              teamWork: affectiveDomain?.teamWork,
+              leadershipSpirit: affectiveDomain?.leadershipSpirit || "",
+              relationshipWithTeachers:
+                affectiveDomain?.relationshipWithTeachers || "",
+              attitudeToWork: affectiveDomain?.attitudeToWork || "",
+              health: affectiveDomain?.health,
+              emotionalStability: affectiveDomain?.emotionalStability || "",
+              innovative: affectiveDomain?.innovative || "",
+            },
+          },
+        },
         // @ts-ignore
         (err: Error, html: string): any => {
           if (err) {

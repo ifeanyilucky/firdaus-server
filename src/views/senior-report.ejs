@@ -178,7 +178,9 @@
         <!-- REPORT HEADER -->
         <p class="MsoNormal" style="margin-top:0in;margin-right:0in;margin-bottom:2.0pt;
 margin-left:-22.5pt;line-height:normal"><b><i><span style="font-size:4.0pt;
-font-family:Georgia;"><img width="748" height="157" src="/image001.jpg"></span></i></b></p>
+font-family:Georgia;"><img width="748" height="157"
+                            src="https://res.cloudinary.com/duvwweuhj/image/upload/v1696063954/Firdaus/report-header_j5twsx.jpg"></span></i></b>
+        </p>
 
         <table class="MsoNormalTable" border="1" cellspacing="0" cellpadding="0"
             style="border-collapse:collapse;border:none">
@@ -198,9 +200,11 @@ font-family:Georgia;"><img width="748" height="157" src="/image001.jpg"></span><
                     </td>
                     <td width="282" valign="top" style="width:211.5pt;border:solid white 1.0pt;
   border-left:none;padding:0in 5.4pt 0in 5.4pt">
-                        <p class="MsoNormal" style="margin-bottom:0in;line-height:normal"><b><i><u><span>FIRST TERM
-                                            REPORT
-                                            SHEET</span></u></i></b>
+                        <p class="MsoNormal" style="margin-bottom:0in;line-height:normal"><b><i><u><span>
+                                            <%=report.reportTerm%>
+                                                REPORT
+                                                SHEET
+                                        </span></u></i></b>
                         </p>
                     </td>
                     <td width="144" valign="top" style="width:1.5in;border-top:solid white 1.0pt;
@@ -212,7 +216,9 @@ font-family:Georgia;"><img width="748" height="157" src="/image001.jpg"></span><
                     <td width="79" valign="top" style="width:59.4pt;border:solid windowtext 1.0pt;
   border-left:none;padding:0in 5.4pt 0in 5.4pt">
                         <p class="MsoNormal" style="margin-bottom:0in;line-height:normal">
-                            <b><i><span>FGMS23443</span></i></b>
+                            <b><i><span>
+                                        <%=report.student.admissionNumber%>
+                                    </span></i></b>
                         </p>
                     </td>
                 </tr>
@@ -232,7 +238,11 @@ font-family:Georgia;"><img width="748" height="157" src="/image001.jpg"></span><
   border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid white 1.0pt;
   padding:0in 5.4pt 0in 5.4pt">
                         <p class="MsoNormal" style="margin-bottom:0in;line-height:normal; text-align: center">
-                            <b><i><span>Omotola Shomorin Ecuador</span></i></b>
+                            <b><i><span>
+                                        <%=report.student.firstName%>
+                                            <%=report.student.lastName%>
+                                                <%=report.student.middleName%>
+                                    </span></i></b>
                         </p>
                     </td>
                     <td width="96" valign="top" style="width:1.0in;border-top:solid white 1.0pt;
@@ -244,7 +254,9 @@ font-family:Georgia;"><img width="748" height="157" src="/image001.jpg"></span><
                     <td width="55" valign="top" style="width:41.4pt;border:solid windowtext 1.0pt;
   border-left:none;padding:0in 5.4pt 0in 5.4pt">
                         <p class="MsoNormal" style="margin-bottom:0in;line-height:normal; text-align: center;">
-                            <b><i><span>SSS1</span></i></b>
+                            <b><i><span>
+                                        <%=report.reportClass%>
+                                    </span></i></b>
                         </p>
                     </td>
                 </tr>
@@ -451,6 +463,7 @@ font-family:Georgia;"><img width="748" height="157" src="/image001.jpg"></span><
 
 
                                 <!-- All Subjects  -->
+
                                 <tr style="height:12.95pt">
                                     <td width="28%" valign="bottom" style="width:28.68%;border:solid windowtext 1.0pt;
     border-top:none;padding:0in 5.4pt 0in 5.4pt;height:12.95pt">
@@ -513,60 +526,142 @@ font-family:Georgia;"><img width="748" height="157" src="/image001.jpg"></span><
                                     </td>
                                 </tr>
 
-
-
-
-
-                                <tr style="height:12.95pt">
-                                    <td width="28%" valign="bottom" style="width:28.68%;border:solid windowtext 1.0pt;
+                                <% report.performance.forEach(function(item, index) { %>
+                                    <tr style="height:12.95pt">
+                                        <td width="28%" valign="bottom" style="width:28.68%;border:solid windowtext 1.0pt;
     border-top:none;padding:0in 5.4pt 0in 5.4pt;height:12.95pt">
-                                        <p class="MsoNormal" style="margin-bottom:0in;line-height:normal"><b><span
-                                                    style="font-size:8.0pt;font-family:Georgia;">&nbsp;</span></b>
-                                        </p>
-                                    </td>
-                                    <td width="8%" valign="bottom" style="width:8.94%;border-top:none;border-left:
+                                            <p class="MsoNormal" style="margin-bottom:0in;line-height:normal">
+                                                <b><i><span style="font-size:8.0pt;font-family:Georgia;">
+                                                            <%= item.subject %>
+                                                        </span></i></b>
+                                            </p>
+                                        </td>
+                                        <!-- Continuous assessment scores -->
+                                        <td width="8%" valign="bottom" style="width:8.94%;border-top:none;border-left:
     none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
     padding:0in 5.4pt 0in 5.4pt;height:12.95pt">
-                                        <p class="MsoNormal" style="margin-bottom:2.0pt;line-height:normal"><b><span
-                                                    style="font-size:7.5pt;font-family:Georgia;">&nbsp;</span></b>
-                                        </p>
-                                    </td>
-                                    <td width="8%" valign="bottom" style="width:8.72%;border-top:none;border-left:
+                                            <p class="MsoNormal" style="margin-bottom:2.0pt;line-height:normal"><b><span
+                                                        style="font-size:7.5pt;font-family:Georgia;">
+                                                        <%=item.continuousAssessmentScore%>
+                                                    </span></b>
+                                            </p>
+                                        </td>
+
+                                        <!-- Exam scores -->
+                                        <td width="8%" valign="bottom" style="width:8.94%;border-top:none;border-left:
     none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
     padding:0in 5.4pt 0in 5.4pt;height:12.95pt">
-                                        <p class="MsoNormal" style="margin-bottom:0in;line-height:normal"><b><i><span
-                                                        style="font-size:7.0pt;font-family:Georgia;">&nbsp;</span></i></b>
-                                        </p>
-                                    </td>
-                                    <td width="9%" valign="bottom" style="width:9.44%;border-top:none;border-left:
+                                            <p class="MsoNormal" style="margin-bottom:2.0pt;line-height:normal"><b><span
+                                                        style="font-size:7.5pt;font-family:Georgia;">
+                                                        <%= item.examScore%>
+                                                    </span></b>
+                                            </p>
+                                        </td>
+                                        <!-- Total(Weighted Average) -->
+                                        <td width="9%" valign="bottom" style="width:9.44%;border-top:none;border-left:
     none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
     padding:0in 5.4pt 0in 5.4pt;height:12.95pt">
-                                        <p class="MsoNormal" style="margin-bottom:0in;line-height:normal"><b><i><span
-                                                        style="font-size:7.0pt;font-family:Georgia;">&nbsp;</span></i></b>
-                                        </p>
-                                    </td>
-                                    <td width="8%" valign="bottom" style="width:8.18%;border-top:none;border-left:
+                                            <p class="MsoNormal" style="margin-bottom:2.0pt;line-height:normal">
+                                                <b><i><span style="font-size:7.5pt;font-family:Georgia;">
+                                                            <%=item.totalWeightedAverage%>
+                                                        </span></i></b>
+                                            </p>
+                                        </td>
+
+                                        <!-- Position/Grade -->
+                                        <td width="8%" valign="bottom" style="width:8.18%;border-top:none;border-left:
     none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
     padding:0in 5.4pt 0in 5.4pt;height:12.95pt">
-                                        <p class="MsoNormal" style="margin-bottom:0in;line-height:normal"><b><i><span
-                                                        style="font-size:7.0pt;font-family:Georgia;">&nbsp;</span></i></b>
-                                        </p>
-                                    </td>
-                                    <td width="9%" valign="bottom" style="width:9.1%;border-top:none;border-left:
+                                            <p class="MsoNormal" style="margin-bottom:2.0pt;line-height:normal">
+                                                <b><i><span style="font-size:7.5pt;font-family:Georgia;">
+                                                            <%=item.positionGrade%>
+                                                        </span></i></b>
+                                            </p>
+                                        </td>
+
+                                        <!-- Teacher's sign -->
+                                        <td width="9%" valign="bottom" style="width:9.1%;border-top:none;border-left:
     none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
     padding:0in 5.4pt 0in 5.4pt;height:12.95pt">
-                                        <p class="MsoNormal" style="margin-bottom:0in;line-height:normal"><b><i><span
-                                                        style="font-size:7.0pt;font-family:Georgia;">&nbsp;</span></i></b>
-                                        </p>
-                                    </td>
-                                    <td width="26%" valign="bottom" style="width:26.92%;border-top:none;
+                                            <p class="MsoNormal" style="margin-bottom:2.0pt;line-height:normal">
+                                                <b><i><span
+                                                            style="font-size:7.5pt;font-family:Georgia;">&nbsp;</span></i></b>
+                                            </p>
+                                        </td>
+
+                                        <!-- Comments -->
+                                        <td width="26%" valign="bottom" style="width:26.92%;border-top:none;
     border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
     padding:0in 5.4pt 0in 5.4pt;height:12.95pt">
-                                        <p class="MsoNormal" style="margin-bottom:0in;line-height:normal"><b><i><span
-                                                        style="font-size:7.0pt;font-family:Georgia;">&nbsp;</span></i></b>
-                                        </p>
-                                    </td>
-                                </tr>
+                                            <p class="MsoNormal" style="margin-bottom:2.0pt;line-height:normal">
+                                                <b><i><span style="font-size:7.5pt;font-family:Georgia;">
+                                                            <%=item.comment%>
+                                                        </span></i></b>
+                                            </p>
+                                        </td>
+                                    </tr>
+                                    <% }) %>
+
+
+
+
+                                        <tr style="height:12.95pt">
+                                            <td width="28%" valign="bottom" style="width:28.68%;border:solid windowtext 1.0pt;
+    border-top:none;padding:0in 5.4pt 0in 5.4pt;height:12.95pt">
+                                                <p class="MsoNormal" style="margin-bottom:0in;line-height:normal">
+                                                    <b><span
+                                                            style="font-size:8.0pt;font-family:Georgia;">&nbsp;</span></b>
+                                                </p>
+                                            </td>
+                                            <td width="8%" valign="bottom" style="width:8.94%;border-top:none;border-left:
+    none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+    padding:0in 5.4pt 0in 5.4pt;height:12.95pt">
+                                                <p class="MsoNormal" style="margin-bottom:2.0pt;line-height:normal">
+                                                    <b><span
+                                                            style="font-size:7.5pt;font-family:Georgia;">&nbsp;</span></b>
+                                                </p>
+                                            </td>
+                                            <td width="8%" valign="bottom" style="width:8.72%;border-top:none;border-left:
+    none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+    padding:0in 5.4pt 0in 5.4pt;height:12.95pt">
+                                                <p class="MsoNormal" style="margin-bottom:0in;line-height:normal">
+                                                    <b><i><span
+                                                                style="font-size:7.0pt;font-family:Georgia;">&nbsp;</span></i></b>
+                                                </p>
+                                            </td>
+                                            <td width="9%" valign="bottom" style="width:9.44%;border-top:none;border-left:
+    none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+    padding:0in 5.4pt 0in 5.4pt;height:12.95pt">
+                                                <p class="MsoNormal" style="margin-bottom:0in;line-height:normal">
+                                                    <b><i><span
+                                                                style="font-size:7.0pt;font-family:Georgia;">&nbsp;</span></i></b>
+                                                </p>
+                                            </td>
+                                            <td width="8%" valign="bottom" style="width:8.18%;border-top:none;border-left:
+    none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+    padding:0in 5.4pt 0in 5.4pt;height:12.95pt">
+                                                <p class="MsoNormal" style="margin-bottom:0in;line-height:normal">
+                                                    <b><i><span
+                                                                style="font-size:7.0pt;font-family:Georgia;">&nbsp;</span></i></b>
+                                                </p>
+                                            </td>
+                                            <td width="9%" valign="bottom" style="width:9.1%;border-top:none;border-left:
+    none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+    padding:0in 5.4pt 0in 5.4pt;height:12.95pt">
+                                                <p class="MsoNormal" style="margin-bottom:0in;line-height:normal">
+                                                    <b><i><span
+                                                                style="font-size:7.0pt;font-family:Georgia;">&nbsp;</span></i></b>
+                                                </p>
+                                            </td>
+                                            <td width="26%" valign="bottom" style="width:26.92%;border-top:none;
+    border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+    padding:0in 5.4pt 0in 5.4pt;height:12.95pt">
+                                                <p class="MsoNormal" style="margin-bottom:0in;line-height:normal">
+                                                    <b><i><span
+                                                                style="font-size:7.0pt;font-family:Georgia;">&nbsp;</span></i></b>
+                                                </p>
+                                            </td>
+                                        </tr>
                             </tbody>
                         </table>
 
@@ -1279,25 +1374,29 @@ font-family:Georgia;"><img width="748" height="157" src="/image001.jpg"></span><
                                     <td width="82" valign="top" style="width:61.85pt;border:solid windowtext 1.0pt;
     border-top:none;padding:0in 5.4pt 0in 5.4pt">
                                         <p class="MsoNormal" style="margin-bottom:0in;line-height:normal"><b><i><span
-                                                        style="font-size:7.0pt;font-family:Georgia;">&nbsp;</span></i></b>
+                                                        style="font-size:7.0pt;font-family:Georgia;">
+                                                        <%=report.timesSchoolOpened%>
+                                                    </span></i></b>
                                         </p>
                                     </td>
                                     <td width="78" valign="top" style="width:58.5pt;border-top:none;border-left:
     none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
     padding:0in 5.4pt 0in 5.4pt">
                                         <p class="MsoNormal" style="margin-bottom:0in;line-height:normal"><b><i><span
-                                                        style="font-size:7.0pt;font-family:Georgia;">&nbsp;</span></i></b>
+                                                        style="font-size:7.0pt;font-family:Georgia;">
+                                                        <%=report.timePresent%>
+                                                    </span></i></b>
                                         </p>
                                     </td>
                                     <td width="63" valign="top" style="width:47.2pt;border-top:none;border-left:
     none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
     padding:0in 5.4pt 0in 5.4pt">
                                         <p class="MsoNormal" style="margin-bottom:0in;line-height:normal"><b><i><span
-                                                        style="font-size:7.0pt;font-family:Georgia;">&nbsp;</span></i></b>
+                                                        style="font-size:7.0pt;font-family:Georgia;">
+                                                        <%=report.timeAbsent%>
+                                                    </span></i></b>
                                         </p>
-                                        <p class="MsoNormal" style="margin-bottom:0in;line-height:normal"><b><i><span
-                                                        style="font-size:7.0pt;font-family:Georgia;">&nbsp;</span></i></b>
-                                        </p>
+
                                     </td>
                                 </tr>
                             </tbody>
@@ -1307,76 +1406,173 @@ font-family:Georgia;"><img width="748" height="157" src="/image001.jpg"></span><
                         </p>
                         <table class="MsoNormalTable" border="1" cellspacing="0" cellpadding="0"
                             style="border-collapse:collapse;border:none">
-                            <tbody>
-                                <tr>
-                                    <td width="223" colspan="2" valign="top" style="width:167.55pt;border:solid windowtext 1.0pt;
+                            <table class="MsoNormalTable" border="1" cellspacing="0" cellpadding="0"
+                                style="border-collapse:collapse;border:none">
+                                <tbody>
+                                    <tr>
+                                        <td width="223" colspan="2" valign="top" style="width:167.55pt;border:solid windowtext 1.0pt;
     padding:0in 5.4pt 0in 5.4pt">
-                                        <p class="MsoNormal" align="center" style="margin-bottom:0in;text-align:center;
+                                            <p class="MsoNormal" align="center" style="margin-bottom:0in;text-align:center;
     line-height:normal"><b><i><span style="font-size:7.0pt;font-family:Georgia;">PERSONAL
-                                                        TRAIT</span></i></b></p>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td width="112" valign="top" style="width:83.75pt;border:solid windowtext 1.0pt;
+                                                            TRAIT</span></i></b></p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td width="112" valign="top" style="width:83.75pt;border:solid windowtext 1.0pt;
     border-top:none;padding:0in 5.4pt 0in 5.4pt">
-                                        <p class="MsoNormal" style="margin-bottom:0in;line-height:normal"><b><i><span
-                                                        style="font-size:7.0pt;font-family:Georgia;">Punctuality
-                                                    </span></i></b></p>
-                                        <p class="MsoNormal" style="margin-bottom:0in;line-height:normal"><b><i><span
-                                                        style="font-size:2.0pt;font-family:Georgia;">&nbsp;</span></i></b>
-                                        </p>
-                                        <p class="MsoNormal" style="margin-bottom:0in;line-height:normal"><b><i><span
-                                                        style="font-size:7.0pt;font-family:Georgia;">Neatness</span></i></b>
-                                        </p>
-                                        <p class="MsoNormal" style="margin-bottom:0in;line-height:normal"><b><i><span
-                                                        style="font-size:2.0pt;font-family:Georgia;">&nbsp;</span></i></b>
-                                        </p>
-                                        <p class="MsoNormal" style="margin-bottom:0in;line-height:normal"><b><i><span
-                                                        style="font-size:7.0pt;font-family:Georgia;">Leadership
-                                                        Trait</span></i></b></p>
-                                        <p class="MsoNormal" style="margin-bottom:0in;line-height:normal"><b><i><span
-                                                        style="font-size:2.0pt;font-family:Georgia;">&nbsp;</span></i></b>
-                                        </p>
-                                        <p class="MsoNormal" style="margin-bottom:0in;line-height:normal"><b><i><span
-                                                        style="font-size:7.0pt;font-family:Georgia;">Demeanor</span></i></b>
-                                        </p>
-                                        <p class="MsoNormal" style="margin-bottom:0in;line-height:normal"><b><i><span
-                                                        style="font-size:7.0pt;font-family:Georgia;">&nbsp;</span></i></b>
-                                        </p>
-                                    </td>
-                                    <td width="112" valign="top" style="width:83.8pt;border-top:none;border-left:
+                                            <!-- Punctuality -->
+                                            <div
+                                                style="display: flex; align-items: center; justify-content: space-between;">
+                                                <p class="MsoNormal" style="margin-bottom:0in;line-height:normal">
+                                                    <b><i><span style="font-size:7.0pt;font-family:Georgia;">Punctuality
+                                                            </span></i></b>
+                                                </p>
+                                                <p class="MsoNormal" style="margin-bottom:0in;line-height:normal">
+                                                    <b><i><span style="font-size:7.0pt;font-family:Georgia;">45
+                                                            </span></i></b>
+                                                </p>
+                                            </div>
+                                            <p class="MsoNormal" style="margin-bottom:0in;line-height:normal">
+                                                <b><i><span
+                                                            style="font-size:2.0pt;font-family:Georgia;">&nbsp;</span></i></b>
+                                            </p>
+
+                                            <!-- Neatness -->
+                                            <div
+                                                style="display: flex; align-items: center; justify-content: space-between;">
+                                                <p class="MsoNormal" style="margin-bottom:0in;line-height:normal">
+                                                    <b><i><span style="font-size:7.0pt;font-family:Georgia;">Neatness
+                                                            </span></i></b>
+                                                </p>
+                                                <p class="MsoNormal" style="margin-bottom:0in;line-height:normal">
+                                                    <b><i><span style="font-size:7.0pt;font-family:Georgia;">45
+                                                            </span></i></b>
+                                                </p>
+                                            </div>
+                                            <p class="MsoNormal" style="margin-bottom:0in;line-height:normal">
+                                                <b><i><span
+                                                            style="font-size:2.0pt;font-family:Georgia;">&nbsp;</span></i></b>
+                                            </p>
+
+                                            <!-- Leadership -->
+                                            <div
+                                                style="display: flex; align-items: center; justify-content: space-between;">
+                                                <p class="MsoNormal" style="margin-bottom:0in;line-height:normal">
+                                                    <b><i><span style="font-size:7.0pt;font-family:Georgia;">Leadership
+                                                                Trait
+                                                            </span></i></b>
+                                                </p>
+                                                <p class="MsoNormal" style="margin-bottom:0in;line-height:normal">
+                                                    <b><i><span style="font-size:7.0pt;font-family:Georgia;">45
+                                                            </span></i></b>
+                                                </p>
+                                            </div>
+                                            <p class="MsoNormal" style="margin-bottom:0in;line-height:normal">
+                                                <b><i><span
+                                                            style="font-size:2.0pt;font-family:Georgia;">&nbsp;</span></i></b>
+                                            </p>
+
+                                            <!-- Demeanor -->
+                                            <div
+                                                style="display: flex; align-items: center; justify-content: space-between;">
+                                                <p class="MsoNormal" style="margin-bottom:0in;line-height:normal">
+                                                    <b><i><span style="font-size:7.0pt;font-family:Georgia;">Demeanor
+                                                            </span></i></b>
+                                                </p>
+                                                <p class="MsoNormal" style="margin-bottom:0in;line-height:normal">
+                                                    <b><i><span style="font-size:7.0pt;font-family:Georgia;">45
+                                                            </span></i></b>
+                                                </p>
+                                            </div>
+                                            <p class="MsoNormal" style="margin-bottom:0in;line-height:normal">
+                                                <b><i><span
+                                                            style="font-size:7.0pt;font-family:Georgia;">&nbsp;</span></i></b>
+                                            </p>
+                                        </td>
+
+                                        <td width="112" valign="top" style="width:83.8pt;border-top:none;border-left:
     none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
     padding:0in 5.4pt 0in 5.4pt">
-                                        <p class="MsoNormal" style="margin-bottom:0in;line-height:normal"><b><i><span
-                                                        style="font-size:7.0pt;font-family:Georgia;">Honesty</span></i></b>
-                                        </p>
-                                        <p class="MsoNormal" style="margin-bottom:0in;line-height:normal"><b><i><span
-                                                        style="font-size:2.0pt;font-family:Georgia;">&nbsp;</span></i></b>
-                                        </p>
-                                        <p class="MsoNormal" style="margin-bottom:0in;line-height:normal"><b><i><span
-                                                        style="font-size:7.0pt;font-family:Georgia;">Respect</span></i></b>
-                                        </p>
-                                        <p class="MsoNormal" style="margin-bottom:0in;line-height:normal"><b><i><span
-                                                        style="font-size:2.0pt;font-family:Georgia;">&nbsp;</span></i></b>
-                                        </p>
-                                        <p class="MsoNormal" style="margin-bottom:0in;line-height:normal"><b><i><span
-                                                        style="font-size:7.0pt;font-family:Georgia;">Mixing
-                                                    </span></i></b></p>
-                                        <p class="MsoNormal" style="margin-bottom:0in;line-height:normal"><b><i><span
-                                                        style="font-size:2.0pt;font-family:Georgia;">&nbsp;</span></i></b>
-                                        </p>
-                                        <p class="MsoNormal" style="margin-bottom:0in;line-height:normal"><b><i><span
-                                                        style="font-size:7.0pt;font-family:Georgia;">Obedience</span></i></b>
-                                        </p>
-                                        <p class="MsoNormal" style="margin-bottom:0in;line-height:normal"><b><i><span
-                                                        style="font-size:2.0pt;font-family:Georgia;">&nbsp;</span></i></b>
-                                        </p>
-                                        <p class="MsoNormal" style="margin-bottom:0in;line-height:normal"><b><i><span
-                                                        style="font-size:7.0pt;font-family:Georgia;">Team
-                                                        Work</span></i></b></p>
-                                    </td>
-                                </tr>
-                            </tbody>
+                                            <!-- Honesty -->
+                                            <div
+                                                style="display: flex; align-items: center; justify-content: space-between;">
+                                                <p class="MsoNormal" style="margin-bottom:0in;line-height:normal">
+                                                    <b><i><span style="font-size:7.0pt;font-family:Georgia;">Honesty
+                                                            </span></i></b>
+                                                </p>
+                                                <p class="MsoNormal" style="margin-bottom:0in;line-height:normal">
+                                                    <b><i><span style="font-size:7.0pt;font-family:Georgia;">45
+                                                            </span></i></b>
+                                                </p>
+                                            </div>
+                                            <p class="MsoNormal" style="margin-bottom:0in;line-height:normal">
+                                                <b><i><span
+                                                            style="font-size:2.0pt;font-family:Georgia;">&nbsp;</span></i></b>
+                                            </p>
+                                            <!-- Respect -->
+                                            <div
+                                                style="display: flex; align-items: center; justify-content: space-between;">
+                                                <p class="MsoNormal" style="margin-bottom:0in;line-height:normal">
+                                                    <b><i><span style="font-size:7.0pt;font-family:Georgia;">Respect
+                                                            </span></i></b>
+                                                </p>
+                                                <p class="MsoNormal" style="margin-bottom:0in;line-height:normal">
+                                                    <b><i><span style="font-size:7.0pt;font-family:Georgia;">45
+                                                            </span></i></b>
+                                                </p>
+                                            </div>
+                                            <p class="MsoNormal" style="margin-bottom:0in;line-height:normal">
+                                                <b><i><span
+                                                            style="font-size:2.0pt;font-family:Georgia;">&nbsp;</span></i></b>
+                                            </p>
+                                            <!-- Mixing -->
+                                            <div
+                                                style="display: flex; align-items: center; justify-content: space-between;">
+                                                <p class="MsoNormal" style="margin-bottom:0in;line-height:normal">
+                                                    <b><i><span style="font-size:7.0pt;font-family:Georgia;">Mixing
+                                                            </span></i></b>
+                                                </p>
+                                                <p class="MsoNormal" style="margin-bottom:0in;line-height:normal">
+                                                    <b><i><span style="font-size:7.0pt;font-family:Georgia;">45
+                                                            </span></i></b>
+                                                </p>
+                                            </div>
+                                            <p class="MsoNormal" style="margin-bottom:0in;line-height:normal">
+                                                <b><i><span
+                                                            style="font-size:2.0pt;font-family:Georgia;">&nbsp;</span></i></b>
+                                            </p>
+                                            <!-- Obedience -->
+                                            <div
+                                                style="display: flex; align-items: center; justify-content: space-between;">
+                                                <p class="MsoNormal" style="margin-bottom:0in;line-height:normal">
+                                                    <b><i><span style="font-size:7.0pt;font-family:Georgia;">Obedience
+                                                            </span></i></b>
+                                                </p>
+                                                <p class="MsoNormal" style="margin-bottom:0in;line-height:normal">
+                                                    <b><i><span style="font-size:7.0pt;font-family:Georgia;">45
+                                                            </span></i></b>
+                                                </p>
+                                            </div>
+                                            <p class="MsoNormal" style="margin-bottom:0in;line-height:normal">
+                                                <b><i><span
+                                                            style="font-size:2.0pt;font-family:Georgia;">&nbsp;</span></i></b>
+                                            </p>
+                                            <!-- Team Work -->
+                                            <div
+                                                style="display: flex; align-items: center; justify-content: space-between;">
+                                                <p class="MsoNormal" style="margin-bottom:0in;line-height:normal">
+                                                    <b><i><span style="font-size:7.0pt;font-family:Georgia;">Team work
+                                                            </span></i></b>
+                                                </p>
+                                                <p class="MsoNormal" style="margin-bottom:0in;line-height:normal">
+                                                    <b><i><span style="font-size:7.0pt;font-family:Georgia;">45
+                                                            </span></i></b>
+                                                </p>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </table>
                         <p class="MsoNormal" style="margin-bottom:0in;line-height:normal"><b><i><span
                                         style="font-size:5.0pt;font-family:Georgia;">&nbsp;</span></i></b>
@@ -1445,6 +1641,8 @@ font-family:Georgia;"><img width="748" height="157" src="/image001.jpg"></span><
                                 </tr>
                             </tbody>
                         </table>
+
+                        <!-- AFFECTIVE DOMAIN -->
                         <p class="MsoNormal" style="margin-bottom:0in;line-height:normal"><b><i><span
                                         style="font-size:5.0pt;font-family:Georgia;">&nbsp;</span></i></b>
                         </p>
@@ -1461,108 +1659,223 @@ font-family:Georgia;"><img width="748" height="157" src="/image001.jpg"></span><
                                 </tr>
                                 <tr>
                                     <td width="223" valign="top" style="width:167.55pt;border:solid windowtext 1.0pt;
-    border-top:none;padding:0in 5.4pt 0in 5.4pt">
-                                        <p class="MsoNormal" style="margin-bottom:0in;line-height:normal"><b><i><span
-                                                        style="font-size:7.0pt;font-family:Georgia;">Punctuality</span></i></b>
-                                        </p>
+    border-top:none;padding:0in 5.4pt 0in 5.4pt;">
+                                        <div style="display: flex; justify-content: space-between;">
+
+                                            <p class="MsoNormal" style="margin-bottom:0in;line-height:normal">
+                                                <b><i><span
+                                                            style="font-size:7.0pt;font-family:Georgia;">Punctuality</span></i></b>
+                                            </p>
+                                            <p class="MsoNormal" style="margin-bottom:0in;line-height:normal">
+                                                <b><i><span style="font-size:7.0pt;font-family:Georgia;">
+                                                            <%=report.affectiveDomain.punctuality%>
+                                                        </span></i></b>
+                                            </p>
+                                        </div>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td width="223" valign="top" style="width:167.55pt;border:solid windowtext 1.0pt;
     border-top:none;padding:0in 5.4pt 0in 5.4pt">
-                                        <p class="MsoNormal" style="margin-bottom:0in;line-height:normal"><b><i><span
-                                                        style="font-size:7.0pt;font-family:Georgia;">Politeness</span></i></b>
-                                        </p>
+                                        <div style="display: flex; justify-content: space-between;">
+
+                                            <p class="MsoNormal" style="margin-bottom:0in;line-height:normal">
+                                                <b><i><span
+                                                            style="font-size:7.0pt;font-family:Georgia;">Politeness</span></i></b>
+                                            </p>
+                                            <p class="MsoNormal" style="margin-bottom:0in;line-height:normal">
+                                                <b><i><span style="font-size:7.0pt;font-family:Georgia;">
+                                                            <%=report.affectiveDomain.politeness%>
+                                                        </span></i></b>
+                                            </p>
+                                        </div>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td width="223" valign="top" style="width:167.55pt;border:solid windowtext 1.0pt;
     border-top:none;padding:0in 5.4pt 0in 5.4pt">
-                                        <p class="MsoNormal" style="margin-bottom:0in;line-height:normal"><b><i><span
-                                                        style="font-size:7.0pt;font-family:Georgia;">Attentiveness</span></i></b>
-                                        </p>
+                                        <div style="display: flex; justify-content: space-between;">
+
+                                            <p class="MsoNormal" style="margin-bottom:0in;line-height:normal">
+                                                <b><i><span
+                                                            style="font-size:7.0pt;font-family:Georgia;">Attentiveness</span></i></b>
+                                            </p>
+                                            <p class="MsoNormal" style="margin-bottom:0in;line-height:normal">
+                                                <b><i><span style="font-size:7.0pt;font-family:Georgia;">
+                                                            <%=report.affectiveDomain.attentiveness%>
+                                                        </span></i></b>
+                                            </p>
+                                        </div>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td width="223" valign="top" style="width:167.55pt;border:solid windowtext 1.0pt;
     border-top:none;padding:0in 5.4pt 0in 5.4pt">
-                                        <p class="MsoNormal" style="margin-bottom:0in;line-height:normal"><b><i><span
-                                                        style="font-size:7.0pt;font-family:Georgia;">Neatness</span></i></b>
-                                        </p>
+                                        <div style="display: flex; justify-content: space-between;">
+
+                                            <p class="MsoNormal" style="margin-bottom:0in;line-height:normal">
+                                                <b><i><span
+                                                            style="font-size:7.0pt;font-family:Georgia;">Neatness</span></i></b>
+                                            </p>
+                                            <p class="MsoNormal" style="margin-bottom:0in;line-height:normal">
+                                                <b><i><span style="font-size:7.0pt;font-family:Georgia;">
+                                                            <%=report.affectiveDomain.neatness%>
+                                                        </span></i></b>
+                                            </p>
+                                        </div>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td width="223" valign="top" style="width:167.55pt;border:solid windowtext 1.0pt;
     border-top:none;padding:0in 5.4pt 0in 5.4pt">
-                                        <p class="MsoNormal" style="margin-bottom:0in;line-height:normal"><b><i><span
-                                                        style="font-size:7.0pt;font-family:Georgia;">Initiative</span></i></b>
-                                        </p>
+                                        <div style="display: flex; justify-content: space-between;">
+
+                                            <p class="MsoNormal" style="margin-bottom:0in;line-height:normal">
+                                                <b><i><span
+                                                            style="font-size:7.0pt;font-family:Georgia;">Initiative</span></i></b>
+                                            </p>
+                                            <p class="MsoNormal" style="margin-bottom:0in;line-height:normal">
+                                                <b><i><span style="font-size:7.0pt;font-family:Georgia;">
+                                                            <%=report.affectiveDomain.initiative%>
+                                                        </span></i></b>
+                                            </p>
+                                        </div>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td width="223" valign="top" style="width:167.55pt;border:solid windowtext 1.0pt;
     border-top:none;padding:0in 5.4pt 0in 5.4pt">
-                                        <p class="MsoNormal" style="margin-bottom:0in;line-height:normal"><b><i><span
-                                                        style="font-size:7.0pt;font-family:Georgia;">Perseverance</span></i></b>
-                                        </p>
+                                        <div style="display: flex; justify-content: space-between;">
+
+                                            <p class="MsoNormal" style="margin-bottom:0in;line-height:normal">
+                                                <b><i><span
+                                                            style="font-size:7.0pt;font-family:Georgia;">Perseverance</span></i></b>
+                                            </p>
+                                            <p class="MsoNormal" style="margin-bottom:0in;line-height:normal">
+                                                <b><i><span style="font-size:7.0pt;font-family:Georgia;">
+                                                            <%=report.affectiveDomain.perseverance%>
+                                                        </span></i></b>
+                                            </p>
+                                        </div>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td width="223" valign="top" style="width:167.55pt;border:solid windowtext 1.0pt;
     border-top:none;padding:0in 5.4pt 0in 5.4pt">
-                                        <p class="MsoNormal" style="margin-bottom:0in;line-height:normal"><b><i><span
-                                                        style="font-size:7.0pt;font-family:Georgia;">Team
-                                                        Work</span></i></b></p>
+                                        <div style="display: flex; justify-content: space-between;">
+
+                                            <p class="MsoNormal" style="margin-bottom:0in;line-height:normal">
+                                                <b><i><span style="font-size:7.0pt;font-family:Georgia;">Team
+                                                            Work</span></i></b>
+                                            </p>
+                                            <p class="MsoNormal" style="margin-bottom:0in;line-height:normal">
+                                                <b><i><span style="font-size:7.0pt;font-family:Georgia;">
+                                                            <%=report.affectiveDomain.teamWork%>
+                                                        </span></i></b>
+                                            </p>
+                                        </div>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td width="223" valign="top" style="width:167.55pt;border:solid windowtext 1.0pt;
     border-top:none;padding:0in 5.4pt 0in 5.4pt">
-                                        <p class="MsoNormal" style="margin-bottom:0in;line-height:normal"><b><i><span
-                                                        style="font-size:7.0pt;font-family:Georgia;">Leadership
-                                                        Spirit</span></i></b></p>
+                                        <div style="display: flex; justify-content: space-between;">
+
+                                            <p class="MsoNormal" style="margin-bottom:0in;line-height:normal">
+                                                <b><i><span style="font-size:7.0pt;font-family:Georgia;">Leadership
+                                                            Spirit</span></i></b>
+                                            </p>
+                                            <p class="MsoNormal" style="margin-bottom:0in;line-height:normal">
+                                                <b><i><span style="font-size:7.0pt;font-family:Georgia;">
+                                                            <%=report.affectiveDomain.leadershipSpirit%>
+                                                        </span></i></b>
+                                            </p>
+                                        </div>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td width="223" valign="top" style="width:167.55pt;border:solid windowtext 1.0pt;
     border-top:none;padding:0in 5.4pt 0in 5.4pt">
-                                        <p class="MsoNormal" style="margin-bottom:0in;line-height:normal"><b><i><span
-                                                        style="font-size:7.0pt;font-family:Georgia;">Relationship
-                                                        with
-                                                        Teachers</span></i></b></p>
+                                        <div style="display: flex; justify-content: space-between;">
+
+                                            <p class="MsoNormal" style="margin-bottom:0in;line-height:normal">
+                                                <b><i><span style="font-size:7.0pt;font-family:Georgia;">Relationship
+                                                            with Teachers</span></i></b>
+                                            </p>
+                                            <p class="MsoNormal" style="margin-bottom:0in;line-height:normal">
+                                                <b><i><span style="font-size:7.0pt;font-family:Georgia;">
+                                                            <%=report.affectiveDomain.relationshipWithTeachers%>
+                                                        </span></i></b>
+                                            </p>
+                                        </div>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td width="223" valign="top" style="width:167.55pt;border:solid windowtext 1.0pt;
     border-top:none;padding:0in 5.4pt 0in 5.4pt">
-                                        <p class="MsoNormal" style="margin-bottom:0in;line-height:normal"><b><i><span
-                                                        style="font-size:7.0pt;font-family:Georgia;">Attitude
-                                                        to
-                                                        Work</span></i></b></p>
+                                        <div style="display: flex; justify-content: space-between;">
+
+                                            <p class="MsoNormal" style="margin-bottom:0in;line-height:normal">
+                                                <b><i><span style="font-size:7.0pt;font-family:Georgia;">Attitude to
+                                                            Work</span></i></b>
+                                            </p>
+                                            <p class="MsoNormal" style="margin-bottom:0in;line-height:normal">
+                                                <b><i><span style="font-size:7.0pt;font-family:Georgia;">
+                                                            <%=report.affectiveDomain.attitudeToWork%>
+                                                        </span></i></b>
+                                            </p>
+                                        </div>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td width="223" valign="top" style="width:167.55pt;border:solid windowtext 1.0pt;
     border-top:none;padding:0in 5.4pt 0in 5.4pt">
-                                        <p class="MsoNormal" style="margin-bottom:0in;line-height:normal"><b><i><span
-                                                        style="font-size:7.0pt;font-family:Georgia;">Health</span></i></b>
-                                        </p>
+                                        <div style="display: flex; justify-content: space-between;">
+
+                                            <p class="MsoNormal" style="margin-bottom:0in;line-height:normal">
+                                                <b><i><span
+                                                            style="font-size:7.0pt;font-family:Georgia;">Health</span></i></b>
+                                            </p>
+                                            <p class="MsoNormal" style="margin-bottom:0in;line-height:normal">
+                                                <b><i><span style="font-size:7.0pt;font-family:Georgia;">
+                                                            <%=report.affectiveDomain.health%>
+                                                        </span></i></b>
+                                            </p>
+                                        </div>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td width="223" valign="top" style="width:167.55pt;border:solid windowtext 1.0pt;
     border-top:none;padding:0in 5.4pt 0in 5.4pt">
-                                        <p class="MsoNormal" style="margin-bottom:0in;line-height:normal"><b><i><span
-                                                        style="font-size:7.0pt;font-family:Georgia;">Emotional
-                                                        Stability</span></i></b></p>
+                                        <div style="display: flex; justify-content: space-between;">
+
+                                            <p class="MsoNormal" style="margin-bottom:0in;line-height:normal">
+                                                <b><i><span style="font-size:7.0pt;font-family:Georgia;">Emotional
+                                                            Stability</span></i></b>
+                                            </p>
+                                            <p class="MsoNormal" style="margin-bottom:0in;line-height:normal">
+                                                <b><i><span style="font-size:7.0pt;font-family:Georgia;">
+                                                            <%=report.affectiveDomain.emotionalStability%>
+                                                        </span></i></b>
+                                            </p>
+                                        </div>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td width="223" valign="top" style="width:167.55pt;border:solid windowtext 1.0pt;
     border-top:none;padding:0in 5.4pt 0in 5.4pt">
-                                        <p class="MsoNormal" style="margin-bottom:0in;line-height:normal"><b><i><span
-                                                        style="font-size:7.0pt;font-family:Georgia;">Innovative</span></i></b>
-                                        </p>
+                                        <div style="display: flex; justify-content: space-between;">
+
+                                            <p class="MsoNormal" style="margin-bottom:0in;line-height:normal">
+                                                <b><i><span
+                                                            style="font-size:7.0pt;font-family:Georgia;">Innovative</span></i></b>
+                                            </p>
+                                            <p class="MsoNormal" style="margin-bottom:0in;line-height:normal">
+                                                <b><i><span style="font-size:7.0pt;font-family:Georgia;">
+                                                            <%=report.affectiveDomain.innovative%>
+                                                        </span></i></b>
+                                            </p>
+                                        </div>
                                     </td>
                                 </tr>
                             </tbody>
@@ -1641,6 +1954,7 @@ font-family:Georgia;"><img width="748" height="157" src="/image001.jpg"></span><
                                 </tr>
                             </tbody>
                         </table>
+
                         <p class="MsoNormal" style="margin-bottom:0in;line-height:normal"><b><i><span
                                         style="font-size:6.0pt;font-family:Georgia;">&nbsp;</span></i></b>
                         </p>
@@ -1663,7 +1977,9 @@ font-family:Georgia;"><img width="748" height="157" src="/image001.jpg"></span><
                                                         style="font-size:6.0pt;font-family:Georgia;">&nbsp;</span></i></b>
                                         </p>
                                         <p class="MsoNormal" style="margin-bottom:0in;line-height:normal"><b><i><span
-                                                        style="font-size:6.0pt;font-family:Georgia;">&nbsp;</span></i></b>
+                                                        style="font-size:6.0pt;font-family:Georgia;">
+                                                        <%=report.classTeacherComment%>
+                                                    </span></i></b>
                                         </p>
                                         <p class="MsoNormal" style="margin-bottom:0in;line-height:normal"><b><i><span
                                                         style="font-size:6.0pt;font-family:Georgia;">&nbsp;</span></i></b>
@@ -1751,13 +2067,18 @@ font-family:Georgia;"><img width="748" height="157" src="/image001.jpg"></span><
                                 </tr>
                                 <tr>
                                     <td width="217" colspan="2" valign="top" style="width:162.8pt;border:solid white 1.0pt;
-    border-top:none;padding:0in 5.4pt 0in 5.4pt">
+    border-top:none;padding:0in 5.4pt 0in 5.4pt; position: relative">
                                         <p class="MsoNormal" align="center" style="margin-bottom:0in;text-align:center;
     line-height:normal"><b><i><span style="font-size:7.0pt;font-family:Georgia;">Signature
                                                         &amp; Date/School Stamp</span></i></b></p>
                                         <p class="MsoNormal" align="center" style="margin-bottom:0in;text-align:center;
     line-height:normal"><b><i><span style="font-size:7.0pt;font-family:Georgia;">&nbsp;</span></i></b>
                                         </p>
+
+                                        <!-- STAMP IMG -->
+                                        <img src="https://res.cloudinary.com/duvwweuhj/image/upload/v1696063954/Firdaus/firdaus-stamp_zcp4pe.jpg"
+                                            alt="stamp-image"
+                                            style="width: 120px;position: absolute;top: -30px;right:0; opacity: .4; z-index: -1" />
                                     </td>
                                 </tr>
                                 <tr>
