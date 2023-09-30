@@ -10,9 +10,14 @@ export const getUser = async (req: Request, res: Response) => {
   res.status(StatusCodes.OK).send({ success: true, data });
 };
 export const createUser = async (req: Request, res: Response) => {
-  const { body, user } = req;
-  const data = await UserService.createUser(body);
-  res.status(StatusCodes.OK).send({ success: true, data });
+  const values = JSON.parse(req.body.values);
+
+  // const formData = req.bo
+  const data = await UserService.createUser(values, req.file);
+  res.status(StatusCodes.OK).send({
+    success: true,
+    data,
+  });
 };
 
 export const getUsers = async (req: Request, res: Response) => {

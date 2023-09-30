@@ -25,6 +25,9 @@ export const appConfig = {
   apiPrefix: "/api/v1",
   host: process.env.HOST,
   corsAllowedOrigins: [process.env.HOST, process.env.DEV_HOST],
+  cloudName: process.env.CLOUD_NAME,
+  cloudApiSecret: process.env.CLOUD_API_SECRET,
+  cloudApiKey: process.env.CLOUD_API_KEY,
 };
 
 export enum Role {

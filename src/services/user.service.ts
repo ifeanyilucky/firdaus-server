@@ -1,6 +1,8 @@
 import { BadRequestError } from "../error";
 import { User } from "../models/user.model";
 import { IUser, IUserResponse } from "../interface/user.interface";
+import { cloudUpload } from "../utils/cloudinary";
+import { File } from "buffer";
 
 export const UserService = {
   getUser: async (id: string) => {
@@ -11,7 +13,8 @@ export const UserService = {
   deleteUser: async (id: string) => {
     return await User.findOneAndDelete({ _id: id });
   },
-  createUser: async (data: IUser) => {
+  createUser: async (data: IUser, file: Express.Multer.File | any) => {
+    let teacherSignature = "";
     if (data.role === "student") {
       if (!data.admissionNumber) {
         throw new BadRequestError("Please enter admission number");
@@ -36,9 +39,14 @@ export const UserService = {
           throw new BadRequestError("Teacher with this ID already existed");
         }
       }
+      if (!file.path)
+        throw new BadRequestError("Teacher's signature is required");
+
+      const upload = await cloudUpload(file.path, "teacher-signature");
+      teacherSignature = upload as string;
     }
 
-    return await User.create(data);
+    return await User.create({ ...data, teacherSignature });
   },
   updateUser: async (id: string, data: IUser) => {
     return await User.findOneAndUpdate({ _id: id }, { ...data }, { new: true });

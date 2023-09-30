@@ -11,13 +11,14 @@ import {
 import { auth } from "../middlewares/authentication.middleware";
 import { CheckRole } from "../middlewares/check-role.middleware";
 import { ROLES, Role } from "../config/app";
+import { upload } from "../utils/multer";
 
 router.route("/").get(auth, getUsers);
 router.route("/single/:id").get(auth, getUser);
 router.route("/edit/:id").patch(auth, updateUser);
 router
   .route("/create")
-  .post(auth, CheckRole([ROLES.ADMIN, ROLES.TEACHER]), createUser);
+  .post(auth, upload.single("teacherSignature"), createUser);
 router.route("/delete/:id").delete(auth, deleteUser);
 
 export default router;
