@@ -1,5 +1,5 @@
 import * as Mongoose from "mongoose";
-import { CLASS } from "./user.interface";
+import { CLASS, IUser } from "./user.interface";
 
 export enum ReportStatus {
   PUBLISHED,
@@ -12,11 +12,12 @@ export enum Term {
 }
 
 export interface IReport extends JuniorReport {
-  teacher: string | object | Mongoose.ObjectId;
+  teacher: IUser | string;
   // subjects : Subject[],
   status: string;
   _id?: string;
-  student: string | object | Mongoose.ObjectId;
+  student?: IUser | string;
+  publishDate: Date;
   affectiveDomain: {
     punctuality?: string;
     politeness?: string;
@@ -47,11 +48,7 @@ export interface IReport extends JuniorReport {
   reportClass: "JSS1" | "JSS2" | "JSS3" | "SSS1" | "SSS2" | "SSS3";
   classSection: string;
   classTeacherComment: string;
-  attendance: {
-    timesSchoolOpened: number;
-    timePresent: number;
-    timeAbsent: number;
-  };
+  attendance: ISeniorAttendance | IJuniorAttendance;
   personalTrait?: {
     punctuality?: string;
     neatness?: string;
@@ -80,15 +77,66 @@ export interface juniorSubject {
 }
 
 export interface JuniorReport {
-  attendance: object;
-  conduct: object;
-  physicalHealth: object;
+  conduct: {
+    comments: string;
+  };
+  physicalHealth: {
+    height: {
+      beginningOfTerm: string;
+      endOfTerm: string;
+    };
+    weight: {
+      beginningOfTerm: string;
+      endOfTerm: string;
+    };
+    daysAbsentDueToIllness: string;
+    cleanlinessRating: string;
+    remarks: string;
+    natureOfIllness: string;
+  };
   position: string;
-  sports: object;
-  clubs: object;
+  sports: {
+    ballGames: string;
+    track: string;
+    throws: string;
+    swimming: string;
+    jumps: string;
+  };
+  clubs: {
+    organization: string;
+    officeHeld: string;
+    significantContribution: string;
+  };
   classTeacherSignature?: string;
   principalComment: string;
   classTeacherComment: string;
   schoolReopens: string;
   numberOfStudents: string;
+}
+
+export interface ISeniorAttendance {
+  timesSchoolOpened: number;
+  timePresent: number;
+  timeAbsent: number;
+}
+
+export interface IJuniorAttendance {
+  school: {
+    timesSchoolOpenedAndActivities: string;
+    timesPresent: string;
+    timeAbsent: string;
+    timesPunctual: string;
+  };
+  sportAndAthletics: {
+    timesSchoolOpenedAndActivities: string;
+    timesPresent: string;
+    timeAbsent: string;
+    timesPunctual: string;
+  };
+  otherOrganizedActivities: {
+    timesSchoolOpenedAndActivities: string;
+    timesPresent: string;
+    timeAbsent: string;
+    timesPunctual: string;
+  };
 }

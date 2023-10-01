@@ -12,6 +12,9 @@ import APIV1Route from "./routes";
 import { NotFound } from "./middlewares/notfound.middleware";
 import YAML from "yamljs";
 import cors from "cors";
+import axios from "axios";
+import { seniorReportConfig } from "./config/ejs-config";
+import { IReport } from "./interface/report.interface";
 
 dotenv.config();
 
@@ -44,6 +47,12 @@ app.use(
   swaggerUi.serve,
   swaggerUi.setup(swaggerDocument, { explorer: true })
 );
+
+app.get("/report-sheet", async (req, res) => {
+  res.render("/senior-report.ejs", {
+    report: seniorReportConfig({} as IReport).report,
+  });
+});
 app.use(NotFound);
 const PORT = process.env.PORT || 4000;
 const start = async (): Promise<void> => {

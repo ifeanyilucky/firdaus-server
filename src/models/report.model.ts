@@ -57,6 +57,7 @@ export const ReportSchema = new Mongoose.Schema<IReport>(
     },
     affectiveDomain: Object,
     personalSkills: Object,
+    publishDate: Date,
   },
   { timestamps: true }
 );

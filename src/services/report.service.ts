@@ -8,6 +8,7 @@ import { User } from "../models/user.model";
 import { BadRequestError, NotFoundError } from "../error";
 import { JUNIOR_SECTION, ROLES, SENIOR_SECTION } from "../config/app";
 import mongoose from "mongoose";
+import { juniorReportConfig, seniorReportConfig } from "../config/ejs-config";
 
 const { ObjectId } = mongoose.Schema;
 export const ReportService = {
@@ -106,43 +107,22 @@ export const ReportService = {
     if (!report) {
       throw new NotFoundError("You do not have a report for this session");
     }
-    const { personalSkills, affectiveDomain, personalTrait } = report;
+    const {
+      personalSkills,
+      affectiveDomain,
+      personalTrait,
+      publishDate,
+      conduct,
+      sports,
+      attendance,
+      student: std,
+    } = report;
     let htmlReport: string = "";
     if (report.classSection === "junior") {
       ejs.renderFile(
         path.join(__dirname, "../views/junior-report.ejs"),
         {
-          report: {
-            performance: report.performance,
-            personalTrait: {
-              punctuality: personalTrait?.punctuality || "",
-              neatness: personalTrait?.neatness || "",
-              leadership: personalTrait?.leadership || "",
-              trait: personalTrait?.trait || "",
-              demeanor: personalTrait?.demeanor || "",
-              respect: personalTrait?.respect || "",
-              honesty: personalTrait?.honesty || "",
-              mixing: personalTrait?.mixing || "",
-              obedience: personalTrait?.obedience || "",
-              teamWork: personalTrait?.teamWork || "",
-            },
-            affectiveDomain: {
-              punctuality: affectiveDomain?.punctuality || "",
-              politeness: affectiveDomain?.politeness || "",
-              attentiveness: affectiveDomain?.attentiveness || "",
-              neatness: affectiveDomain?.neatness || "",
-              initiative: affectiveDomain?.initiative || "",
-              perseverance: affectiveDomain?.perseverance || "",
-              teamWork: affectiveDomain?.teamWork,
-              leadershipSpirit: affectiveDomain?.leadershipSpirit || "",
-              relationshipWithTeachers:
-                affectiveDomain?.relationshipWithTeachers || "",
-              attitudeToWork: affectiveDomain?.attitudeToWork || "",
-              health: affectiveDomain?.health,
-              emotionalStability: affectiveDomain?.emotionalStability || "",
-              innovative: affectiveDomain?.innovative || "",
-            },
-          },
+          report: juniorReportConfig(report).report,
         },
         // @ts-ignore
         (err: Error, html: string): any => {
@@ -155,7 +135,9 @@ export const ReportService = {
     } else {
       ejs.renderFile(
         path.join(__dirname, "../views/senior-report.ejs"),
-        { report },
+        {
+          report: seniorReportConfig(report).report,
+        },
         // @ts-ignore
         (err: Error, html: string): any => {
           if (err) {
