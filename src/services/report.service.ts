@@ -1,5 +1,6 @@
 import { IReport, Term } from "../interface/report.interface";
 import { Report } from "../models/report.model";
+import { Term as TermModel } from "../models/term.model";
 import { htmlToPdf } from "../utils/html-to-pdf";
 import ejs from "ejs";
 import path from "path";
@@ -70,9 +71,17 @@ export const ReportService = {
     if (existingReport)
       throw new BadRequestError(`Report already exists for this student.`);
 
+    const currentDate = new Date();
+    const currentTerm = await TermModel.findOne({
+      startDate: { $lte: currentDate },
+      endDate: { $gte: currentDate },
+    });
+
     const newReport = new Report({
       ...data,
       teacher: teacherId,
+      reportTerm: currentTerm?.name,
+      reportYear: currentTerm?.startDate,
     });
     return await newReport.save();
   },
@@ -93,7 +102,7 @@ export const ReportService = {
       user,
       classSection,
     } = params;
-
+    console.log(selectedTerm);
     const report = await Report.findOne({
       reportTerm: selectedTerm,
       reportClass: selectedClass,

@@ -1,4 +1,5 @@
 import { IUser } from "../interface/user.interface";
+import _ from "lodash";
 import {
   IJuniorAttendance,
   IReport,
@@ -6,13 +7,23 @@ import {
 } from "../interface/report.interface";
 
 export const seniorReportConfig = (report: IReport) => {
+  const getReportYear = new Date(report.reportYear).getFullYear();
+  const totalAverageScore = _.sumBy(report.performance, "totalWeightedAverage");
+
+  const totalDefaultAverageScore = report.performance.length * 100;
+  const averagePercentage = totalAverageScore / 100;
   return {
     report: {
       ...report,
+      totalDefaultAverageScore: totalDefaultAverageScore || "",
+      averagePercentage: averagePercentage || "",
+      totalAverageScore: totalAverageScore || "",
       reportClass: report?.reportClass || "",
       performance: report?.performance || [],
       publishDate: report?.publishDate || "",
       reportTerm: report?.reportTerm || "",
+      reportYear: getReportYear || "",
+      schoolReopenDate: report?.schoolReopenDate || "",
       personalTrait: {
         punctuality: report?.personalTrait?.punctuality || "",
         neatness: report?.personalTrait?.neatness || "",
@@ -76,57 +87,97 @@ export const seniorReportConfig = (report: IReport) => {
 };
 
 export const juniorReportConfig = (report: IReport) => {
+  const getReportYear = new Date(report.reportYear).getFullYear();
+  const totalAverageScore = _.sumBy(report.performance, "totalWeightedAverage");
+
+  const totalDefaultAverageScore = report.performance.length * 100;
+  const averagePercentage = Math.floor(
+    (totalAverageScore / totalDefaultAverageScore) * 100
+  );
   return {
     report: {
       ...report,
       performance: report.performance || [],
-      schoolReopens: report.schoolReopens,
-      numberOfStudents: report.numberOfStudents,
+      totalAverageScore: totalAverageScore || "",
+      averagePercentage: averagePercentage || "",
+      totalDefaultAverageScore: totalDefaultAverageScore || "",
+      schoolReopens: report.schoolReopens || "",
+      numberOfStudents: report.numberOfStudents || "",
+      reportYear: getReportYear || "",
+      reportClass: report.reportClass || "",
+      reportTerm: report.reportTerm || "",
+      position: report.position || "",
+
+      principalComment: report.numberOfStudents || "",
+      sports: {
+        ballGames: report?.sports?.ballGames || "",
+        track: report?.sports?.track || "",
+        throws: report?.sports?.throws || "",
+        swimming: report?.sports?.swimming || "",
+        jumps: report?.sports?.jumps || "",
+      },
       conduct: {
-        comments: report.conduct.comments,
+        comments: report.conduct.comments || "",
       },
       attendance: {
         school: {
-          timesSchoolOpened: (report.attendance as IJuniorAttendance).school
-            .timeAbsent,
-          timeAbsent: (report.attendance as IJuniorAttendance).school
-            .timeAbsent,
-          timePunctual: (report.attendance as IJuniorAttendance).school
-            .timesPunctual,
+          timesSchoolOpened:
+            (report.attendance as IJuniorAttendance).school
+              .timesSchoolOpenedAndActivities || "",
+          timeAbsent:
+            (report.attendance as IJuniorAttendance).school.timesAbsent || "",
+          timePunctual:
+            (report.attendance as IJuniorAttendance).school.timesPunctual || "",
         },
         sportAndAthletics: {
-          timesSchoolOpened: (report.attendance as IJuniorAttendance)
-            .sportAndAthletics.timeAbsent,
+          timesSchoolOpened:
+            (report.attendance as IJuniorAttendance).sportAndAthletics
+              .timesAbsent || "",
           timeAbsent: (report.attendance as IJuniorAttendance).sportAndAthletics
-            .timeAbsent,
-          timePunctual: (report.attendance as IJuniorAttendance)
-            .sportAndAthletics.timesPunctual,
+            .timesAbsent,
+          timePunctual:
+            (report.attendance as IJuniorAttendance).sportAndAthletics
+              .timesPunctual || "",
         },
         otherOrganizedActivities: {
-          timesSchoolOpened: (report.attendance as IJuniorAttendance)
-            .sportAndAthletics.timeAbsent,
-          timeAbsent: (report.attendance as IJuniorAttendance).sportAndAthletics
-            .timeAbsent,
-          timePunctual: (report.attendance as IJuniorAttendance)
-            .sportAndAthletics.timesPunctual,
+          timesSchoolOpened:
+            (report.attendance as IJuniorAttendance).sportAndAthletics
+              .timesAbsent || "",
+          timeAbsent:
+            (report.attendance as IJuniorAttendance).sportAndAthletics
+              .timesAbsent || "",
+          timePunctual:
+            (report.attendance as IJuniorAttendance).sportAndAthletics
+              .timesPunctual || "",
         },
       },
       physicalHealth: {
         height: {
-          beginningOfTerm: report.physicalHealth.height.beginningOfTerm,
-          endOfTerm: report.physicalHealth.height.endOfTerm,
+          beginningOfTerm: report.physicalHealth.height.beginningOfTerm || "",
+          endOfTerm: report.physicalHealth.height.endOfTerm || "",
         },
         weight: {
-          beginningOfTerm: report.physicalHealth.weight.beginningOfTerm,
-          endOfTerm: report.physicalHealth.weight.endOfTerm,
+          beginningOfTerm: report.physicalHealth.weight.beginningOfTerm || "",
+          endOfTerm: report.physicalHealth.weight.endOfTerm || "",
         },
-        daysAbsentDueToIllness: report.physicalHealth.daysAbsentDueToIllness,
-        natureOfIllness: report.physicalHealth.natureOfIllness,
-        cleanlinessRating: report.physicalHealth.cleanlinessRating,
-        remarks: report.physicalHealth.remarks,
+        daysAbsentDueToIllness:
+          report.physicalHealth.daysAbsentDueToIllness || "",
+        natureOfIllness: report.physicalHealth.natureOfIllness || "",
+        cleanlinessRating: report.physicalHealth.cleanlinessRating || "",
+        remarks: report.physicalHealth.remarks || "",
       },
       clubs: {
-        organization: report.clubs.organization,
+        organization: report.clubs.organization || "",
+      },
+      student: {
+        ...(report.student as IUser),
+        admissionNumber: (report.student as IUser).admissionNumber,
+        firstName: (report.student as IUser).firstName,
+        lastName: (report.student as IUser).lastName,
+        middleName: (report.student as IUser).middleName,
+      },
+      teacher: {
+        teacherSignature: (report.teacher as IUser).teacherSignature,
       },
     },
   };

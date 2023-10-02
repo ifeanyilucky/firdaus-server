@@ -13,6 +13,8 @@ export enum Term {
 
 export interface IReport extends JuniorReport {
   teacher: IUser | string;
+  schoolReopenDate: Date;
+  reportYear: string;
   // subjects : Subject[],
   status: string;
   _id?: string;
@@ -43,7 +45,7 @@ export interface IReport extends JuniorReport {
     arabiyyaAndFiqhu: string;
     cultural: string;
   };
-  reportTerm: "FIRST_TERM" | "SECOND_TERM" | "THIRD_TERM";
+  reportTerm: "FIRST TERM" | "SECOND TERM" | "THIRD TERM";
   performance: subject[];
   reportClass: "JSS1" | "JSS2" | "JSS3" | "SSS1" | "SSS2" | "SSS3";
   classSection: string;
@@ -124,19 +126,19 @@ export interface IJuniorAttendance {
   school: {
     timesSchoolOpenedAndActivities: string;
     timesPresent: string;
-    timeAbsent: string;
+    timesAbsent: string;
     timesPunctual: string;
   };
   sportAndAthletics: {
     timesSchoolOpenedAndActivities: string;
     timesPresent: string;
-    timeAbsent: string;
+    timesAbsent: string;
     timesPunctual: string;
   };
   otherOrganizedActivities: {
     timesSchoolOpenedAndActivities: string;
     timesPresent: string;
-    timeAbsent: string;
+    timesAbsent: string;
     timesPunctual: string;
   };
 }

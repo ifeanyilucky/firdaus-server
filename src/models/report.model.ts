@@ -43,7 +43,7 @@ export const ReportSchema = new Mongoose.Schema<IReport>(
     reportTerm: {
       type: String,
       required: [true, "Please enter term of student report"],
-      enum: ["FIRST_TERM", "SECOND_TERM", "THIRD_TERM"],
+      enum: ["FIRST TERM", "SECOND TERM", "THIRD TERM"],
     },
     reportClass: {
       type: String,
@@ -58,6 +58,11 @@ export const ReportSchema = new Mongoose.Schema<IReport>(
     affectiveDomain: Object,
     personalSkills: Object,
     publishDate: Date,
+    reportYear: {
+      type: String,
+      required: true,
+    },
+    schoolReopenDate: Date,
   },
   { timestamps: true }
 );
