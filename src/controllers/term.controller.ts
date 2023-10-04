@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { ITerm, Term } from "../models/term.model";
-import { BadRequestError } from "../error";
+import { BadRequestError, NotFoundError } from "../error";
 
 export const getCurrentTerm = async (req: Request, res: Response) => {
   const currentDate = new Date();
@@ -8,7 +8,8 @@ export const getCurrentTerm = async (req: Request, res: Response) => {
     startDate: { $lte: currentDate },
     endDate: { $gte: currentDate },
   });
-  console.log(currentTerm);
+  if (!currentTerm) throw new NotFoundError("No current term found");
+  console.log("current-term", currentTerm);
   res.status(200).json({ data: currentTerm, success: true });
 };
 
