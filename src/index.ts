@@ -53,6 +53,12 @@ app.get("/report-sheet", async (req, res) => {
     report: seniorReportConfig({} as IReport).report,
   });
 });
+
+app.use(
+  cors({
+    origin: ["http://localhost:3000", "http://localhost:3001"],
+  })
+);
 app.use(NotFound);
 const PORT = process.env.PORT || 4000;
 const start = async (): Promise<void> => {
