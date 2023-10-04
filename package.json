@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "npm-run-all clean tsc copy-assets",
+    "build": "npm-run-all clean tsc copy-assets node_modules/puppeteer/install.js",
     "copy-assets": "ts-node ./src/tools/copyAssets",
     "clean": "rimraf ./dist",
     "tsc": "npx tsc",
