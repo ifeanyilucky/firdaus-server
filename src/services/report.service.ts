@@ -157,7 +157,7 @@ export const ReportService = {
       );
     }
 
-    const reportPath = path.join(__dirname, "../tmp/report-sheet.pdf");
+    const reportPath = path.join("/tmp/report-sheet.pdf");
     // convert html to pdf
     await generatePdf(htmlReport, reportPath)
       .then((res) => {
