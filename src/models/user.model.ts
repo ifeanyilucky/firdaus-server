@@ -113,12 +113,13 @@ const UserSchema = new mongoose.Schema<IUser, UserModel, IUserMethods>(
       enum: ["JSS1", "JSS2", "JSS3", "SSS1", "SSS2", "SSS3"],
       required: function (): boolean {
         // @ts-ignore
-        return this.role === "teacher" ? true : false;
+        return this.classTeacher === "teacher" ? true : false;
       },
     },
     department: {
       type: String,
-      enum: ["science", "commercial", "art"],
+      enum: ["science", "commercial", "art", "none"],
+      default: "none",
     },
     passwordResetToken: String,
     passwordResetExpire: Date,

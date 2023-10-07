@@ -174,10 +174,10 @@ export const juniorReportConfig = (report: IReport) => {
         admissionNumber: (report.student as IUser).admissionNumber,
         firstName: (report.student as IUser).firstName,
         lastName: (report.student as IUser).lastName,
-        middleName: (report.student as IUser).middleName,
+        middleName: (report.student as IUser).middleName || "",
       },
       teacher: {
-        teacherSignature: (report.teacher as IUser).teacherSignature,
+        teacherSignature: (report.teacher as IUser).teacherSignature || "",
       },
     },
   };

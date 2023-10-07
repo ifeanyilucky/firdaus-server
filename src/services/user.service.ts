@@ -46,7 +46,15 @@ export const UserService = {
       teacherSignature = upload as string;
     }
 
-    return await User.create({ ...data, teacherSignature });
+    const existingDepartment = ["art", "commercial", "science"].some(
+      (item: string) => item === data.department
+    );
+
+    return await User.create({
+      ...data,
+      teacherSignature,
+      department: existingDepartment ? data.department : "none",
+    });
   },
   updateUser: async (id: string, data: IUser) => {
     return await User.findOneAndUpdate({ _id: id }, { ...data }, { new: true });

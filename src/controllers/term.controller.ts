@@ -9,7 +9,7 @@ export const getCurrentTerm = async (req: Request, res: Response) => {
     endDate: { $gte: currentDate },
   });
   if (!currentTerm) throw new NotFoundError("No current term found");
-  console.log("current-term", currentTerm);
+
   res.status(200).json({ data: currentTerm, success: true });
 };
 
