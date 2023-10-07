@@ -1,24 +1,36 @@
-import puppeteer from "puppeteer";
+import fs from "fs";
+import pdf from "html-pdf";
 
-export const htmlToPdf = async (html: string, outputPath: string) => {
-  const browser = await puppeteer.launch({
-    headless: "new",
+export async function generatePdf(html: string, filePath: string) {
+  return new Promise((resolve, reject) => {
+    pdf
+      .create(html, { format: "Letter" })
+      .toFile(filePath, function (err, res) {
+        if (err) reject(err);
+        resolve(res);
+      });
   });
+}
 
-  const page = await browser.newPage();
+// export const htmlToPdf = async (html: string, outputPath: string) => {
+//   const browser = await puppeteer.launch({
+//     headless: "new",
+//   });
 
-  await page.setContent(html, {
-    waitUntil: "networkidle0",
-  });
+//   const page = await browser.newPage();
 
-  const pdf = await page.pdf({
-    path: outputPath,
-    printBackground: true,
-    scale: 1,
-    format: "a4",
-  });
+//   await page.setContent(html, {
+//     waitUntil: "networkidle0",
+//   });
 
-  await browser.close();
+//   const pdf = await page.pdf({
+//     path: outputPath,
+//     printBackground: true,
+//     scale: 1,
+//     format: "a4",
+//   });
 
-  return pdf;
-};
+//   await browser.close();
+
+//   return pdf;
+// };

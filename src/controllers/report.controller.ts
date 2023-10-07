@@ -3,7 +3,6 @@ import { Request, Response, response } from "express";
 import { ReportService } from "../services/report.service";
 import { IUserResponse } from "../interface/user.interface";
 import { IReport, Term } from "../interface/report.interface";
-import { htmlToPdf } from "../utils/html-to-pdf";
 import path from "path";
 import fs from "fs";
 
