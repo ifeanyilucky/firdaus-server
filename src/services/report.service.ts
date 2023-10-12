@@ -1,7 +1,7 @@
 import { IReport, Term } from "../interface/report.interface";
 import { Report } from "../models/report.model";
 import { Term as TermModel } from "../models/term.model";
-import { generatePdf } from "../utils/html-to-pdf";
+import { generatePdf, convertToPdf } from "../utils/html-to-pdf";
 import ejs from "ejs";
 import path from "path";
 import { CLASS, IUser, IUserResponse } from "../interface/user.interface";
@@ -157,14 +157,13 @@ export const ReportService = {
       );
     }
 
-    const reportPath = path.join("/tmp/report-sheet.pdf");
+    const reportPath = path.join(__dirname, "../tmp/report-sheet.pdf");
     // convert html to pdf
-    await generatePdf(htmlReport, reportPath)
-      .then((res) => {
+    await convertToPdf(htmlReport, reportPath)
+      .then(() => {
         console.log("Pdf created successfully");
-        console.log(res);
       })
-      .catch((error: any) => {
+      .catch((error) => {
         console.log("Error generating PDF", error);
       });
     return reportPath;

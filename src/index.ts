@@ -6,7 +6,6 @@ import { connectDb } from "./db/connect";
 import { appConfig } from "./config/app";
 import "express-async-errors";
 import { ErrorHandler } from "./middlewares/errorhandler.middleware";
-import swaggerJsDoc from "swagger-jsdoc";
 import swaggerUi from "swagger-ui-express";
 import APIV1Route from "./routes";
 import { NotFound } from "./middlewares/notfound.middleware";
