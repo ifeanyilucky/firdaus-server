@@ -1,3 +1,4 @@
+import axios from "axios";
 import { IReport, Term } from "../interface/report.interface";
 import { Report } from "../models/report.model";
 import { Term as TermModel } from "../models/term.model";
@@ -7,9 +8,11 @@ import path from "path";
 import { CLASS, IUser, IUserResponse } from "../interface/user.interface";
 import { User } from "../models/user.model";
 import { BadRequestError, NotFoundError } from "../error";
-import { JUNIOR_SECTION, ROLES, SENIOR_SECTION } from "../config/app";
 import mongoose from "mongoose";
+import { JUNIOR_SECTION, ROLES, SENIOR_SECTION } from "../config/app";
 import { juniorReportConfig, seniorReportConfig } from "../config/ejs-config";
+import { Response } from "express";
+import fs from "fs";
 
 const { ObjectId } = mongoose.Schema;
 export const ReportService = {
@@ -156,16 +159,31 @@ export const ReportService = {
         }
       );
     }
-
     const reportPath = path.join(__dirname, "../tmp/report-sheet.pdf");
+
+    // const pdfReport = await axios.post("http://localhost:8080/to-pdf", {
+    //   html: htmlReport,
+    // });
+
+    // fs.writeFile(reportPath, pdfReport.data, (err) => {
+    //   if (err) {
+    //     console.log(err);
+    //     return;
+    //   }
+
+    //   console.log("PDF received and saved on Server");
+    // });
+
     // convert html to pdf
-    await convertToPdf(htmlReport, reportPath)
-      .then(() => {
-        console.log("Pdf created successfully");
-      })
-      .catch((error) => {
-        console.log("Error generating PDF", error);
-      });
-    return reportPath;
+    // await convertToPdf(htmlReport, reportPath)
+    //   .then(() => {
+    //     console.log("Pdf created successfully");
+    //   })
+    //   .catch((error) => {
+    //     console.log("Error generating PDF", error);
+    //   });
+    return htmlReport;
   },
 };
+
+// https://generate-pdf-emhz.onrender.com/

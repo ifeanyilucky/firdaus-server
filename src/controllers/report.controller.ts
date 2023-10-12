@@ -1,5 +1,5 @@
 import { StatusCodes } from "http-status-codes";
-import { Request, Response, response } from "express";
+import { Request, Response } from "express";
 import { ReportService } from "../services/report.service";
 import { IUserResponse } from "../interface/user.interface";
 import { IReport, Term } from "../interface/report.interface";
@@ -54,17 +54,18 @@ export const downloadReport = async (req: Request, res: Response) => {
     reportId: req.params.id,
     user,
   });
-
-  res.download(response, "report.pdf", (err) => {
-    if (err) {
-      console.log(err);
-      res.status(500).send("Error generating the PDF");
-    } else {
-      fs.unlink(response, (err) => {
-        if (err) {
-          console.log(err);
-        }
-      });
-    }
-  });
+  res.status(200).json({ success: true, data: response });
+  // res.download(response, "report.pdf", (err) => {
+  //   if (err) {
+  //     console.log(err);
+  //     res.status(500).send("Error generating the PDF");
+  //   } else {
+  //     // fs.unlink(response, (err) => {
+  //     //   if (err) {
+  //     //     console.log(err);
+  //     //   }
+  //     // });
+  //     console.log("success saving");
+  //   }
+  // });
 };
