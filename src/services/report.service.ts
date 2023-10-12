@@ -2,7 +2,6 @@ import axios from "axios";
 import { IReport, Term } from "../interface/report.interface";
 import { Report } from "../models/report.model";
 import { Term as TermModel } from "../models/term.model";
-import { generatePdf, convertToPdf } from "../utils/html-to-pdf";
 import ejs from "ejs";
 import path from "path";
 import { CLASS, IUser, IUserResponse } from "../interface/user.interface";
