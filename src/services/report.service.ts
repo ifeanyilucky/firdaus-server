@@ -82,8 +82,8 @@ export const ReportService = {
     const newReport = new Report({
       ...data,
       teacher: teacherId,
-      // reportTerm: currentTerm?.name,
-      // reportYear: currentTerm?.startDate,
+      reportTerm: currentTerm?.name,
+      reportYear: currentTerm?.startDate,
     });
     return await newReport.save();
   },
