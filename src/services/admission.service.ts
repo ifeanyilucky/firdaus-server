@@ -21,4 +21,4 @@ export const AdmissionService = {
 
     return admission;
   },
-};
+};  
