@@ -49,3 +49,15 @@ export const updateUser = async (req: Request, res: Response) => {
   const data = await UserService.updateUser(id, body);
   res.status(StatusCodes.OK).send({ success: true, data });
 };
+
+export const changePassword = async (req: Request, res: Response) => {
+  const { oldPassword, newPassword } = req.body;
+
+  const data = await UserService.changePassword({
+    oldPassword,
+    newPassword,
+    user: req.user,
+  });
+
+  res.status(StatusCodes.OK).json({ success: true, data });
+};

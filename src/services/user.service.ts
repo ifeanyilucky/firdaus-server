@@ -1,8 +1,13 @@
-import { BadRequestError } from "../error";
+import { BadRequestError, NotFoundError } from "../error";
 import { User } from "../models/user.model";
 import { IUser, IUserResponse } from "../interface/user.interface";
 import { cloudUpload } from "../utils/cloudinary";
 import { File } from "buffer";
+import crypto from "crypto";
+import bcrypt from "bcryptjs";
+import ejs from "ejs";
+import path from "path";
+import { sendEmail } from "../utils/sendemail";
 
 export const UserService = {
   getUser: async (id: string) => {
@@ -83,5 +88,85 @@ export const UserService = {
       queryObject.currentClass = currentClass;
     }
     return await User.find(queryObject);
+  },
+
+  forgotPassword: async (params: { email: string }) => {
+    const { email } = params;
+
+    const user = await User.findOne({ email: email });
+    if (!user) {
+      throw new NotFoundError(`${email} not found!`);
+    }
+
+    const resetToken = user.getResetPasswordToken();
+
+    await user.save();
+
+    const resetUrl = `${process.env.HOST}/reset-password/${resetToken}`;
+
+    ejs.renderFile(
+      path.join(__dirname, "../views/emails/reset-password.ejs"),
+      { email: user.email, resetUrl },
+      async (error, data) => {
+        if (error) {
+          console.log(error);
+          user.passwordResetToken = undefined as unknown as string;
+          user.passwordResetExpire = undefined as unknown as Date;
+
+          await user.save();
+          throw new BadRequestError("Email could not be sent");
+        } else {
+          await sendEmail({
+            to: user.email,
+            subject: "Forgot your password? Let's get you a new one.",
+            html: data,
+          });
+        }
+      }
+    );
+  },
+  changePassword: async (params: {
+    oldPassword: string;
+    newPassword: string;
+    user: IUserResponse;
+  }) => {
+    const { oldPassword, newPassword } = params;
+
+    const account = await User.findOne({ _id: params.user._id });
+
+    if (!account) throw new NotFoundError("User not found");
+    const isPasswordRight = await account.comparePassword(oldPassword);
+
+    if (!isPasswordRight)
+      throw new BadRequestError(`Sorry that password isn't right`);
+    const salt = await bcrypt.genSalt(10);
+    const hashNewPassword = await bcrypt.hash(newPassword, salt);
+    const updatePassword = await User.findOneAndUpdate(
+      { _id: account._id },
+      { password: hashNewPassword },
+      { new: true }
+    );
+    return updatePassword;
+  },
+
+  resetPassword: async (params: { token: string; password: string }) => {
+    const resetPasswordToken = crypto
+      .createHash("sha256")
+      .update(params.token)
+      .digest("hex");
+
+    const user = await User.findOne({
+      resetPasswordToken,
+      passwordResetExpire: { $gt: Date.now() },
+    });
+    if (!user) {
+      throw new BadRequestError("Invalid reset token");
+    }
+
+    user.password = params.password;
+    user.passwordResetToken = undefined as unknown as string;
+    user.passwordResetExpire = undefined as unknown as Date;
+
+    await user.save();
   },
 };

@@ -2,6 +2,7 @@ import express from "express";
 
 const router = express.Router();
 import {
+  changePassword,
   createUser,
   deleteUser,
   getUser,
@@ -16,6 +17,7 @@ import { upload } from "../utils/multer";
 router.route("/").get(auth, getUsers);
 router.route("/single/:id").get(auth, getUser);
 router.route("/edit/:id").patch(auth, updateUser);
+router.route("/change-password").put(auth, changePassword);
 router
   .route("/create")
   .post(auth, upload.single("teacherSignature"), createUser);
