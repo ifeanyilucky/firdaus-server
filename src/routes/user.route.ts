@@ -3,6 +3,7 @@ import express from "express";
 const router = express.Router();
 import {
   changePassword,
+  createMultiUsers,
   createUser,
   deleteUser,
   getUser,
@@ -16,11 +17,14 @@ import { upload } from "../utils/multer";
 
 router.route("/").get(auth, getUsers);
 router.route("/single/:id").get(auth, getUser);
-router.route("/edit/:id").patch(auth, updateUser);
+router
+  .route("/edit/:id")
+  .patch(auth, upload.single("teacherSignature"), updateUser);
 router.route("/change-password").put(auth, changePassword);
 router
   .route("/create")
   .post(auth, upload.single("teacherSignature"), createUser);
 router.route("/delete/:id").delete(auth, deleteUser);
+router.route("/multi-users").post(auth, createMultiUsers);
 
 export default router;

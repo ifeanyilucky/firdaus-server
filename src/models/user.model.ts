@@ -61,6 +61,11 @@ const UserSchema = new mongoose.Schema<IUser, UserModel, IUserMethods>(
       default: "student",
       required: [true, "Please specify role for this user"],
     },
+    status: {
+      type: String,
+      enum: ["active", "inactive"],
+      default: "active",
+    },
     tel: {
       type: String,
       minLength: 10,
@@ -95,6 +100,7 @@ const UserSchema = new mongoose.Schema<IUser, UserModel, IUserMethods>(
     },
     teacherType: {
       type: String,
+      enum: ["subject_teacher", "class_teacher"],
       required: function (): boolean {
         // @ts-ignore
         return this.role === "teacher" ? true : false;
@@ -110,11 +116,26 @@ const UserSchema = new mongoose.Schema<IUser, UserModel, IUserMethods>(
     },
     classHandled: {
       type: String,
-      enum: ["JSS1", "JSS2", "JSS3", "SSS1", "SSS2", "SSS3"],
-      required: function (): boolean {
-        // @ts-ignore
-        return this.classTeacher === "teacher" ? true : false;
-      },
+      enum: [
+        "FGJSC_001",
+        "FGJSC_002",
+        "FGJSC_002",
+        "FGJSC_003",
+        "FGSSC_001",
+        "FGSSC_002",
+        "FGSSC_003",
+        "FGKGC_001",
+        "FGKGC_002",
+        "FGNSC_001",
+        "FGNSC_002",
+        "FGBSC_001",
+        "FGBSC_002",
+        "FGBSC_003",
+        "FGBSC_004",
+        "FGBSC_005",
+        "FGBSC_006",
+        "none",
+      ],
     },
     department: {
       type: String,

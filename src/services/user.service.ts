@@ -29,40 +29,59 @@ export const UserService = {
         });
         if (existingStudent)
           throw new BadRequestError(
-            "Student with this admission number already existed"
+            "Student with this admission number already exists"
           );
       }
     }
     if (data.role === "teacher") {
-      if (!data.teacherId) {
+      if (!data?.teacherId) {
         throw new BadRequestError("Please enter teacher ID");
       } else {
         const existingTeacher = await User.findOne({
           teacherId: data.teacherId,
         });
         if (existingTeacher) {
-          throw new BadRequestError("Teacher with this ID already existed");
+          throw new BadRequestError("Teacher with this ID already exists");
         }
       }
-      if (!file.path)
-        throw new BadRequestError("Teacher's signature is required");
 
-      const upload = await cloudUpload(file.path, "teacher-signature");
-      teacherSignature = upload as string;
+      // if (!file.path)
+      //   throw new BadRequestError("Teacher's signature is required");
+      if (file?.path) {
+        const upload = await cloudUpload(file?.path, "teacher-signature");
+        teacherSignature = upload as string;
+      }
     }
 
     const existingDepartment = ["art", "commercial", "science"].some(
       (item: string) => item === data.department
     );
-
+    console.log(data);
     return await User.create({
       ...data,
-      teacherSignature,
+      teacherSignature: teacherSignature,
       department: existingDepartment ? data.department : "none",
     });
   },
-  updateUser: async (id: string, data: IUser) => {
-    return await User.findOneAndUpdate({ _id: id }, { ...data }, { new: true });
+  updateUser: async (
+    id: string,
+    params: { data: IUser; user: IUser; file: Express.Multer.File | any }
+  ) => {
+    const { data } = params;
+
+    let teacherSignature = params.user.teacherSignature;
+    if (params.file?.path) {
+      const uploadSignature = await cloudUpload(
+        params.file.path,
+        "teacher-signature"
+      );
+      teacherSignature = uploadSignature as string;
+    }
+    return await User.findOneAndUpdate(
+      { _id: id },
+      { ...data, teacherSignature },
+      { new: true }
+    );
   },
   getUsers: async (params: { query: IUserResponse | any }) => {
     const { role, _id, department, classHandled, currentClass, classTeacher } =
@@ -88,6 +107,10 @@ export const UserService = {
       queryObject.currentClass = currentClass;
     }
     return await User.find(queryObject);
+  },
+  multiUsers: async (data: IUser[]) => {
+    const allUsers = User.insertMany(data);
+    return allUsers;
   },
 
   forgotPassword: async (params: { email: string }) => {

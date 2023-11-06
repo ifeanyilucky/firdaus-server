@@ -42,11 +42,17 @@ export const deleteUser = async (req: Request, res: Response) => {
 };
 
 export const updateUser = async (req: Request, res: Response) => {
+  const values = JSON.parse(req.body.values);
+
   const {
     params: { id },
     body,
   } = req;
-  const data = await UserService.updateUser(id, body);
+  const data = await UserService.updateUser(id, {
+    data: values,
+    file: req.file,
+    user: req.user,
+  });
   res.status(StatusCodes.OK).send({ success: true, data });
 };
 
@@ -59,5 +65,11 @@ export const changePassword = async (req: Request, res: Response) => {
     user: req.user,
   });
 
+  res.status(StatusCodes.OK).json({ success: true, data });
+};
+
+export const createMultiUsers = async (req: Request, res: Response) => {
+  const values = JSON.parse(req.body.values);
+  const data = await UserService.multiUsers(values);
   res.status(StatusCodes.OK).json({ success: true, data });
 };
