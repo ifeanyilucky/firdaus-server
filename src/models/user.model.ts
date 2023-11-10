@@ -91,6 +91,13 @@ const UserSchema = new mongoose.Schema<IUser, UserModel, IUserMethods>(
       //   return this.role === "teacher" ? true : false;
       // },
     },
+    subjects: {
+      type: Array,
+      required: function (): boolean {
+        // @ts-ignore
+        return this.role === "student" ? true : false;
+      },
+    },
     subjectTaught: {
       type: String,
       required: function (): boolean {

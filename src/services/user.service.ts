@@ -8,6 +8,7 @@ import bcrypt from "bcryptjs";
 import ejs from "ejs";
 import path from "path";
 import { sendEmail } from "../utils/sendemail";
+import { assignSubject } from "../utils/assignSubject";
 
 export const UserService = {
   getUser: async (id: string) => {
@@ -20,6 +21,7 @@ export const UserService = {
   },
   createUser: async (data: IUser, file: Express.Multer.File | any) => {
     let teacherSignature = "";
+    let studentSubject: any = [];
     if (data.role === "student") {
       if (!data.admissionNumber) {
         throw new BadRequestError("Please enter admission number");
@@ -32,6 +34,11 @@ export const UserService = {
             "Student with this admission number already exists"
           );
       }
+      const getAssignedSubject = assignSubject(
+        data.currentClass,
+        data.department
+      );
+      studentSubject = getAssignedSubject?.subject;
     }
     if (data.role === "teacher") {
       if (!data?.teacherId) {
@@ -61,6 +68,7 @@ export const UserService = {
       ...data,
       teacherSignature: teacherSignature,
       department: existingDepartment ? data.department : "none",
+      subjects: studentSubject,
     });
   },
   updateUser: async (

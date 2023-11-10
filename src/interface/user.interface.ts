@@ -15,6 +15,7 @@ export interface IUser {
   currentClass: "JSS1" | "JSS2" | "JSS3" | "SSS1" | "SSS2" | "SSS3";
   reports?: IReport[];
   gender: string;
+  subjects?: object[];
   tel?: string;
   passwordResetExpire: Date;
   passwordResetToken: string;
