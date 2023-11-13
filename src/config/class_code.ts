@@ -1,13 +1,6 @@
-const class_code = [
-  "FGJSC_001",
-  "FGJSC_002",
-  "FGJSC_002",
-  "FGJSC_003",
-  "FGSSC_001",
-  "FGSSC_002",
-  "FGSSC_003",
-  "FGKGC_001",
+export const class_code = [
   "FGKGC_002",
+  "FGKGC_001",
   "FGNSC_001",
   "FGNSC_002",
   "FGBSC_001",
@@ -16,6 +9,13 @@ const class_code = [
   "FGBSC_004",
   "FGBSC_005",
   "FGBSC_006",
+  "FGJSC_001",
+  "FGJSC_002",
+  "FGJSC_002",
+  "FGJSC_003",
+  "FGSSC_001",
+  "FGSSC_002",
+  "FGSSC_003",
 ];
 
 export const kgOne = "";

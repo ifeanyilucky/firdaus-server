@@ -29,6 +29,8 @@ export const getUsers = async (req: Request, res: Response) => {
     query: {
       ...req.query,
     },
+    limit: Number(req.query.limit),
+    page: Number(req.query.page),
   });
   res.status(StatusCodes.OK).send({ success: true, data });
 };

@@ -9,6 +9,11 @@ import ejs from "ejs";
 import path from "path";
 import { sendEmail } from "../utils/sendemail";
 import { assignSubject } from "../utils/assignSubject";
+import {
+  BasicSubjects,
+  ElementarySubjects,
+  ScienceSubjects,
+} from "../config/subjects";
 
 export const UserService = {
   getUser: async (id: string) => {
@@ -91,13 +96,31 @@ export const UserService = {
       { new: true }
     );
   },
-  getUsers: async (params: { query: IUserResponse | any }) => {
-    const { role, _id, department, classHandled, currentClass, classTeacher } =
-      params.query;
+  getUsers: async (params: {
+    query: IUserResponse | any;
+    page: number;
+    limit: number;
+  }) => {
+    const {
+      role,
+      _id,
+      department,
+      classHandled,
+      currentClass,
+      classTeacher,
+      firstName,
+      lastName,
+    } = params.query;
     const queryObject: IUserResponse | any = {};
 
     if (role) {
       queryObject.role = role;
+    }
+    if (firstName) {
+      queryObject.firstName = { $regex: firstName, $options: "i" };
+    }
+    if (lastName) {
+      queryObject.lastName = { $regex: lastName, $options: "i" };
     }
     if (_id) {
       queryObject._id = _id;
@@ -114,8 +137,24 @@ export const UserService = {
     if (currentClass) {
       queryObject.currentClass = currentClass;
     }
-    return await User.find(queryObject);
+    let result = User.find(queryObject);
+    const page = Number(params.page) || 1;
+    const limit = Number(params.limit) || 5;
+    const skip = (page - 1) * limit;
+    result = result.skip(skip).limit(limit);
+    const users = await result;
+    const totalDocuments = await User.countDocuments(queryObject);
+    const totalPages = Math.ceil(totalDocuments / limit);
+
+    return {
+      list: users,
+      total: totalDocuments,
+      currentPage: page,
+      limit,
+      totalPages,
+    };
   },
+
   multiUsers: async (data: IUser[]) => {
     const allUsers = User.insertMany(data);
     return allUsers;
@@ -199,5 +238,40 @@ export const UserService = {
     user.passwordResetExpire = undefined as unknown as Date;
 
     await user.save();
+  },
+  removeSubject: async (params: { subjectCode: string; userId: string }) => {
+    const { subjectCode, userId } = params;
+    let updatedSubjects = null;
+    if (BasicSubjects.filter((item) => item.code === subjectCode)) {
+      const newSubjects = BasicSubjects.filter(
+        (item) => item.code !== subjectCode
+      );
+
+      updatedSubjects = await User.findOneAndUpdate(
+        { _id: userId },
+        { subjects: newSubjects }
+      );
+    }
+    if (ElementarySubjects.filter((item) => item.code === subjectCode)) {
+      const newSubjects = ElementarySubjects.filter(
+        (item) => item.code !== subjectCode
+      );
+
+      updatedSubjects = await User.findOneAndUpdate(
+        { _id: userId },
+        { subjects: newSubjects }
+      );
+    }
+    if (ScienceSubjects.filter((item) => item.code === subjectCode)) {
+      const newSubjects = ScienceSubjects.filter(
+        (item) => item.code !== subjectCode
+      );
+
+      updatedSubjects = await User.findOneAndUpdate(
+        { _id: userId },
+        { subjects: newSubjects }
+      );
+    }
+    return updatedSubjects;
   },
 };

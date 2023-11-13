@@ -44,7 +44,30 @@ const UserSchema = new mongoose.Schema<IUser, UserModel, IUserMethods>(
     avatar: {
       type: String,
     },
-    currentClass: { type: String },
+    currentClass: {
+      type: String,
+      enum: [
+        "FGKGC_001",
+        "FGKGC_002",
+        "FGNSC_001",
+        "FGNSC_002",
+        "FGBSC_001",
+        "FGBSC_002",
+        "FGBSC_003",
+        "FGBSC_004",
+        "FGBSC_005",
+        "FGBSC_006",
+        "FGJSC_001",
+        "FGJSC_002",
+        "FGJSC_002",
+        "FGJSC_003",
+        "FGSSC_001",
+        "FGSSC_002",
+        "FGSSC_003",
+
+        "none",
+      ],
+    },
     teacherId: String,
     gender: {
       type: String,
