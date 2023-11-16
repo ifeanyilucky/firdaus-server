@@ -110,6 +110,7 @@ export const UserService = {
       classTeacher,
       firstName,
       lastName,
+      status,
     } = params.query;
     const queryObject: IUserResponse | any = {};
 
@@ -136,6 +137,9 @@ export const UserService = {
     }
     if (currentClass) {
       queryObject.currentClass = currentClass;
+    }
+    if (status) {
+      queryObject.status = status;
     }
     let result = User.find(queryObject);
     const page = Number(params.page) || 1;
