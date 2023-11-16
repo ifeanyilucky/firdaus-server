@@ -199,6 +199,22 @@ export const UserService = {
       }
     );
   },
+  adminChangeStudentPassword: async (params: {
+    newPassword: string;
+    user: IUserResponse;
+  }) => {
+    const { newPassword } = params;
+    const account = await User.findOne({ _id: params.user._id });
+    if (!account) throw new NotFoundError("User not found");
+    const salt = await bcrypt.genSalt(10);
+    const hashNewPassword = await bcrypt.hash(newPassword, salt);
+    const updatePassword = await User.findOneAndUpdate(
+      { _id: account._id },
+      { password: hashNewPassword },
+      { new: true }
+    );
+    return updatePassword;
+  },
   changePassword: async (params: {
     oldPassword: string;
     newPassword: string;

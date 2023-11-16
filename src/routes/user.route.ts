@@ -2,6 +2,7 @@ import express from "express";
 
 const router = express.Router();
 import {
+  adminChangeStudentPassword,
   changePassword,
   createMultiUsers,
   createUser,
@@ -21,6 +22,9 @@ router
   .route("/edit/:id")
   .patch(auth, upload.single("teacherSignature"), updateUser);
 router.route("/change-password").put(auth, changePassword);
+router
+  .route("/change-password-for-student")
+  .put(auth, adminChangeStudentPassword);
 router
   .route("/create")
   .post(auth, upload.single("teacherSignature"), createUser);

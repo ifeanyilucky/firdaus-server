@@ -69,7 +69,18 @@ export const changePassword = async (req: Request, res: Response) => {
 
   res.status(StatusCodes.OK).json({ success: true, data });
 };
+export const adminChangeStudentPassword = async (
+  req: Request,
+  res: Response
+) => {
+  const { newPassword } = req.body;
 
+  const data = await UserService.adminChangeStudentPassword({
+    newPassword,
+    user: req.user,
+  });
+  res.status(StatusCodes.OK).json({ success: true, data });
+};
 export const createMultiUsers = async (req: Request, res: Response) => {
   const values = JSON.parse(req.body.values);
   const data = await UserService.multiUsers(values);
