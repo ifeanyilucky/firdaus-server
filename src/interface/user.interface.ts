@@ -8,11 +8,28 @@ export interface IUser {
   teacherId?: string;
   status: string;
   email: string;
-  role: string;
+  role: "student" | "teacher" | "admin";
   avatar?: string;
   password: string;
   admissionNumber?: string;
-  currentClass: "JSS1" | "JSS2" | "JSS3" | "SSS1" | "SSS2" | "SSS3";
+  currentClass:
+    | "FGKGC_001"
+    | "FGKGC_002"
+    | "FGNSC_001"
+    | "FGNSC_002"
+    | "FGBSC_001"
+    | "FGBSC_002"
+    | "FGBSC_003"
+    | "FGBSC_004"
+    | "FGBSC_005"
+    | "FGBSC_006"
+    | "FGJSC_001"
+    | "FGJSC_002"
+    | "FGJSC_002"
+    | "FGJSC_003"
+    | "FGSSC_001"
+    | "FGSSC_002"
+    | "FGSSC_003";
   reports?: IReport[];
   gender: string;
   subjects?: object[];
@@ -25,7 +42,7 @@ export interface IUser {
   classHandled?: "JSS1" | "JSS2" | "JSS3" | "SSS1" | "SSS2" | "SSS3";
   classTeacher?: string;
   teacherType: string;
-  department?: "science" | "department" | "art";
+  department?: "science" | "commercial" | "art";
 }
 
 export enum CLASS {

@@ -3,6 +3,17 @@ import { IUserMethods, User } from "../models/user.model";
 import { IUser, IUserResponse } from "../interface/user.interface";
 import { ROLES } from "../config/app";
 import { Document, Types } from "mongoose";
+import { Subject } from "../models/subject.model";
+import { assignSubject } from "../utils/assignSubject";
+import {
+  BasicSubjects,
+  ArtsSubjects,
+  CommercialSubjects,
+  ElementarySubjects,
+  JuniorSubjects,
+  ScienceSubjects,
+} from "../config/subjects";
+import { ISubject } from "../interface/subject.interface";
 
 interface ILoginData {
   admissionNumber: number;
@@ -16,16 +27,7 @@ interface ILoginData {
 export const AuthService = {
   register: async (params: { data: IUser }) => {
     const { data } = params;
-
-    if (data.role === ROLES.STUDENT) {
-      const existingStudent = await User.findOne({
-        admissionNumber: data.admissionNumber,
-      });
-      if (existingStudent)
-        throw new BadRequestError(
-          "Student with this admission number already existed"
-        );
-    }
+    let subjects: ISubject[] = [];
 
     if (data.role === ROLES.TEACHER) {
       const existingTeacher = await User.findOne({
@@ -42,8 +44,48 @@ export const AuthService = {
     if (existingEmail)
       throw new BadRequestError("User with this email already existed");
 
-    const newUser = new User({ ...data });
-    const user = await newUser.save();
+    const user = await User.create({ ...data });
+    if (data.role === ROLES.STUDENT || data.role === ROLES.TEACHER) {
+      if (["FGNSC_001", "FGNSC_002"].includes(data.currentClass)) {
+        subjects = ElementarySubjects;
+      }
+      if (data.currentClass === "FGKGC_002") {
+        subjects = BasicSubjects;
+      }
+      if (
+        [
+          "FGBSC_001",
+          "FGBSC_002",
+          "FGBSC_003",
+          "FGBSC_004",
+          "FGBSC_005",
+          "FGBSC_006",
+        ].includes(data.currentClass)
+      ) {
+        subjects = BasicSubjects;
+      }
+      if (["FGJSC_001", "FGJSC_002", "FGJSC_003"].includes(data.currentClass)) {
+        subjects = JuniorSubjects;
+      }
+      if (["FGSSC_001", "FGSSC_002", "FGSSC_003"].includes(data.currentClass)) {
+        if (data.department === "science") {
+          subjects = ScienceSubjects;
+        }
+        if (data.department === "art") {
+          subjects = ArtsSubjects;
+        }
+        if (data.department === "commercial") {
+          subjects === CommercialSubjects;
+        }
+      }
+
+      console.log("subjects created successfully");
+    }
+
+    await Subject.create({
+      subjects: subjects,
+      user_id: user._id,
+    });
     const token = user.createJwt();
     return { data: user, token };
   },
@@ -105,8 +147,7 @@ export const AuthService = {
     }
 
     const passwordIsCorrect = await user!.comparePassword(password);
-    if (!passwordIsCorrect)
-      throw new BadRequestError("Sorry, that password isn't right");
+    if (!passwordIsCorrect) throw new BadRequestError("Password is incorrect");
 
     const token = user!.createJwt();
     return { data: user as any, token };

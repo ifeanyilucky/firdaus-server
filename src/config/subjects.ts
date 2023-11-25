@@ -10,7 +10,7 @@ export const ElementarySubjects = [
     id: "002",
   },
   {
-    name: "Handwitting",
+    name: "Handwriting",
     code: "FES_003",
     id: "003",
   },

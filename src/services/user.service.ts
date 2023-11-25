@@ -10,10 +10,15 @@ import path from "path";
 import { sendEmail } from "../utils/sendemail";
 import { assignSubject } from "../utils/assignSubject";
 import {
+  ArtsSubjects,
   BasicSubjects,
+  CommercialSubjects,
   ElementarySubjects,
+  JuniorSubjects,
   ScienceSubjects,
 } from "../config/subjects";
+import { Subject } from "../models/subject.model";
+import { ISubject } from "../interface/subject.interface";
 
 export const UserService = {
   getUser: async (id: string) => {
@@ -25,6 +30,7 @@ export const UserService = {
     return await User.findOneAndDelete({ _id: id });
   },
   createUser: async (data: IUser, file: Express.Multer.File | any) => {
+    let subjects: ISubject[] = [];
     let teacherSignature = "";
     let studentSubject: any = [];
     if (data.role === "student") {
@@ -39,11 +45,6 @@ export const UserService = {
             "Student with this admission number already exists"
           );
       }
-      const getAssignedSubject = assignSubject(
-        data.currentClass,
-        data.department
-      );
-      studentSubject = getAssignedSubject?.subject;
     }
     if (data.role === "teacher") {
       if (!data?.teacherId) {
@@ -69,12 +70,62 @@ export const UserService = {
       (item: string) => item === data.department
     );
     console.log(data);
-    return await User.create({
+    // ASSIGN SUBJECTS TO TEACHER AND STUDENT
+    if (data.role === "student" || data.role === "teacher") {
+      const existingStudent = await User.findOne({
+        admissionNumber: data.admissionNumber,
+      });
+      if (existingStudent)
+        throw new BadRequestError(
+          "Student with this admission number already existed"
+        );
+
+      if (["FGNSC_001", "FGNSC_002"].includes(data.currentClass)) {
+        subjects = ElementarySubjects;
+      }
+      if (data.currentClass === "FGKGC_002") {
+        subjects = BasicSubjects;
+      }
+      if (
+        [
+          "FGBSC_001",
+          "FGBSC_002",
+          "FGBSC_003",
+          "FGBSC_004",
+          "FGBSC_005",
+          "FGBSC_006",
+        ].includes(data.currentClass)
+      ) {
+        subjects = BasicSubjects;
+      }
+      if (["FGJSC_001", "FGJSC_002", "FGJSC_003"].includes(data.currentClass)) {
+        subjects = JuniorSubjects;
+      }
+      if (["FGSSC_001", "FGSSC_002", "FGSSC_003"].includes(data.currentClass)) {
+        if (data.department === "science") {
+          subjects = ScienceSubjects;
+        }
+        if (data.department === "art") {
+          subjects = ArtsSubjects;
+        }
+        if (data.department === "commercial") {
+          subjects === CommercialSubjects;
+        }
+      }
+    }
+    const user = await User.create({
       ...data,
       teacherSignature: teacherSignature,
       department: existingDepartment ? data.department : "none",
       subjects: studentSubject,
     });
+
+    await Subject.create({
+      subjects: subjects,
+      user_id: user._id,
+    });
+
+    return user;
   },
   updateUser: async (
     id: string,
@@ -227,8 +278,7 @@ export const UserService = {
     if (!account) throw new NotFoundError("User not found");
     const isPasswordRight = await account.comparePassword(oldPassword);
 
-    if (!isPasswordRight)
-      throw new BadRequestError(`Sorry that password isn't right`);
+    if (!isPasswordRight) throw new BadRequestError(`Password is incorrect`);
     const salt = await bcrypt.genSalt(10);
     const hashNewPassword = await bcrypt.hash(newPassword, salt);
     const updatePassword = await User.findOneAndUpdate(
