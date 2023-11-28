@@ -44,8 +44,8 @@ export const deleteUser = async (req: Request, res: Response) => {
 };
 
 export const updateUser = async (req: Request, res: Response) => {
+  console.log(req.body);
   const values = JSON.parse(req.body.values);
-
   const {
     params: { id },
     body,

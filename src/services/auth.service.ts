@@ -145,7 +145,10 @@ export const AuthService = {
         throw new NotFoundError("Cannot find user with this email");
       }
     }
-
+    if (user?.status === "inactive")
+      throw new BadRequestError(
+        "Sorry, you currently cannot login to your profile at the moment, kindly see or contact the school management"
+      );
     const passwordIsCorrect = await user!.comparePassword(password);
     if (!passwordIsCorrect) throw new BadRequestError("Password is incorrect");
 
