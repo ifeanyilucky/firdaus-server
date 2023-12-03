@@ -78,9 +78,8 @@ export const AuthService = {
           subjects === CommercialSubjects;
         }
       }
-
-      console.log("subjects created successfully");
     }
+    console.log(subjects);
 
     await Subject.create({
       subjects: subjects,

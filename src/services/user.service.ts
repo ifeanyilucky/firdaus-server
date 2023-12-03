@@ -34,6 +34,38 @@ export const UserService = {
     let teacherSignature = "";
     let studentSubject: any = [];
     let classTeacher: any;
+    // ASSIGN SUBJECTS TO TEACHER AND STUDENT
+    if (data.role === "student" || data.role === "teacher") {
+      if (["FGNSC_001", "FGNSC_002", "FGKGC_002"].includes(data.currentClass)) {
+        subjects = ElementarySubjects;
+      }
+      if (
+        [
+          "FGBSC_001",
+          "FGBSC_002",
+          "FGBSC_003",
+          "FGBSC_004",
+          "FGBSC_005",
+          "FGBSC_006",
+        ].includes(data.currentClass)
+      ) {
+        subjects = BasicSubjects;
+      }
+      if (["FGJSC_001", "FGJSC_002", "FGJSC_003"].includes(data.currentClass)) {
+        subjects = JuniorSubjects;
+      }
+      if (["FGSSC_001", "FGSSC_002", "FGSSC_003"].includes(data.currentClass)) {
+        if (data.department === "science") {
+          subjects = ScienceSubjects;
+        }
+        if (data.department === "art") {
+          subjects = ArtsSubjects;
+        }
+        if (data.department === "commercial") {
+          subjects === CommercialSubjects;
+        }
+      }
+    }
     if (data.role === "student") {
       if (!data.admissionNumber) {
         throw new BadRequestError("Please enter admission number");
@@ -71,45 +103,8 @@ export const UserService = {
       (item: string) => item === data.department
     );
     console.log(data);
-    // ASSIGN SUBJECTS TO TEACHER AND STUDENT
-    if (data.role === "student" || data.role === "teacher") {
-      const existingStudent = await User.findOne({
-        admissionNumber: data.admissionNumber,
-      });
-      if (existingStudent)
-        throw new BadRequestError(
-          "Student with this admission number already existed"
-        );
-      if (["FGNSC_001", "FGNSC_002", "FGKGC_002"].includes(data.currentClass)) {
-        subjects = ElementarySubjects;
-      }
-      if (
-        [
-          "FGBSC_001",
-          "FGBSC_002",
-          "FGBSC_003",
-          "FGBSC_004",
-          "FGBSC_005",
-          "FGBSC_006",
-        ].includes(data.currentClass)
-      ) {
-        subjects = BasicSubjects;
-      }
-      if (["FGJSC_001", "FGJSC_002", "FGJSC_003"].includes(data.currentClass)) {
-        subjects = JuniorSubjects;
-      }
-      if (["FGSSC_001", "FGSSC_002", "FGSSC_003"].includes(data.currentClass)) {
-        if (data.department === "science") {
-          subjects = ScienceSubjects;
-        }
-        if (data.department === "art") {
-          subjects = ArtsSubjects;
-        }
-        if (data.department === "commercial") {
-          subjects === CommercialSubjects;
-        }
-      }
-    }
+
+    console.log(subjects);
     const user = await User.create({
       ...data,
       teacherSignature: teacherSignature,

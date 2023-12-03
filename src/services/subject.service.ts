@@ -1,5 +1,6 @@
 import { Subject } from "../models/subject.model";
 import { ISubject } from "../interface/subject.interface";
+import mongoose from "mongoose";
 
 export const SubjectService = () => {
   return {
@@ -17,12 +18,25 @@ export const SubjectService = () => {
       return removeSubject;
     },
     getSingleSubject: () => {},
-    getAllSubjects: async (params: { user_id: string }) => {
-      const subjects = await Subject.find({ user_id: params.user_id });
-
-      return subjects;
+    getAllSubjects: async (params: { user_id: mongoose.Types.ObjectId }) => {
+      const subject = await Subject.findOne({
+        user_id: params.user_id as mongoose.Types.ObjectId,
+      });
+      console.log("fetching subjects");
+      console.log(subject);
+      return subject;
     },
     addSubjects: async (params: { user_id: string; subjects: ISubject[] }) => {
+      const subjects = await Subject.findOneAndUpdate({
+        user_id: params.user_id,
+        subjects: [...params.subjects],
+      });
+      return subjects;
+    },
+    updateSubjects: async (params: {
+      subjects: ISubject[];
+      user_id: string;
+    }) => {
       const subjects = await Subject.findOneAndUpdate({
         user_id: params.user_id,
         subjects: [...params.subjects],
