@@ -77,7 +77,7 @@ export const adminChangeStudentPassword = async (
 
   const data = await UserService.adminChangeStudentPassword({
     newPassword,
-    user: req.user,
+    userId: req.params.id,
   });
   res.status(StatusCodes.OK).json({ success: true, data });
 };

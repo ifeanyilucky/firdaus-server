@@ -23,7 +23,7 @@ router
   .patch(auth, upload.single("teacherSignature"), updateUser);
 router.route("/change-password").put(auth, changePassword);
 router
-  .route("/change-password-for-student")
+  .route("/change-password-for-student/:id")
   .put(auth, adminChangeStudentPassword);
 router
   .route("/create")

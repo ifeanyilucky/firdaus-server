@@ -139,10 +139,10 @@ const UserSchema = new mongoose.Schema<IUser, UserModel, IUserMethods>(
     classTeacher: {
       type: mongoose.Types.ObjectId,
       ref: "User",
-      required: function (): boolean {
-        // @ts-ignore
-        return this.role === "student" ? true : false;
-      },
+      // required: function (): boolean {
+      //   // @ts-ignore
+      //   return this.role === "student" ? true : false;
+      // },
     },
     classHandled: {
       type: String,

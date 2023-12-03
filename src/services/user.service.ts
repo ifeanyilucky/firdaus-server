@@ -33,6 +33,7 @@ export const UserService = {
     let subjects: ISubject[] = [];
     let teacherSignature = "";
     let studentSubject: any = [];
+    let classTeacher: any;
     if (data.role === "student") {
       if (!data.admissionNumber) {
         throw new BadRequestError("Please enter admission number");
@@ -79,12 +80,8 @@ export const UserService = {
         throw new BadRequestError(
           "Student with this admission number already existed"
         );
-
-      if (["FGNSC_001", "FGNSC_002"].includes(data.currentClass)) {
+      if (["FGNSC_001", "FGNSC_002", "FGKGC_002"].includes(data.currentClass)) {
         subjects = ElementarySubjects;
-      }
-      if (data.currentClass === "FGKGC_002") {
-        subjects = BasicSubjects;
       }
       if (
         [
@@ -252,10 +249,10 @@ export const UserService = {
   },
   adminChangeStudentPassword: async (params: {
     newPassword: string;
-    user: IUserResponse;
+    userId: string;
   }) => {
     const { newPassword } = params;
-    const account = await User.findOne({ _id: params.user._id });
+    const account = await User.findOne({ _id: params.userId });
     if (!account) throw new NotFoundError("User not found");
     const salt = await bcrypt.genSalt(10);
     const hashNewPassword = await bcrypt.hash(newPassword, salt);
