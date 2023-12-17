@@ -154,6 +154,7 @@ export const UserService = {
       firstName,
       lastName,
       status,
+      sort,
     } = params.query;
     const queryObject: IUserResponse | any = {};
 
@@ -185,6 +186,13 @@ export const UserService = {
       queryObject.status = status;
     }
     let result = User.find(queryObject);
+
+    if (sort) {
+      const sortList = sort.split(",").join(" ");
+      result = result.sort(sortList);
+    } else {
+      result = result.sort("-createdAt");
+    }
     const page = Number(params.page) || 1;
     const limit = Number(params.limit) || 5;
     const skip = (page - 1) * limit;

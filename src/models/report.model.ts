@@ -7,6 +7,9 @@ type ReportModel = Mongoose.Model<IReport, {}, {}>;
 export const ReportSchema = new Mongoose.Schema<IReport>(
   {
     performance: [],
+    timesSchoolOpenedAndActivities: String,
+    timesPunctual: String,
+    schoolReopenDate: String,
     attendance: {
       type: Object,
     },
@@ -47,12 +50,31 @@ export const ReportSchema = new Mongoose.Schema<IReport>(
     },
     reportClass: {
       type: String,
-      enum: ["JSS1", "JSS2", "JSS3", "SSS1", "SSS2", "SSS3"],
+      enum: [
+        "FGKGC_001",
+        "FGKGC_002",
+        "FGNSC_001",
+        "FGNSC_002",
+        "FGBSC_001",
+        "FGBSC_002",
+        "FGBSC_003",
+        "FGBSC_004",
+        "FGBSC_005",
+        "FGBSC_006",
+        "FGJSC_001",
+        "FGJSC_002",
+        "FGJSC_002",
+        "FGJSC_003",
+        "FGSSC_001",
+        "FGSSC_002",
+        "FGSSC_003",
+        "none",
+      ],
       required: [true, "Please specify student class"],
     },
     classSection: {
       type: String,
-      enum: ["junior", "senior"],
+      enum: ["junior", "senior", "elementary", "primary"],
       required: [true, "Class section is required"],
     },
     affectiveDomain: Object,
@@ -62,7 +84,6 @@ export const ReportSchema = new Mongoose.Schema<IReport>(
       type: String,
       required: true,
     },
-    schoolReopenDate: Date,
   },
   { timestamps: true }
 );

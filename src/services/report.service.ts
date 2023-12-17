@@ -42,7 +42,10 @@ export const ReportService = {
     if (teacher) {
       queryObject.teacher = new mongoose.Types.ObjectId(teacher as string);
     }
-    return await Report.find(queryObject);
+
+    return await Report.find(queryObject)
+      .populate("teacher")
+      .populate("student");
   },
 
   deleteReport: async function (params: { id: string }) {
@@ -61,31 +64,39 @@ export const ReportService = {
     return updatedReport;
   },
 
-  createReport: async function (params: { data: IReport; teacherId: string }) {
+  createReport: async function (params: {
+    data: IReport;
+    teacherId: string;
+    reportClass: string;
+  }) {
     const { data, teacherId } = params;
+    console.log(JSON.stringify(params.data));
 
     const existingReport = await Report.findOne({
       student: data.student,
       reportTerm: data.reportTerm,
-      classSection: data.classSection,
-      reportClass: data.reportClass,
+      reportClass: params.reportClass,
     });
     if (existingReport)
       throw new BadRequestError(`Report already exists for this student.`);
-
+    const student = await User.findOne({
+      admissionNumber: data.admissionNumber,
+    });
     const currentDate = new Date();
     const currentTerm = await TermModel.findOne({
       startDate: { $lte: currentDate },
       endDate: { $gte: currentDate },
     });
 
-    const newReport = new Report({
+    const newReport = await Report.create({
       ...data,
+      student: student?._id,
       teacher: teacherId,
       reportTerm: currentTerm?.name,
       reportYear: currentTerm?.startDate,
+      reportClass: params.reportClass,
     });
-    return await newReport.save();
+    return newReport;
   },
   // GET AND CONVERT REPORT TO PDF AND SEND THE FILE PATH TO CONTROLLER
   downloadReport: async function (params: {
@@ -104,11 +115,15 @@ export const ReportService = {
       user,
       classSection,
     } = params;
-    console.log(selectedTerm);
+    console.log("selected term", selectedTerm);
+    console.log("selected class", selectedClass);
+    console.log("class section", classSection);
+    console.log("student", student);
+
     const report = await Report.findOne({
       reportTerm: selectedTerm,
       reportClass: selectedClass,
-      student: user._id,
+      student: student,
       classSection: classSection,
     })
       .populate("student")
@@ -129,7 +144,7 @@ export const ReportService = {
       student: std,
     } = report;
     let htmlReport: string = "";
-    if (report.classSection === "junior") {
+    if (report.classSection == "junior") {
       ejs.renderFile(
         path.join(__dirname, "../views/junior-report.ejs"),
         {
@@ -143,7 +158,8 @@ export const ReportService = {
           htmlReport = html;
         }
       );
-    } else {
+    }
+    if (report.classSection == "senior") {
       ejs.renderFile(
         path.join(__dirname, "../views/senior-report.ejs"),
         {
@@ -157,6 +173,11 @@ export const ReportService = {
           htmlReport = html;
         }
       );
+    }
+    if (report.classSection == "primary") {
+      return null;
+    } else if (report.classSection == "elementary") {
+      return null;
     }
     const reportPath = path.join(__dirname, "../tmp/report-sheet.pdf");
 
@@ -182,6 +203,12 @@ export const ReportService = {
     //     console.log("Error generating PDF", error);
     //   });
     return htmlReport;
+  },
+
+  getReportsByTeacher: async function (params: { teacherId: string }) {
+    const reports = await Report.find({});
+
+    return reports;
   },
 };
 

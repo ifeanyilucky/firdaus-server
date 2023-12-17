@@ -13,7 +13,11 @@ export enum Term {
 
 export interface IReport extends JuniorReport {
   teacher: IUser | string;
-  schoolReopenDate: Date;
+  admissionNumber: string;
+  timesSchoolOpenedAndActivities: string;
+  schoolReopenDate: string;
+  timesPunctual: string;
+  // classSection: string;
   reportYear: string;
   // subjects : Subject[],
   status: string;

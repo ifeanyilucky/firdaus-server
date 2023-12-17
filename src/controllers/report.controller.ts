@@ -34,10 +34,10 @@ export const updateReport = async (req: Request, res: Response) => {
 
 export const createReport = async (req: Request, res: Response) => {
   const reportData: IReport = req.body;
-
   const data = await ReportService.createReport({
     data: reportData,
     teacherId: req.user._id,
+    reportClass: req.user.classHandled as unknown as string,
   });
   res.status(StatusCodes.OK).json({ data, success: true });
 };
@@ -68,4 +68,10 @@ export const downloadReport = async (req: Request, res: Response) => {
   //     console.log("success saving");
   //   }
   // });
+};
+
+export const getReportsByTeacher = async (req: Request, res: Response) => {
+  const reports = await ReportService.getReportsByTeacher({ teacherId: "" });
+
+  res.status(StatusCodes.ACCEPTED).json({ success: true, data: reports });
 };

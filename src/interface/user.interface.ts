@@ -39,7 +39,7 @@ export interface IUser {
   parentPhone?: string;
   teacherSignature?: string;
   subjectTaught?: string;
-  classHandled?: "JSS1" | "JSS2" | "JSS3" | "SSS1" | "SSS2" | "SSS3";
+  classHandled?: "JSS1" | "JSS2" | "JSS3" | "SSS1" | "SSS2" | "SSS3" | string;
   classTeacher?: string;
   teacherType: string;
   department?: "science" | "commercial" | "art";

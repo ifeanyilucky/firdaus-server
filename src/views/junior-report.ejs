@@ -328,7 +328,7 @@ margin-bottom:2.0pt;margin-left:.25in;text-align:center;line-height:normal'><b><
   padding:0in 5.4pt 0in 5.4pt'>
                     <p class=MsoNormal style='margin-bottom:2.0pt;line-height:normal'><span
                             style='font-size:8.5pt;font-family:"Georgia",serif;color:blue'>
-                            <%= report.attendance.school.timesPunctual %>
+                            <%= report.timesPunctual %>
                         </span></p>
                 </td>
                 <td width=144 valign=bottom style='width:108.25pt;border-top:none;border-left:
@@ -699,7 +699,7 @@ font-family:"Georgia",serif'>&nbsp;</span></b></p>
   border-top:none;padding:0in 5.4pt 0in 5.4pt;height:13.9pt'>
                         <p class=MsoNormal style='margin-bottom:2.0pt;line-height:normal'><b><span
                                     style='font-size:8pt;font-family:"Georgia",serif'>
-                                    <%= item.subject %>
+                                    <%= item.name %>
                                 </span></b></p>
                     </td>
                     <td width=36 valign=bottom style='width:26.9pt;border-top:none;border-left:
@@ -715,7 +715,7 @@ font-family:"Georgia",serif'>&nbsp;</span></b></p>
   padding:0in 5.4pt 0in 5.4pt;height:13.9pt; text-align: center;'>
                         <p class=MsoNormal style='margin-bottom:2.0pt;line-height:normal'><b><span
                                     style='font-size:9pt;font-family:"Georgia",serif; text-align: center;color: blue;'>
-                                    <%= item.sumTestScores %>
+                                    <%= item.examScore %>
                                 </span></b>
                         </p>
                     </td>
@@ -752,7 +752,9 @@ font-family:"Georgia",serif'>&nbsp;</span></b></p>
                                 <p class=MsoNormal style='margin-bottom:2.0pt;line-height:normal'><b><span
                                             style='font-size:7.5pt;font-family:"Georgia",serif'>Position:</span></b></p>
                                 <p class=MsoNormal style='margin-bottom:2.0pt;line-height:normal'><b><span
-                                            style='font-size:12.5pt;font-family:"Georgia",serif;padding-left:20px;color:blue;'>&nbsp;</span></b>
+                                            style='font-size:12.5pt;font-family:"Georgia",serif;padding-left:20px;color:blue;'>&nbsp;
+                                            <%= report.position %>
+                                        </span></b>
                                 </p>
                             </div>
                         </td>
@@ -766,7 +768,9 @@ font-family:"Georgia",serif'>&nbsp;</span></b></p>
                                             style='font-size:7.5pt;font-family:"Georgia",serif'>No. of
                                             students</span></b></p>
                                 <p class=MsoNormal style='margin-bottom:2.0pt;line-height:normal'><b><span
-                                            style='font-size:9pt;font-family:"Georgia",serif;color:blue;padding-left:20px'>30</span></b>
+                                            style='font-size:9pt;font-family:"Georgia",serif;color:blue;padding-left:20px'>
+                                            <%= report.numberOfStudents %>
+                                        </span></b>
                                 </p>
                             </div>
                         </td>

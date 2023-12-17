@@ -64,7 +64,6 @@ const UserSchema = new mongoose.Schema<IUser, UserModel, IUserMethods>(
         "FGSSC_001",
         "FGSSC_002",
         "FGSSC_003",
-
         "none",
       ],
     },
@@ -123,18 +122,18 @@ const UserSchema = new mongoose.Schema<IUser, UserModel, IUserMethods>(
     },
     subjectTaught: {
       type: String,
-      required: function (): boolean {
-        // @ts-ignore
-        return this.role === "teacher" ? true : false;
-      },
+      // required: function (): boolean {
+      //   // @ts-ignore
+      //   return this.role === "teacher" ? true : false;
+      // },
     },
     teacherType: {
       type: String,
       enum: ["subject_teacher", "class_teacher"],
-      required: function (): boolean {
-        // @ts-ignore
-        return this.role === "teacher" ? true : false;
-      },
+      // required: function (): boolean {
+      //   // @ts-ignore
+      //   return this.role === "teacher" ? true : false;
+      // },
     },
     classTeacher: {
       type: mongoose.Types.ObjectId,
