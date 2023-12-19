@@ -98,8 +98,11 @@ export const seniorReportConfig = (report: IReport) => {
 
 export const juniorReportConfig = (report: IReport) => {
   const getReportYear = new Date(report.reportYear).getFullYear();
-  const totalAverageScore = _.sumBy(report.performance, "totalWeightedAverage");
-  console.log(report);
+  // const totalAverageScore = _.sumBy(report.performance, "totalWeightedAverage");
+  const totalAverageScore = _.sumBy(report.performance, (item) =>
+    Number(item.totalWeightedAverage)
+  );
+
   const totalDefaultAverageScore = report.performance.length * 100;
   const averagePercentage = Math.floor(
     (Number(totalAverageScore) / Number(totalDefaultAverageScore)) * 100
@@ -190,7 +193,7 @@ export const juniorReportConfig = (report: IReport) => {
         middleName: (report?.student as IUser).middleName || "",
       },
       teacher: {
-        teacherSignature: (report.teacher as IUser).teacherSignature || "",
+        teacherSignature: (report.teacher as IUser)?.teacherSignature || "",
       },
     },
   };

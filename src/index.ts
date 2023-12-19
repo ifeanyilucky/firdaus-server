@@ -19,8 +19,9 @@ dotenv.config();
 
 const app: Application = express();
 // EJS
-app.set("views", "./views");
+// app.set("views", "./views");
 app.set("view engine", "ejs");
+app.set("views", "./views");
 app.use(
   express.static(path.join(__dirname, "/public"), { maxAge: 31557600000 })
 );
@@ -38,6 +39,28 @@ app.get("/", (req: Request, res: Response) => {
     `<div>Welcome to Firdaus API Server<br/> <a href="/api-docs">Click here 👽👻</a> to navigate to API documentation </div>`
   );
 });
+
+app.get("/report-preview", (req, res) => {
+  res.render("/senior-report.ejs", {});
+});
+
+// app.use('/receipt', (req, res) => {
+//   res.render('emails/payment-receipt.ejs', {
+//     config,
+//     firstName: 'lucky',
+//     lastName: 'Ifeanyi',
+//     hostelName: '3 bedroom flat available at igando',
+//     area: 'Iganod',
+//     totalCost: '300000',
+//     agreementCommissionFee: 3000,
+//     agencyFee: '30000',
+//     rentFee: '3000',
+//     cautionFee: '30000',
+//   });
+// });
+// app.use('/submitted', (req, res) => {
+//   res.render('emails/payment-submitted.ejs');
+// });
 
 app.use(ErrorHandler);
 const swaggerDocument = YAML.load(path.join(__dirname, "./docs/swagger.yaml"));
