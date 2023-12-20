@@ -96,6 +96,7 @@ export const ReportService = {
       reportYear: currentTerm?.startDate,
       reportClass: params.reportClass,
     });
+    console.log("studentid", student?._id);
     return newReport;
   },
   // GET AND CONVERT REPORT TO PDF AND SEND THE FILE PATH TO CONTROLLER

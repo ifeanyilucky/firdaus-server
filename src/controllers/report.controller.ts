@@ -3,6 +3,7 @@ import { Request, Response } from "express";
 import { ReportService } from "../services/report.service";
 import { IUserResponse } from "../interface/user.interface";
 import { IReport, Term } from "../interface/report.interface";
+import { User } from "../models/user.model";
 import path from "path";
 import fs from "fs";
 
