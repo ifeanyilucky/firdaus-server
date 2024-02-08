@@ -72,6 +72,8 @@ export interface subject extends juniorSubject {
   subject: string;
   continuousAssessmentScore: number;
   examScore: number;
+  firstTermScore: number;
+  secondTermScore: number;
   totalWeightedAverage: number;
   positionGrade: string;
   comment?: string;

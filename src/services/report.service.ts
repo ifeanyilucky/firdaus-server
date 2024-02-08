@@ -73,10 +73,15 @@ export const ReportService = {
     console.log(JSON.stringify(params.data));
 
     const existingReport = await Report.findOne({
-      student: data.student,
+      admissionNumber: data.admissionNumber,
       reportTerm: data.reportTerm,
       reportClass: params.reportClass,
     });
+    // const existingReport = await Report.findOne({
+    //   student: data.student,
+    //   reportTerm: data.reportTerm,
+    //   reportClass: params.reportClass,
+    // });
     if (existingReport)
       throw new BadRequestError(`Report already exists for this student.`);
     const student = await User.findOne({
@@ -96,7 +101,6 @@ export const ReportService = {
       reportYear: currentTerm?.startDate,
       reportClass: params.reportClass,
     });
-    console.log("studentid", student?._id);
     return newReport;
   },
   // GET AND CONVERT REPORT TO PDF AND SEND THE FILE PATH TO CONTROLLER
