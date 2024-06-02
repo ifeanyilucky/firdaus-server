@@ -1,0 +1,453 @@
+openapi: 3.0.0
+info:
+  title: Firdaus server
+  description: This is an API documentation for Firdaus API v1.0
+  contact:
+    name: Ifeanyi Lucky
+    url: https://ifeanyilucky.engineer
+    email: ifeanyilucky360@gmail.com
+  version: '1.0'
+servers:
+- url: https://firdausgate-api.cyclic.app/api/v1
+  variables: {}
+paths:
+  /auth/login:
+    post:
+      tags:
+      - Auth
+      summary: login
+      operationId: login
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: '#/components/schemas/loginrequest'
+              - example:
+                  email: ifeanyilucky360@gmail.com
+                  password: mbfibab2018
+            example:
+              email: ifeanyilucky360@gmail.com
+              password: mbfibab2018
+        required: true
+      responses:
+        '202':
+          description: Accepted
+          headers:
+            X-Powered-By:
+              content:
+                text/plain:
+                  schema:
+                    type: string
+                  example: Express
+            Content-Length:
+              content:
+                text/plain:
+                  schema:
+                    type: string
+                  example: '651'
+            ETag:
+              content:
+                text/plain:
+                  schema:
+                    type: string
+                  example: W/"28b-ha1fRvcVDzwSFi6FJPmC5WwCrB4"
+            Date:
+              content:
+                text/plain:
+                  schema:
+                    type: string
+                  example: Tue, 05 Sep 2023 07:16:34 GMT
+            Connection:
+              content:
+                text/plain:
+                  schema:
+                    type: string
+                  example: keep-alive
+            Keep-Alive:
+              content:
+                text/plain:
+                  schema:
+                    type: string
+                  example: timeout=5
+          content:
+            application/json; charset=utf-8:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/login'
+                - example:
+                    user:
+                      _id: 64f567409196dd1b86d9d3c1
+                      firstName: John
+                      lastName: Lucky
+                      middleName: Promise
+                      admissionNumber: 190801294
+                      email: ifeanyilucas30@gmail.com
+                      class: SSS3
+                      department: Science
+                      password: $2a$10$b2Hi9G0pYJ7IKwve0V8NZ.Q6UN5ITK3emWTCJrR7aUm8eovARZaHW
+                      role: student
+                      reports: []
+                      createdAt: 2023-09-04T05:12:32.426Z
+                      updatedAt: 2023-09-04T05:12:32.426Z
+                      __v: 0
+                    token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NGY1Njc0MDkxOTZkZDFiODZkOWQzYzEiLCJlbWFpbCI6ImlmZWFueWlsdWNhczMwQGdtYWlsLmNvbSIsInJvbGUiOiJzdHVkZW50IiwiaWF0IjoxNjkzODk4MTk0LCJleHAiOjE2OTQwNzA5OTR9.Q3_3lQVBaA7NlKEZObfDi7SxuC8SFgMjQJW5bo--y70
+              example:
+                user:
+                  _id: 64f567409196dd1b86d9d3c1
+                  firstName: John
+                  lastName: Lucky
+                  middleName: Promise
+                  admissionNumber: 190801294
+                  email: ifeanyilucas30@gmail.com
+                  class: SSS3
+                  department: Science
+                  password: $2a$10$b2Hi9G0pYJ7IKwve0V8NZ.Q6UN5ITK3emWTCJrR7aUm8eovARZaHW
+                  role: student
+                  reports: []
+                  createdAt: 2023-09-04T05:12:32.426Z
+                  updatedAt: 2023-09-04T05:12:32.426Z
+                  __v: 0
+                token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NGY1Njc0MDkxOTZkZDFiODZkOWQzYzEiLCJlbWFpbCI6ImlmZWFueWlsdWNhczMwQGdtYWlsLmNvbSIsInJvbGUiOiJzdHVkZW50IiwiaWF0IjoxNjkzODk4MTk0LCJleHAiOjE2OTQwNzA5OTR9.Q3_3lQVBaA7NlKEZObfDi7SxuC8SFgMjQJW5bo--y70
+      deprecated: false
+  /auth/register:
+    post:
+      tags:
+      - Auth
+      summary: register
+      operationId: register
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: '#/components/schemas/register'
+              - {}
+        required: true
+      responses:
+        '202':
+          description: Accepted
+          headers:
+            X-Powered-By:
+              content:
+                text/plain:
+                  schema:
+                    type: string
+                  example: Express
+            Content-Length:
+              content:
+                text/plain:
+                  schema:
+                    type: string
+                  example: '652'
+            ETag:
+              content:
+                text/plain:
+                  schema:
+                    type: string
+                  example: W/"28c-MPuEjnvkiVOp3PCmG7+Tgff2zxA"
+            Date:
+              content:
+                text/plain:
+                  schema:
+                    type: string
+                  example: Tue, 05 Sep 2023 07:16:19 GMT
+            Connection:
+              content:
+                text/plain:
+                  schema:
+                    type: string
+                  example: keep-alive
+            Keep-Alive:
+              content:
+                text/plain:
+                  schema:
+                    type: string
+                  example: timeout=5
+          content:
+            application/json; charset=utf-8:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/register'
+                - example:
+                    user:
+                      firstName: Ekene
+                      lastName: Lucky
+                      middleName: Promise
+                      admissionNumber: 190801255
+                      email: ifeanyilucas20@gmail.com
+                      class: SSS3
+                      department: Science
+                      password: $2a$10$MkZX1NjtM1ebjTY01QtuRuLW8otrq5KY0q4GzwO/w0pXvO6/uN01m
+                      role: student
+                      reports: []
+                      _id: 64f6d5c3cc6cb7bedeec0b50
+                      createdAt: 2023-09-05T07:16:19.151Z
+                      updatedAt: 2023-09-05T07:16:19.151Z
+                      __v: 0
+                    token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NGY2ZDVjM2NjNmNiN2JlZGVlYzBiNTAiLCJlbWFpbCI6ImlmZWFueWlsdWNhczIwQGdtYWlsLmNvbSIsInJvbGUiOiJzdHVkZW50IiwiaWF0IjoxNjkzODk4MTc5LCJleHAiOjE2OTQwNzA5Nzl9.UOzukddRjXIRWLoDjRDMKxA2YKAHY2YDXneWIFkAB9U
+              example:
+                user:
+                  firstName: Ekene
+                  lastName: Lucky
+                  middleName: Promise
+                  admissionNumber: 190801255
+                  email: ifeanyilucas20@gmail.com
+                  class: SSS3
+                  department: Science
+                  password: $2a$10$MkZX1NjtM1ebjTY01QtuRuLW8otrq5KY0q4GzwO/w0pXvO6/uN01m
+                  role: student
+                  reports: []
+                  _id: 64f6d5c3cc6cb7bedeec0b50
+                  createdAt: 2023-09-05T07:16:19.151Z
+                  updatedAt: 2023-09-05T07:16:19.151Z
+                  __v: 0
+                token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NGY2ZDVjM2NjNmNiN2JlZGVlYzBiNTAiLCJlbWFpbCI6ImlmZWFueWlsdWNhczIwQGdtYWlsLmNvbSIsInJvbGUiOiJzdHVkZW50IiwiaWF0IjoxNjkzODk4MTc5LCJleHAiOjE2OTQwNzA5Nzl9.UOzukddRjXIRWLoDjRDMKxA2YKAHY2YDXneWIFkAB9U
+      deprecated: false
+components:
+  schemas:
+    loginrequest:
+      title: loginrequest
+      required:
+      - email
+      - password
+      type: object
+      properties:
+        admissionNumber:
+          type: string
+        password:
+          type: string
+      example:
+        admissionNumber: FGMS190822332
+        password: mbfibab2018
+    login:
+      title: login
+      required:
+      - user
+      - token
+      type: object
+      properties:
+        user:
+          allOf:
+          - $ref: '#/components/schemas/User'
+          - {}
+        token:
+          type: string
+      example:
+        user:
+          _id: 64f567409196dd1b86d9d3c1
+          firstName: John
+          lastName: Lucky
+          middleName: Promise
+          admissionNumber: 190801294
+          email: ifeanyilucas30@gmail.com
+          class: SSS3
+          department: Science
+          password: $2a$10$b2Hi9G0pYJ7IKwve0V8NZ.Q6UN5ITK3emWTCJrR7aUm8eovARZaHW
+          role: student
+          reports: []
+          createdAt: 2023-09-04T05:12:32.426Z
+          updatedAt: 2023-09-04T05:12:32.426Z
+          __v: 0
+        token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NGY1Njc0MDkxOTZkZDFiODZkOWQzYzEiLCJlbWFpbCI6ImlmZWFueWlsdWNhczMwQGdtYWlsLmNvbSIsInJvbGUiOiJzdHVkZW50IiwiaWF0IjoxNjkzODk4MTk0LCJleHAiOjE2OTQwNzA5OTR9.Q3_3lQVBaA7NlKEZObfDi7SxuC8SFgMjQJW5bo--y70
+    User:
+      title: User
+      required:
+      - _id
+      - firstName
+      - lastName
+      - middleName
+      - admissionNumber
+      - email
+      - class
+      - department
+      - password
+      - role
+      - reports
+      - createdAt
+      - updatedAt
+      - __v
+      type: object
+      properties:
+        _id:
+          type: string
+        firstName:
+          type: string
+        lastName:
+          type: string
+        middleName:
+          type: string
+        admissionNumber:
+          type: integer
+          format: int32
+        email:
+          type: string
+        class:
+          type: string
+        department:
+          type: string
+        password:
+          type: string
+        role:
+          type: string
+        reports:
+          type: array
+          items:
+            type: string
+          description: ''
+        createdAt:
+          type: string
+        updatedAt:
+          type: string
+        __v:
+          type: integer
+          format: int32
+      example:
+        _id: 64f567409196dd1b86d9d3c1
+        firstName: John
+        lastName: Lucky
+        middleName: Promise
+        admissionNumber: 190801294
+        email: ifeanyilucas30@gmail.com
+        class: SSS3
+        department: Science
+        password: $2a$10$b2Hi9G0pYJ7IKwve0V8NZ.Q6UN5ITK3emWTCJrR7aUm8eovARZaHW
+        role: student
+        reports: []
+        createdAt: 2023-09-04T05:12:32.426Z
+        updatedAt: 2023-09-04T05:12:32.426Z
+        __v: 0
+    register:
+      title: register
+      required:
+      - user
+      - token
+      type: object
+      properties:
+        user:
+          allOf:
+          - $ref: '#/components/schemas/User'
+          - {}
+        token:
+          type: string
+      example:
+          firstName: Ekene
+          lastName: Lucky
+          middleName: Promise
+          admissionNumber: 190801255
+          email: ifeanyilucas20@gmail.com
+          class: SSS3
+          department: Science
+          password: mbfibab2018
+      
+    creatreportrequest:
+      title: creatreportrequest
+      required:
+      - subjects
+      - term
+      - studentId
+      type: object
+      properties:
+        subjects:
+          type: array
+          items:
+            $ref: '#/components/schemas/Subject'
+          description: ''
+        term:
+          type: string
+        studentId:
+          type: string
+      example:
+        subjects:
+        - subject: Accounting
+          continuousAssessmentScore: 50
+          examScore: 50
+          totalWeightedAverage: 50
+          positionGrade: 12
+          comment: good
+        - subject: English
+          continuousAssessmentScore: 30
+          examScore: 60
+          totalWeightedAverage: 50
+          positionGrade: 12
+          comment: distinction
+        - subject: Commerce
+          continuousAssessmentScore: 50
+          examScore: 50
+          totalWeightedAverage: 50
+          positionGrade: 12
+          comment: good
+        - subject: Physics
+          continuousAssessmentScore: 50
+          examScore: 50
+          totalWeightedAverage: 50
+          positionGrade: 12
+          comment: good
+        - subject: Mathematics
+          continuousAssessmentScore: 50
+          examScore: 50
+          totalWeightedAverage: 50
+          positionGrade: 12
+          comment: good
+        - subject: Biology
+          continuousAssessmentScore: 20
+          examScore: 30
+          totalWeightedAverage: 50
+          positionGrade: 12
+          comment: good
+        - subject: Agriculture
+          continuousAssessmentScore: 20
+          examScore: 60
+          totalWeightedAverage: 50
+          positionGrade: 12
+          comment: excellent
+        term: FIRST_TERM
+        studentId: '290811249'
+    Subject:
+      title: Subject
+      required:
+      - subject
+      - continuousAssessmentScore
+      - examScore
+      - totalWeightedAverage
+      - positionGrade
+      - comment
+      type: object
+      properties:
+        subject:
+          type: string
+        continuousAssessmentScore:
+          type: integer
+          format: int32
+        examScore:
+          type: integer
+          format: int32
+        totalWeightedAverage:
+          type: integer
+          format: int32
+        positionGrade:
+          type: integer
+          format: int32
+        comment:
+          type: string
+      example:
+        subject: Accounting
+        continuousAssessmentScore: 50
+        examScore: 50
+        totalWeightedAverage: 50
+        positionGrade: 12
+        comment: good
+  securitySchemes:
+    httpBearer:
+      type: http
+      scheme: bearer
+security:
+- httpBearer: []
+tags:
+
+- name: Auth
+  description: ''
