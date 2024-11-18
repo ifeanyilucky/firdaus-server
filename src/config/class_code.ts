@@ -11,7 +11,6 @@ export const class_code = [
   "FGBSC_006",
   "FGJSC_001",
   "FGJSC_002",
-  "FGJSC_002",
   "FGJSC_003",
   "FGSSC_001",
   "FGSSC_002",
